@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/werl/College/netvizGL/main.cpp
+/home/werl/College/netvizGL/src/main.cpp
 GL/glut.h
 -
 

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/werl/College/netvizGL/main.cpp" "/home/werl/College/netvizGL/CMakeFiles/netvizGL.dir/main.cpp.o"
+  "/home/werl/College/netvizGL/src/main.cpp" "/home/werl/College/netvizGL/CMakeFiles/netvizGL.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

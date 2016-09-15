@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/netvizGL.dir/main.cpp.o"
+  "CMakeFiles/netvizGL.dir/src/main.cpp.o"
   "netvizGL.pdb"
   "netvizGL"
 )

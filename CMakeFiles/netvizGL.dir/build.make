@@ -49,37 +49,37 @@ include CMakeFiles/netvizGL.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/netvizGL.dir/flags.make
 
-CMakeFiles/netvizGL.dir/main.cpp.o: CMakeFiles/netvizGL.dir/flags.make
-CMakeFiles/netvizGL.dir/main.cpp.o: main.cpp
+CMakeFiles/netvizGL.dir/src/main.cpp.o: CMakeFiles/netvizGL.dir/flags.make
+CMakeFiles/netvizGL.dir/src/main.cpp.o: src/main.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/werl/College/netvizGL/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/netvizGL.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/netvizGL.dir/main.cpp.o -c /home/werl/College/netvizGL/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/netvizGL.dir/src/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/netvizGL.dir/src/main.cpp.o -c /home/werl/College/netvizGL/src/main.cpp
 
-CMakeFiles/netvizGL.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/netvizGL.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/werl/College/netvizGL/main.cpp > CMakeFiles/netvizGL.dir/main.cpp.i
+CMakeFiles/netvizGL.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/netvizGL.dir/src/main.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/werl/College/netvizGL/src/main.cpp > CMakeFiles/netvizGL.dir/src/main.cpp.i
 
-CMakeFiles/netvizGL.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/netvizGL.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/werl/College/netvizGL/main.cpp -o CMakeFiles/netvizGL.dir/main.cpp.s
+CMakeFiles/netvizGL.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/netvizGL.dir/src/main.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/werl/College/netvizGL/src/main.cpp -o CMakeFiles/netvizGL.dir/src/main.cpp.s
 
-CMakeFiles/netvizGL.dir/main.cpp.o.requires:
-.PHONY : CMakeFiles/netvizGL.dir/main.cpp.o.requires
+CMakeFiles/netvizGL.dir/src/main.cpp.o.requires:
+.PHONY : CMakeFiles/netvizGL.dir/src/main.cpp.o.requires
 
-CMakeFiles/netvizGL.dir/main.cpp.o.provides: CMakeFiles/netvizGL.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/netvizGL.dir/main.cpp.o.provides
+CMakeFiles/netvizGL.dir/src/main.cpp.o.provides: CMakeFiles/netvizGL.dir/src/main.cpp.o.requires
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/main.cpp.o.provides.build
+.PHONY : CMakeFiles/netvizGL.dir/src/main.cpp.o.provides
 
-CMakeFiles/netvizGL.dir/main.cpp.o.provides.build: CMakeFiles/netvizGL.dir/main.cpp.o
+CMakeFiles/netvizGL.dir/src/main.cpp.o.provides.build: CMakeFiles/netvizGL.dir/src/main.cpp.o
 
 # Object files for target netvizGL
 netvizGL_OBJECTS = \
-"CMakeFiles/netvizGL.dir/main.cpp.o"
+"CMakeFiles/netvizGL.dir/src/main.cpp.o"
 
 # External object files for target netvizGL
 netvizGL_EXTERNAL_OBJECTS =
 
-netvizGL: CMakeFiles/netvizGL.dir/main.cpp.o
+netvizGL: CMakeFiles/netvizGL.dir/src/main.cpp.o
 netvizGL: CMakeFiles/netvizGL.dir/build.make
 netvizGL: /usr/lib/x86_64-linux-gnu/libGLU.so
 netvizGL: /usr/lib/x86_64-linux-gnu/libGL.so
@@ -98,7 +98,7 @@ netvizGL: CMakeFiles/netvizGL.dir/link.txt
 CMakeFiles/netvizGL.dir/build: netvizGL
 .PHONY : CMakeFiles/netvizGL.dir/build
 
-CMakeFiles/netvizGL.dir/requires: CMakeFiles/netvizGL.dir/main.cpp.o.requires
+CMakeFiles/netvizGL.dir/requires: CMakeFiles/netvizGL.dir/src/main.cpp.o.requires
 .PHONY : CMakeFiles/netvizGL.dir/requires
 
 CMakeFiles/netvizGL.dir/clean:
