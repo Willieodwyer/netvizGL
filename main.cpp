@@ -1,36 +1,82 @@
-#include <GL/glut.h>	// ==> gl.h and glu.h
+#include <GL/glut.h>
 
-void init (void)
+void sendHELP()
 {
-  glClearColor(1.0, 1.0, 1.0, 0.0);
+  glClear(GL_COLOR_BUFFER_BIT); // clear the window
 
-  glMatrixMode(GL_PROJECTION);
-  gluOrtho2D(0.0, 200.0, 0.0, 150.0);
-}
+  // set line width, in pixels
+  glLineWidth(4.0);
 
-void lineSegmentGreen (void)
-{
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  glColor3f(0.0, 1.0, 0.0);
+  // Draw H
   glBegin(GL_LINES);
-  glVertex2i(0, 0);
-  glVertex2i(2000, 300);
+    glColor3f(1.0, 1.0, 1.0); // set color to white
+    glVertex3f(-0.8, -0.6 ,0.0);
+    glVertex3f(-0.8, 0.6, 0.0);
+    glVertex3f(-0.4, 0.6, 0.0);
+    glVertex3f(-0.4, -0.6, 0.0);
+    glVertex3f(-0.8, 0.0, 0.0);
+    glVertex3f(-0.4, 0.0, 0.0);
   glEnd();
+
+  // Draw E
+  glBegin(GL_LINES);
+    glColor3f(1.0, 0.0, 0.0); // set color to red
+    glVertex3f(-0.3, -0.6 ,0.0);
+    glVertex3f(-0.3, 0.6, 0.0);
+    glVertex3f(-0.3, 0.6 , 0.0);
+    glVertex3f(0.0, 0.6 , 0.0);
+    glVertex3f(-0.3, 0.0 , 0.0);
+    glVertex3f(0.0, 0.0 , 0.0);
+    glVertex3f(-0.3, -0.6 , 0.0);
+    glVertex3f(0.0, -0.6 , 0.0);
+  glEnd();
+
+  //Draw L
+  glBegin(GL_LINES);
+    glColor3f(0.0, 1.0, 0.0); // set color to red
+    glVertex3f(0.1, -0.6 ,0.0);
+    glVertex3f(0.1, 0.6, 0.0);
+    glVertex3f(0.1, -0.6 , 0.0);
+    glVertex3f(0.4, -0.6 , 0.0);
+  glEnd();
+
+  //Draw P
+
+  glBegin(GL_LINES);
+    glColor3f(0.0, 0.0, 1.0); // set color to red
+    glVertex3f(0.5, 0.6 ,0.0);
+    glColor3f(1.0,1.0,0.0);
+    glVertex3f(0.9, 0.6, 0.0);
+    glColor3f(1.0,0.0,0.0);
+    glVertex3f(0.5, 0.0 , 0.0);
+    glVertex3f(0.9, 0.0 , 0.0);
+    glVertex3f(0.5, 0.6 , 0.0);
+    glColor3f(1.0,1.0,0.0);
+    glVertex3f(0.5, -0.6 , 0.0);
+    glVertex3f(0.9, 0.6 , 0.0);
+    glVertex3f(0.9, -0.0 , 0.0);
+  glEnd();
+
 
   glFlush();
 }
 
-int main (int argc, char ** argv)
+// input keyboard function to quit with q or Q.
+void quit(unsigned char key, int x, int y)
 {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowPosition(50, 100);
-  glutInitWindowSize(1280, 720);
-  glutCreateWindow("A Baby GL example");
+  if (key == 'q' || key == 'Q')
+    exit(0);
+}
 
-  init();  // we will write this
-
-  glutDisplayFunc(lineSegmentGreen); // and this
-  glutMainLoop();
+int main (int argc, char** argv)
+{
+  glutInit(&argc, argv);        // initialize glut
+  glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE); // RGB, single buffer mode
+  glutInitWindowSize(1280,720);  // set window width, height in pixels
+  glutInitWindowPosition(0,0);  // x, y from top left corner of screen
+  glutCreateWindow(argv[0]);    // create window, with program name in titlebar
+  glutDisplayFunc(sendHELP);     // set display callback function
+  glutKeyboardFunc(quit);       // set keyboard callback function
+  glutMainLoop();               // hand over control to glut
+  return 0;
 }

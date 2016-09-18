@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/netvizGL.dir/src/main.cpp.o  -o netvizGL -rdynamic -lglfw -lGLU -lGL -lSM -lICE -lX11 -lXext -lglut -lXmu -lXi 
