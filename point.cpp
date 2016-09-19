@@ -2,7 +2,7 @@
 // Created by werl on 16/09/16.
 //
 
-#include "Point.h"
+#include "point.h"
 
 float Point::getX() const {
     return x;
