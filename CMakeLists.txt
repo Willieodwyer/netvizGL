@@ -42,6 +42,7 @@ find_library(GLFW_LIBRARIES glfw3 ${LIBRARY_SEARCH_PATH})
 
 # Set additional libs
 set( ADDITIONAL_LIBS
+        -lglut
         -lGLEW
         -lglfw3
         -lGL

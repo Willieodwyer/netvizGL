@@ -29,7 +29,7 @@ public:
         vertexFile.open(vertexPath);
 
         if (vertexFile.is_open()) {
-            printf("OPENNNNNN");
+            printf("OPEN");
         } else
             printf("NOT OPEN.- %s", vertexPath);
 
@@ -103,6 +103,10 @@ public:
         // Delete the shaders as they're linked into our program now and no longer necessery
         glDeleteShader(vertex);
         glDeleteShader(fragment);
+
+    }
+
+    virtual ~Shader() {
 
     }
 

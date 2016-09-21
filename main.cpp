@@ -10,13 +10,18 @@ const GLuint WIDTH = 1280, HEIGHT = 720;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-// When a user presses the escape key, we set the WindowShouldClose property to true,
-// closing the application
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
 int main() {
+
+//    char cwd[1024];
+//    if (getcwd(cwd, sizeof(cwd)) != NULL)
+//        fprintf(stdout, "Current working dir: %s\n", cwd);
+//    else
+//        perror("getcwd() error");
+
     glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -27,6 +32,8 @@ int main() {
 
 
     GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "netvizGL", NULL, NULL);
+    glfwSetWindowPos(window, 320,180);
+
 
     if (window == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -35,6 +42,9 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+
+    glfwSwapInterval(1);
+
 
     glewExperimental = GL_TRUE;
 
@@ -76,6 +86,8 @@ int main() {
 
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    glPointSize(12.0);
+
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -85,7 +97,8 @@ int main() {
 
         shade.Use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_POINTS, 0, 3);
+        glDrawArrays(GL_LINE_LOOP, 0, 3);
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
