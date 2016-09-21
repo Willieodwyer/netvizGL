@@ -89,7 +89,7 @@ set(INCLUDE_PATH ${INCUDE_PATH}
 # Add a target executable
 add_executable(${PROJ_NAME}
         main.cpp
-        shader.h)
+        shader.h window.cpp window.h)
 
 
 # Libraries to be linked
