@@ -44,6 +44,7 @@ find_library(GLFW_LIBRARIES glfw3 ${LIBRARY_SEARCH_PATH})
 set( ADDITIONAL_LIBS
         -lglut
         -lGLEW
+        -lglfw
         -lglfw3
         -lGL
         -lX11
@@ -89,7 +90,7 @@ set(INCLUDE_PATH ${INCUDE_PATH}
 # Add a target executable
 add_executable(${PROJ_NAME}
         main.cpp
-        shader.h window.cpp window.h)
+        shader.h window.cpp window.h Point.cpp Point.h)
 
 
 # Libraries to be linked

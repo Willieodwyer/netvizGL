@@ -4,8 +4,10 @@
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include <GL/glu.h>
-#include <cmath>
+#include <iostream>
 #include "window.h"
+#include "Point.h"
+
 
 Window::Window(const int WIDTH, const int HEIGHT) {
 
@@ -43,6 +45,7 @@ void Window::display() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_PROJECTION_MATRIX);
+        glPushMatrix();
         glLoadIdentity();
         gluPerspective(60, (double) windowWidth / (double) windowHeight, 0.1, 100);
 
@@ -59,47 +62,8 @@ void Window::display() {
     }
 }
 
-void Window::draw() {
-    static GLfloat vertices[] = //new GLfloat[49];
-            {
-                    -1.0f, -1.0f, -1.0f,
-                    -1.0f, -1.0f, 1.0f,
-                    -1.0f, 1.0f, 1.0f,
-                    1.0f, 1.0f, -1.0f,
-                    -1.0f, -1.0f, -1.0f,
-                    -1.0f, 1.0f, -1.0f,
-                    1.0f, -1.0f, 1.0f,
-                    -1.0f, -1.0f, -1.0f,
-                    1.0f, -1.0f, -1.0f,
-                    1.0f, 1.0f, -1.0f,
-                    1.0f, -1.0f, -1.0f,
-                    -1.0f, -1.0f, -1.0f,
-                    -1.0f, -1.0f, -1.0f,
-                    -1.0f, 1.0f, 1.0f,
-                    -1.0f, 1.0f, -1.0f,
-                    1.0f, -1.0f, 1.0f,
-                    -1.0f, -1.0f, 1.0f,
-                    -1.0f, -1.0f, -1.0f,
-                    -1.0f, 1.0f, 1.0f,
-                    -1.0f, -1.0f, 1.0f,
-                    1.0f, -1.0f, 1.0f,
-                    1.0f, 1.0f, 1.0f,
-                    1.0f, -1.0f, -1.0f,
-                    1.0f, 1.0f, -1.0f,
-                    1.0f, -1.0f, -1.0f,
-                    1.0f, 1.0f, 1.0f,
-                    1.0f, -1.0f, 1.0f,
-                    1.0f, 1.0f, 1.0f,
-                    1.0f, 1.0f, -1.0f,
-                    -1.0f, 1.0f, -1.0f,
-                    1.0f, 1.0f, 1.0f,
-                    -1.0f, 1.0f, -1.0f,
-                    -1.0f, 1.0f, 1.0f,
-                    1.0f, 1.0f, 1.0f,
-                    -1.0f, 1.0f, 1.0f,
-                    1.0f, -1.0f, 1.0f
-            };
 
+void Window::draw() {
     static GLfloat colors[] =
             {
                     0.583f, 0.771f, 0.014f,
@@ -144,17 +108,23 @@ void Window::draw() {
     //attempt to rotate cube
     glRotatef(alpha, 0, 1, 0);
 
-    /* We have a color array and a vertex array */
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(3, GL_FLOAT, 0, colors);
+    Point *point = new Point(2,100,100);
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
-    /* Send data : 24 vertices */
-    glDrawArrays(GL_TRIANGLES, 0, 3 * 12);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(3, GL_FLOAT, 0, point->verts);
+//    glColorPointer(3, GL_FLOAT, 0, colors);
+    glDrawElements(GL_QUADS, point->indices.size(), GL_UNSIGNED_SHORT, &point->indices[0]);
+
+
+    glPopMatrix();
+
 
     /* Cleanup states */
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-    alpha += 1;
+    alpha += .1;
 }
