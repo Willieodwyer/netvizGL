@@ -108,7 +108,7 @@ void Window::draw() {
     //attempt to rotate cube
     glRotatef(alpha, 0, 1, 0);
 
-    Point *point = new Point(2,100,100);
+    Point *point = new Point(2,9,9);
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
     glEnableClientState(GL_VERTEX_ARRAY);
