@@ -8,6 +8,7 @@
 #include "../inc/Window.h"
 #include "../inc/line.h"
 
+
 Window::Window(const int WIDTH, const int HEIGHT) {
 
     point = new Point(.1, 9, 9, 10, 10, 0);
@@ -57,11 +58,7 @@ void Window::display() {
         glMatrixMode(GL_MODELVIEW_MATRIX);
         glTranslatef(0, 0, -5);
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         glLineWidth(4.0);
 
@@ -69,18 +66,13 @@ void Window::display() {
 
         glRotatef(alpha, 0, 1, 0);
 
+        line->draw();
         point->draw();
         point2->draw();
         point3->draw();
         point4->draw();
-        line->draw();
 
         alpha += .1;
-
-        //cleanup
-//        glDisableClientState(GL_COLOR_ARRAY);
-//        glDisableClientState(GL_VERTEX_ARRAY);
-//        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 
         // Update Screen

@@ -19,9 +19,19 @@ Line::~Line() {
 }
 
 void Line::draw() {
-    glLineWidth(4.0);
-    glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
-    glDrawArrays(GL_LINES, 0, 2);
-    glLineWidth(1.0);
+    static GLfloat colors2[] = {1,0,1,
+                                0,0,0};
 
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, colors2);
+
+    glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
+
+    glPushMatrix();
+    glDrawArrays(GL_LINES, 0, 2);
+    glPopMatrix();
+
+    glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+    glDisableClientState(GL_COLOR_ARRAY);
 }

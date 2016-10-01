@@ -12,6 +12,7 @@ class Renderable {
 public:
 
     GLdouble *vertices;
+    GLdouble  *colours;
 
     Renderable() {
         fprintf(stdout, "Made a renderable!\n");
