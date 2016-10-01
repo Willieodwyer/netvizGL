@@ -19,8 +19,9 @@ Line::~Line() {
 }
 
 void Line::draw() {
-
+    glLineWidth(4.0);
     glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
     glDrawArrays(GL_LINES, 0, 2);
+    glLineWidth(1.0);
 
 }

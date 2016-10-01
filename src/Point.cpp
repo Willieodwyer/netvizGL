@@ -39,12 +39,10 @@ Point::Point(float radius, unsigned int rings, unsigned int sectors, float offse
 }
 
 void Point::draw() {
-
     glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
     glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
-
 }
 
 Point::~Point() {
-    delete vertices;
+
 }

@@ -11,14 +11,14 @@
 #include <cmath>
 #include "Renderable.h"
 
-class Point : public Renderable {
+class Point : public Renderable
+{
 public:
 
     GLuint *indices;
     GLint indIndex;
 
     Point(float radius, unsigned int rings, unsigned int sectors, float offsetX, float offsetY, float offsetZ);
-
     virtual ~Point();
 
     void draw();

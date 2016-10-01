@@ -3,6 +3,7 @@
 //
 
 
+#include <GL/glew.h>
 #include "../inc/Shader.h"
 
 Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
@@ -34,21 +35,6 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
 
     const GLchar *vShaderCode = vertexString.c_str();
     const GLchar *fShaderCode = fragmentString.c_str();
-
-//        // Shaders
-//        const GLchar *vShaderCode = "#version 330 core\n"
-//                "layout (location = 0) in vec3 position;\n"
-//                "void main()\n"
-//                "{\n"
-//                "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-//                "}\0";
-//        const GLchar *fShaderCode = "#version 330 core\n"
-//                "out vec4 color;\n"
-//                "void main()\n"
-//                "{\n"
-//                "color = vec4(0f, 0f, 0f, 1.0f);\n"
-//                "}\n\0";
-
 
     // 2. Compile shaders
     GLuint vertex, fragment;

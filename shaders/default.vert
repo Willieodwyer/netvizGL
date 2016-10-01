@@ -1,5 +1,14 @@
-#version 330 core
-layout (location = 0) in vec3 position;
-void main(){
-    gl_Position = vec4(position.x, position.y, position.z, 1.0);
+#version 130
+
+uniform mat4 viewMatrix, projMatrix;
+
+in vec4 position;
+in vec3 color;
+
+out vec3 Color;
+
+void main()
+{
+    Color = color;
+    gl_Position = projMatrix * viewMatrix * position ;
 }
