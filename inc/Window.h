@@ -26,6 +26,9 @@ public:
 
     void display();
 
+    void GLinit();
+
+    static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
 };
 
 #endif //NETVIZGL_WINDOW_H
