@@ -12,7 +12,7 @@
 Window::Window(const int WIDTH, const int HEIGHT) {
 
     point = new Point(.1, 9, 9, 10, 10, 0);
-    point2 = new Point(.8, 9, 9, 0, 0, 0);
+    point2 = new Point(.8, 90, 90, 0, 0, 0);
     point3 = new Point(.1, 9, 9, 10, 10, 10);
     point4 = new Point(.1, 9, 9, 30, -5, 10);
     line = new Line(0, 0, 0, 1, 1, 1);
@@ -51,9 +51,9 @@ void Window::display() {
         glClearColor(0.0, 1.0, 1.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glMatrixMode(GL_PROJECTION_MATRIX);
+        //glMatrixMode(GL_PROJECTION_MATRIX);
         glLoadIdentity();
-        gluPerspective(45, (double) windowWidth / (double) windowHeight, 0, 100);
+        gluPerspective(45, (double) windowWidth / (double) windowHeight, 1, 100);
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
         glTranslatef(0, 0, -5);
@@ -72,7 +72,7 @@ void Window::display() {
         point3->draw();
         point4->draw();
 
-        alpha += .1;
+        alpha += 1;
 
 
         // Update Screen
