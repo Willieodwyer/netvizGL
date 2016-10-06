@@ -6,6 +6,7 @@
 #define NETVIZGL_WINDOW_H
 
 #include "Point.h"
+#include <GLFW/glfw3.h>
 
 class Window {
 
@@ -16,11 +17,10 @@ public:
 
     GLFWwindow *window;
 
-    Renderable *point;
-    Renderable *point2;
-    Renderable *point3;
-    Renderable *point4;
-    Renderable *line;
+    Point *point;
+    Point *point2;
+    Point *point3;
+    Point *point4;
 
     int windowWidth;
     int windowHeight;

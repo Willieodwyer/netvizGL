@@ -6,19 +6,39 @@
 #define NETVIZGL_SPHERE_H
 
 #include <cmath>
-#include "Renderable.h"
+#include "Line.h"
 
-class Point : public Renderable
-{
+class Point{
 public:
+    static const unsigned int rings = 18, sectors = 18;
+    static const double radius = .01;
+
+    Point *attachedPoint;
+    void attachPoint(Point *p);
+
+    Line *line = NULL;
+
+    GLdouble colourR;
+    GLdouble colourG;
+    GLdouble colourB;
+
+    Point(float OFFSETX, float OFFSETY, float OFFSETZ);
+
+    GLdouble offsetX, offsetY, offsetZ;
 
     GLuint *indices;
     GLint indIndex;
 
-    Point(float radius, unsigned int rings, unsigned int sectors, float offsetX, float offsetY, float offsetZ);
     virtual ~Point();
 
     void draw();
+
+    void setColour(GLdouble r, GLdouble g, GLdouble b);
+
+    GLdouble *getColour();
+
+    GLdouble *vertices;
+    GLdouble  *colours;
 };
 
 

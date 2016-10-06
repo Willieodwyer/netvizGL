@@ -1,8 +1,8 @@
 #include <GL/glew.h>
-#include "../inc/Renderable.h"
 #include <iostream>
+#include <stdio.h>
 #include "../inc/Window.h"
-#include "../inc/line.h"
+#include "../inc/Line.h"
 
 //
 // Created by werl on 21/09/16.
@@ -35,11 +35,24 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 
     GLInit();
 
-    point = new Point(.01, 6, 6, 10, 10, 0);
-    point2 = new Point(.01, 6, 6, 0, 0, 0);
-    point3 = new Point(.01, 6, 6, 10, 10, 10);
-    point4 = new Point(.01, 6, 6, 30, -5, 10);
-    line = new Line(0, 0, 0, .1, .1, .1);
+    point = new Point(10, 10, 0);
+    point2 = new Point(2, 2, 2);
+    point3 = new Point(10, 10, 10);
+    point4 = new Point(30, -5, 10);
+
+    point->setColour(1,0,1);
+    point->attachPoint(point2);
+
+    point2->setColour(1,0,0);
+    point2->attachPoint(point3);
+
+    point3->setColour(0,0,0);
+    point3->attachPoint(point);
+
+    point4->setColour(0,0,1);
+    point4->attachPoint(point);
+
+
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -80,7 +93,6 @@ void Window::display() {
         point2->draw();
         point3->draw();
         point4->draw();
-        line->draw();
 
         glfwSwapBuffers(window);
 

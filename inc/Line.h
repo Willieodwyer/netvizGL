@@ -7,15 +7,14 @@
 
 
 #include <GL/gl.h>
-#include "Renderable.h"
 
-class Line : public Renderable {
+class Line {
 public:
 
-    Line(GLfloat X1, GLfloat Y1, GLfloat Z1, GLfloat X2, GLfloat Y2, GLfloat Z2);
+    Line(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2);
 
     ~Line();
-
+    GLdouble *vertices;
     void draw();
 };
 

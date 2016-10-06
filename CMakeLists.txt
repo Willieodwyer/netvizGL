@@ -90,7 +90,7 @@ set(INCLUDE_PATH ${INCUDE_PATH}
 # Add a target executable
 add_executable(${PROJ_NAME}
         main.cpp
-        inc/Shader.h src/Window.cpp inc/Window.h src/Point.cpp inc/Point.h src/Shader.cpp src/line.cpp inc/line.h inc/Renderable.h)
+        inc/Shader.h src/Window.cpp inc/Window.h src/Point.cpp inc/Point.h src/Shader.cpp src/Line.cpp inc/Line.h)
 
 
 # Libraries to be linked

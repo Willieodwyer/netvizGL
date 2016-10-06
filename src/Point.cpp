@@ -4,7 +4,11 @@
 
 #include "../inc/Point.h"
 
-Point::Point(float radius, unsigned int rings, unsigned int sectors, float offsetX, float offsetY, float offsetZ) {
+Point::Point(float OFFSETX, float OFFSETY, float OFFSETZ) {
+
+    offsetX = OFFSETX, offsetY = OFFSETY, offsetZ = OFFSETZ;
+    colourR = 0, colourB = 0, colourG = 0;
+
     const GLfloat RINGS = (float) 1.0 / (rings - 1);
     const GLfloat SECTORS = (float) 1.0 / (sectors - 1);
 
@@ -17,17 +21,17 @@ Point::Point(float radius, unsigned int rings, unsigned int sectors, float offse
     for (r = 0; r < rings; r++) {
         for (s = 0; s < sectors; s++) {
 
-            GLdouble x = offsetX + cos(2 * M_PI * s * SECTORS) * (GLfloat) sin(M_PI * r * RINGS);
+            GLdouble x = offsetX + cos(2 * M_PI * s * SECTORS) * sin(M_PI * r * RINGS);
             GLdouble y = offsetY + sin(-M_PI_2 + M_PI * r * RINGS);
-            GLdouble z = offsetZ + sin(2 * M_PI * s * SECTORS) * (GLfloat) sin(M_PI * r * RINGS);
+            GLdouble z = offsetZ + sin(2 * M_PI * s * SECTORS) * sin(M_PI * r * RINGS);
 
             vertices[vertIndex++] = x * radius;
             vertices[vertIndex++] = y * radius;
             vertices[vertIndex++] = z * radius;
 
-            colours[colIndex++] = fmod((x * radius), 1.0);
-            colours[colIndex++] = fmod((y * radius), 1.0);
-            colours[colIndex++] = fmod((z * radius), 1.0);
+            colours[colIndex++] = colourR;
+            colours[colIndex++] = colourG;
+            colours[colIndex++] = colourB;
         }
     }
 
@@ -58,8 +62,43 @@ void Point::draw() {
 
     glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
     glDisableClientState(GL_COLOR_ARRAY);
+
+    if (line != NULL){
+        line->draw();
+    }
 }
 
 Point::~Point() {
 
+}
+
+void Point::setColour(GLdouble R, GLdouble G, GLdouble B) {
+
+    colourR = R;
+    colourG = G;
+    colourB = B;
+
+    int colIndex = 0;
+
+    for (int r = 0; r < rings; r++) {
+        for (int s = 0; s < sectors; s++) {
+            colours[colIndex++] = colourR;
+            colours[colIndex++] = colourG;
+            colours[colIndex++] = colourB;
+        }
+    }
+}
+
+GLdouble *Point::getColour() {
+    GLdouble *ret = new GLdouble[3];
+    ret[0] = colourR;
+    ret[1] = colourG;
+    ret[2] = colourB;
+    return ret;
+}
+
+void Point::attachPoint(Point *p) {
+    attachedPoint = p;
+    line = new Line(offsetX * 0.1,offsetY * 0.1,offsetZ * 0.1,
+                    p->offsetX * 0.1,p->offsetY * 0.1,p->offsetZ * 0.1);
 }
