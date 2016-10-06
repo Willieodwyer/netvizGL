@@ -6,6 +6,7 @@
 #define NETVIZGL_RENDERABLE_H
 
 #include <GL/gl.h>
+#include <GLFW/glfw3.h>
 #include <cstdio>
 
 class Renderable {

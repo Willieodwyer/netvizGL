@@ -1,25 +1,94 @@
-//
-// Created by werl on 21/09/16.
-//
-#include <GLFW/glfw3.h>
-#include <cstdio>
-#include <GL/glu.h>
+#include <GL/glew.h>
+#include "../inc/Renderable.h"
 #include <iostream>
 #include "../inc/Window.h"
 #include "../inc/line.h"
 
+//
+// Created by werl on 21/09/16.
+//
+
+Window *Window::windowInstance = NULL;
+
+Window *Window::Instance() {
+    if (!windowInstance)   // Only allow one instance of class to be generated.
+        windowInstance = new Window(1280, 720);
+    return windowInstance;
+}
+
 
 Window::Window(const int WIDTH, const int HEIGHT) {
 
-    point = new Point(.1, 9, 9, 10, 10, 0);
-    point2 = new Point(.8, 90, 90, 0, 0, 0);
-    point3 = new Point(.1, 9, 9, 10, 10, 10);
-    point4 = new Point(.1, 9, 9, 30, -5, 10);
-    line = new Line(0, 0, 0, 1, 1, 1);
+    pitch = 0;
+    heading = 0;
+    bank = 0;
 
+    translateX = 0;
+    translateY = 0;
+    translateZ = 1;
+
+    mouseLEFT = false;
+    mouseRIGHT = false;
 
     this->windowWidth = WIDTH;
     this->windowHeight = HEIGHT;
+
+    GLInit();
+
+    point = new Point(.01, 6, 6, 10, 10, 0);
+    point2 = new Point(.01, 6, 6, 0, 0, 0);
+    point3 = new Point(.01, 6, 6, 10, 10, 10);
+    point4 = new Point(.01, 6, 6, 30, -5, 10);
+    line = new Line(0, 0, 0, .1, .1, .1);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
+void Window::display() {
+    while (!glfwWindowShouldClose(window)) {
+
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+        glViewport(0, 0, windowWidth, windowHeight);
+
+        glClearColor(0.0, 1.0, 1.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glLoadIdentity();
+        gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
+//
+//        if(mouseLEFT || (mouseLEFT == mouseRIGHT)){
+//            glRotatef(pitch, 1, 0, 0);
+//            glTranslatef(translateX, translateY, -translateZ);
+//            glRotatef(heading, 0, 1, 0);
+//        }
+//        if(mouseRIGHT){
+//            glTranslatef(translateX, translateY, -translateZ);
+//            glRotatef(pitch, 1, 0, 0);
+//            glRotatef(heading, 0, 1, 0);
+//        }
+
+        glTranslatef(translateX, translateY, -translateZ);
+        glRotatef(pitch, 1, 0, 0);
+        glRotatef(heading, 0, 1, 0);
+
+        glLineWidth(4.0);
+
+        point->draw();
+        point2->draw();
+        point3->draw();
+        point4->draw();
+        line->draw();
+
+        glfwSwapBuffers(window);
+
+        glfwPollEvents();
+    }
+}
+
+void Window::GLInit() {
 
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
@@ -34,53 +103,90 @@ Window::Window(const int WIDTH, const int HEIGHT) {
         glfwTerminate();
     }
 
-    glfwSetWindowPos(window, 320, 180);
-
     glfwMakeContextCurrent(window);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
+    glfwSetWindowPos(window, 320, 180);
+
+    glewExperimental = GL_TRUE;
+
+    GLenum err = glewInit();
+
+    if (GLEW_OK != err) {
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+    }
+
+    glfwSetKeyCallback(window, keyPressedEvent);
+    glfwSetMouseButtonCallback(window, mousePressedEvent);
+    glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, 1);
+
+    glfwSetCursorPosCallback(window, mousePositionEvent);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+    glfwSetScrollCallback(window, this->scrollEvent);
+
+
 }
 
-void Window::display() {
-    while (!glfwWindowShouldClose(window)) {
+void Window::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
+    Window::Instance()->translateZ += yoffset / 16;
+}
 
-        glfwGetWindowSize(window, &windowWidth, &windowHeight);
-        glViewport(0, 0, windowWidth, windowHeight);
+void Window::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
 
-        glClearColor(0.0, 1.0, 1.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        //glMatrixMode(GL_PROJECTION_MATRIX);
-        glLoadIdentity();
-        gluPerspective(45, (double) windowWidth / (double) windowHeight, 1, 100);
-
-        glMatrixMode(GL_MODELVIEW_MATRIX);
-        glTranslatef(0, 0, -5);
-
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        glLineWidth(4.0);
-
-        static float alpha = 0;
-
-        glRotatef(alpha, 0, 1, 0);
-
-        line->draw();
-        point->draw();
-        point2->draw();
-        point3->draw();
-        point4->draw();
-
-        alpha += 1;
-
-
-        // Update Screen
-        glfwSwapBuffers(window);
-
-        // Check for any input, or window movement
-        glfwPollEvents();
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+        Window::Instance()->mouseRIGHT = true;
+        //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
     }
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
+        Window::Instance()->mouseRIGHT = false;
+        //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
+    }
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        Window::Instance()->mouseLEFT = true;
+        //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+    }
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+        Window::Instance()->mouseLEFT = false;
+        //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+    }
+}
+
+void Window::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
+
+
+    if (Window::Instance()->mouseLEFT || Window::Instance()->mouseRIGHT) {
+        Window::Instance()->heading += (xpos - Window::Instance()->mouseX) / 8;
+        Window::Instance()->pitch += (ypos - Window::Instance()->mouseY) / 8;
+        Window::Instance()->mouseX = xpos;
+        Window::Instance()->mouseY = ypos;
+    }
+
+    Window::Instance()->mouseX = xpos;
+    Window::Instance()->mouseY = ypos;
+}
+
+void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
+
+    //printf("Window::keyPressedEvent::%d\n", key);
+
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+
+    if (key == GLFW_KEY_LEFT) {
+        Window::Instance()->translateX += .01;
+    }
+    if (key == GLFW_KEY_RIGHT) {
+        Window::Instance()->translateX -= .01;
+    }
+
+    if (key == GLFW_KEY_DOWN) {
+        Window::Instance()->translateY += .01;
+    }
+    if (key == GLFW_KEY_UP) {
+        Window::Instance()->translateY -= .01;
+    }
+
 }
 
 
