@@ -5,12 +5,17 @@
 #ifndef NETVIZGL_WINDOW_H
 #define NETVIZGL_WINDOW_H
 
-#include <GLFW/glfw3.h>
 #include "Point.h"
 
 class Window {
+
 public:
+
+    static Window *Instance();
+
+
     GLFWwindow *window;
+
     Renderable *point;
     Renderable *point2;
     Renderable *point3;
@@ -20,15 +25,34 @@ public:
     int windowWidth;
     int windowHeight;
 
-    Window(const int WIDTH, const int HEIGHT);
+    double pitch;
+    double heading;
+    double bank;
 
-    ~Window();
+    double translateX;
+    double translateY;
+    double translateZ;
+
+    double mouseX;
+    double mouseY;
+
+    bool mouseLEFT;
+    bool mouseRIGHT;
 
     void display();
 
-    void GLinit();
+    void GLInit();
 
     static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
+    static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
+    static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
+    static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
+
+private:
+
+    Window(const int WIDTH, const int HEIGHT);
+
+    static Window *windowInstance;
 };
 
 #endif //NETVIZGL_WINDOW_H

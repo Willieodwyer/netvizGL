@@ -3,7 +3,8 @@
 #include "inc/Window.h"
 
 int main(int argc, char **argv) {
-    Window *window = new Window(1280, 720);
+
+    Window *window = Window::Instance();
 
     if (NULL != window->window) {
         window->display();

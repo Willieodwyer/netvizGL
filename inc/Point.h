@@ -5,9 +5,6 @@
 #ifndef NETVIZGL_SPHERE_H
 #define NETVIZGL_SPHERE_H
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <vector>
 #include <cmath>
 #include "Renderable.h"
 
