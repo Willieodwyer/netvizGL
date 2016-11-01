@@ -7,39 +7,42 @@
 
 #include <cmath>
 #include "Line.h"
+#include <vector>
+using namespace std;
+class Point {
+ public:
+  static const unsigned int rings = 18, sectors = 18;
+  static const double radius = .01;
 
-class Point{
-public:
-    static const unsigned int rings = 18, sectors = 18;
-    static const double radius = .01;
+  vector<Point *> attachedPoints;
 
-    Point *attachedPoint;
-    void attachPoint(Point *p);
+  int pointIndex = 0;
 
-    Line *line = NULL;
+  void attachPoint(Point *p);
 
-    GLdouble colourR;
-    GLdouble colourG;
-    GLdouble colourB;
+  vector<Line *> lines;
 
-    Point(float OFFSETX, float OFFSETY, float OFFSETZ);
+  GLdouble colourR;
+  GLdouble colourG;
+  GLdouble colourB;
 
-    GLdouble offsetX, offsetY, offsetZ;
+  Point(float OFFSETX, float OFFSETY, float OFFSETZ, int index);
 
-    GLuint *indices;
-    GLint indIndex;
+  GLdouble offsetX, offsetY, offsetZ;
 
-    virtual ~Point();
+  GLuint *indices;
+  GLint indIndex;
 
-    void draw();
+  virtual ~Point();
 
-    void setColour(GLdouble r, GLdouble g, GLdouble b);
+  void draw();
 
-    GLdouble *getColour();
+  void setColour(GLdouble r, GLdouble g, GLdouble b);
 
-    GLdouble *vertices;
-    GLdouble  *colours;
+  GLdouble *getColour();
+
+  GLdouble *vertices;
+  GLdouble *colours;
 };
-
 
 #endif //NETVIZGL_SPHERE_H
