@@ -54,6 +54,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   point4->setColour(0, 0, 1);
   point4->attachPoint(point);
 
+  //glEnable( GL_LIGHTING );
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 

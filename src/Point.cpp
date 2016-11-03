@@ -20,6 +20,7 @@ Point::Point(float OFFSETX, float OFFSETY, float OFFSETZ, int index) {
 
   vertices = new GLdouble[rings * sectors * 3];
   colours = new GLdouble[rings * sectors * 3];
+  black = new GLdouble[rings * sectors * 3];
 
   for (r = 0; r < rings; r++) {
     for (s = 0; s < sectors; s++) {
@@ -32,9 +33,12 @@ Point::Point(float OFFSETX, float OFFSETY, float OFFSETZ, int index) {
       vertices[vertIndex++] = y * radius;
       vertices[vertIndex++] = z * radius;
 
-      colours[colIndex++] = colourR;
-      colours[colIndex++] = colourG;
-      colours[colIndex++] = colourB;
+      colours[colIndex] = colourR;
+      black[colIndex++] = 0;
+      colours[colIndex] = colourG;
+      black[colIndex++] = 0;
+      colours[colIndex] = colourB;
+      black[colIndex++] = 0;
     }
   }
 
@@ -55,13 +59,20 @@ void Point::draw() {
 
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
-  glColorPointer(3, GL_DOUBLE, 0, colours);
 
   glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
 
-  glPushMatrix();
+  glEnable( GL_POLYGON_OFFSET_FILL );
+  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
+  glColorPointer(3, GL_DOUBLE, 0, black);
   glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
-  glPopMatrix();
+
+  glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+  glPolygonOffset( -2.5f, -2.5f );
+  glColorPointer(3, GL_DOUBLE, 0, colours);
+  glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
 
   glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
   glDisableClientState(GL_COLOR_ARRAY);
@@ -106,6 +117,6 @@ void Point::attachPoint(Point *p) {
   attachedPoints.push_back(p);
   Line *l = new Line(offsetX * 0.1, offsetY * 0.1, offsetZ * 0.1,
                      p->offsetX * 0.1, p->offsetY * 0.1, p->offsetZ * 0.1);
-  l->setColour(colourR,colourG,colourB,p->colourR,p->colourG,p->colourB);
+  //l->setColour(colourR,colourG,colourB,p->colourR,p->colourG,p->colourB);
   lines.push_back(l);
 }

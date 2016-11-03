@@ -43,6 +43,7 @@ class Point {
 
   GLdouble *vertices;
   GLdouble *colours;
+  GLdouble *black;
 };
 
 #endif //NETVIZGL_SPHERE_H

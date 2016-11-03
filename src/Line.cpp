@@ -31,9 +31,7 @@ void Line::draw() {
 
   glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
 
-  glPushMatrix();
   glDrawArrays(GL_LINES, 0, 2);
-  glPopMatrix();
 
   glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
   glDisableClientState(GL_COLOR_ARRAY);
