@@ -85,8 +85,8 @@ public class Diagram {
 		// copy nodes into an array of metadata and randomise initial coordinates for each node
 		NodeLayoutInfo[] layout = new NodeLayoutInfo[mNodes.Count];
 		for (int i = 0; i < mNodes.Count; i++) {
-			layout[i] = new NodeLayoutInfo(mNodes[i], new Vector(), Point.Empty);
-			layout[i].Node.Location = new Point(rnd.Next(-50, 50), rnd.Next(-50, 50));
+			layout[i] = new NodeLayoutInfo(mNodes[i], new Vector(), Vertex.Empty);
+			layout[i].Node.Location = new Vertex(rnd.Next(-50, 50), rnd.Next(-50, 50));
 		}
 
 		int stopCount = 0;
@@ -99,7 +99,7 @@ public class Diagram {
 				NodeLayoutInfo current = layout[i];
 
 				// express the node's current position as a vector, relative to the origin
-				Vector currentPosition = new Vector(CalcDistance(Point.Empty, current.Node.Location), GetBearingAngle(Point.Empty, current.Node.Location));
+				Vector currentPosition = new Vector(CalcDistance(Vertex.Empty, current.Node.Location), GetBearingAngle(Vertex.Empty, current.Node.Location));
 				Vector netForce = new Vector(0, 0);
 
 				// determine repulsion between nodes
@@ -138,7 +138,7 @@ public class Diagram {
 
 		// center the diagram around the origin
 		Rectangle logicalBounds = GetDiagramBounds();
-		Point midPoint = new Point(logicalBounds.X + (logicalBounds.Width / 2), logicalBounds.Y + (logicalBounds.Height / 2));
+		Vertex midPoint = new Vertex(logicalBounds.X + (logicalBounds.Width / 2), logicalBounds.Y + (logicalBounds.Height / 2));
 
 		foreach (Node node in mNodes) {
 			node.Location -= (Size)midPoint;
@@ -163,12 +163,12 @@ public class Diagram {
 	}
 
 	/// <summary>
-	/// Calculates the distance between two points.
+	/// Calculates the distance between two vertices.
 	/// </summary>
 	/// <param name="a">The first point.</param>
 	/// <param name="b">The second point.</param>
-	/// <returns>The pixel distance between the two points.</returns>
-	public static int CalcDistance(Point a, Point b) {
+	/// <returns>The pixel distance between the two vertices.</returns>
+	public static int CalcDistance(Vertex a, Vertex b) {
 		double xDist = (a.X - b.X);
 		double yDist = (a.Y - b.Y);
 		return (int)Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
@@ -212,7 +212,7 @@ public class Diagram {
 	/// <param name="graphics">GDI+ Graphics surface.</param>
 	/// <param name="bounds">Bounds in which to draw the diagram.</param>
 	public void Draw(Graphics graphics, Rectangle bounds) {
-		Point center = new Point(bounds.X + (bounds.Width / 2), bounds.Y + (bounds.Height / 2));
+		Vertex center = new Vertex(bounds.X + (bounds.Width / 2), bounds.Y + (bounds.Height / 2));
 
 		// determine the scaling factor
 		Rectangle logicalBounds = GetDiagramBounds();
@@ -226,18 +226,18 @@ public class Diagram {
 
 		// draw all of the connectors first
 		foreach (Node node in mNodes) {
-			Point source = ScalePoint(node.Location, scale);
+			Vertex source = ScalePoint(node.Location, scale);
 
 			// connectors
 			foreach (Node other in node.Connections) {
-				Point destination = ScalePoint(other.Location, scale);
+				Vertex destination = ScalePoint(other.Location, scale);
 				node.DrawConnector(graphics, center + (Size)source, center + (Size)destination, other);
 			}
 		}
 
 		// then draw all of the nodes
 		foreach (Node node in mNodes) {
-			Point destination = ScalePoint(node.Location, scale);
+			Vertex destination = ScalePoint(node.Location, scale);
 
 			Size nodeSize = node.Size;
 			Rectangle nodeBounds = new Rectangle(center.X + destination.X - (nodeSize.Width / 2), center.Y + destination.Y - (nodeSize.Height / 2), nodeSize.Width, nodeSize.Height);
@@ -251,8 +251,8 @@ public class Diagram {
 	/// <param name="start">The node that the angle is measured from.</param>
 	/// <param name="end">The node that creates the angle.</param>
 	/// <returns>The bearing angle, in degrees.</returns>
-	private double GetBearingAngle(Point start, Point end) {
-		Point half = new Point(start.X + ((end.X - start.X) / 2), start.Y + ((end.Y - start.Y) / 2));
+	private double GetBearingAngle(Vertex start, Vertex end) {
+		Vertex half = new Vertex(start.X + ((end.X - start.X) / 2), start.Y + ((end.Y - start.Y) / 2));
 
 		double diffX = (double)(half.X - start.X);
 		double diffY = (double)(half.Y - start.Y);
@@ -309,9 +309,9 @@ public class Diagram {
 	/// </summary>
 	/// <param name="point">The coordinates to scale.</param>
 	/// <param name="scale">The scaling factor.</param>
-	/// <returns>A System.Drawing.Point representing the scaled coordinates.</returns>
-	private Point ScalePoint(Point point, double scale) {
-		return new Point((int)((double)point.X * scale), (int)((double)point.Y * scale));
+	/// <returns>A System.Drawing.Vertex representing the scaled coordinates.</returns>
+	private Vertex ScalePoint(Vertex point, double scale) {
+		return new Vertex((int)((double)point.X * scale), (int)((double)point.Y * scale));
 	}
 
 	/// <summary>
@@ -321,7 +321,7 @@ public class Diagram {
 
 		public Node Node;			// reference to the node in the simulation
 		public Vector Velocity;		// the node's current velocity, expressed in vector form
-		public Point NextPosition;	// the node's position after the next iteration
+		public Vertex NextPosition;	// the node's position after the next iteration
 
 		/// <summary>
 		/// Initialises a new instance of the Diagram.NodeLayoutInfo class, using the specified parameters.
@@ -329,7 +329,7 @@ public class Diagram {
 		/// <param name="node"></param>
 		/// <param name="velocity"></param>
 		/// <param name="nextPosition"></param>
-		public NodeLayoutInfo(Node node, Vector velocity, Point nextPosition) {
+		public NodeLayoutInfo(Node node, Vector velocity, Vertex nextPosition) {
 			Node = node;
 			Velocity = velocity;
 			NextPosition = nextPosition;

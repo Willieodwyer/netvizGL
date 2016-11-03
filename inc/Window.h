@@ -5,8 +5,9 @@
 #ifndef NETVIZGL_WINDOW_H
 #define NETVIZGL_WINDOW_H
 
-#include "Point.h"
+#include "Vertex.h"
 #include "Graph.h"
+#include "SimpleForceDirected.h"
 #include <GLFW/glfw3.h>
 
 class Window {
@@ -16,11 +17,6 @@ class Window {
   static Window *Instance();
 
   GLFWwindow *window;
-
-  Point *point;
-  Point *point2;
-  Point *point3;
-  Point *point4;
 
   int windowWidth;
   int windowHeight;
@@ -54,6 +50,7 @@ class Window {
  private:
 
   Graph *graph;
+  SimpleForceDirected *algorithm;
 
   Window(const int WIDTH, const int HEIGHT);
 

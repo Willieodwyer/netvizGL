@@ -12,7 +12,6 @@
 Graph::Graph(const char *filePath) {
 
   numVertices = 0;
-
   vector<int *> edgeList;
 
   string inString;
@@ -43,16 +42,25 @@ Graph::Graph(const char *filePath) {
 
   numVertices++;
 
+  edges = new int*[numVertices];
+  for (int i = 0; i < numVertices; ++i) {
+    edges[i] = new int[numVertices];
+    for (int j = 0; j < numVertices; ++j) {
+      edges[i][j] = 0;
+    }
+  }
+
   std::srand(std::time(0));
   for (int j = 0; j < numVertices; ++j) {
-    points.push_back(new Point(rand() % 20, rand() % 20, rand() % 20, j));
-    points[j]->setColour(((double) rand() / (RAND_MAX)),
+    vertices.push_back(new Vertex(rand() % 20, rand() % 20, 0));
+    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
                          ((double) rand() / (RAND_MAX)),
                          ((double) rand() / (RAND_MAX)));
   }
 
   for (int k = 0; k < edgeList.size(); ++k) {
-    points[edgeList[k][0]]->attachPoint(points[edgeList[k][1]]);
+    vertices[edgeList[k][0]]->attachPoint(vertices[edgeList[k][1]]);
+    edges[edgeList[k][0]][edgeList[k][1]] = 1;
   }
 
 }
@@ -72,6 +80,11 @@ int *Graph::split(string str) {
 
 void Graph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-    points[i]->draw();
+    vertices[i]->draw();
+  }
+}
+void Graph::update() {
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->update();
   }
 }

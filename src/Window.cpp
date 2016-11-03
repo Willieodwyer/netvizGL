@@ -37,32 +37,14 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 
   GLInit();
 
-  point = new Point(10, 10, 0, 0);
-  point2 = new Point(2, 2, 2, 0);
-  point3 = new Point(10, 10, 10, 0);
-  point4 = new Point(30, -5, 10, 0);
-
-  point->setColour(1, 0, 1);
-  point->attachPoint(point2);
-
-  point2->setColour(1, 0, 0);
-  point2->attachPoint(point3);
-
-  point3->setColour(0, 0, 0);
-  point3->attachPoint(point);
-
-  point4->setColour(0, 0, 1);
-  point4->attachPoint(point);
-
-  //glEnable( GL_LIGHTING );
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_CULL_FACE);
 
-  graph = new Graph("/home/werl/College/netvizGL/Graphs/edge-links.txt");
-
+  graph = new Graph("../Graphs/edge-links.txt");
+  algorithm = new SimpleForceDirected(graph);
 }
 
 void Window::display() {
@@ -107,6 +89,14 @@ void Window::display() {
     glRotatef(yaw, 0, 1, 0);     //yaw
 
     graph->draw();
+    algorithm->simpleAL();
+//    std::srand(std::time(0));
+//    for (int i = 0; i < graph->vertices.size(); ++i) {
+//      graph->vertices[i]->posX += ((double) rand() / RAND_MAX - .6) *.1;
+//      graph->vertices[i]->posY += ((double) rand() / RAND_MAX - .6) *.1;
+//      graph->vertices[i]->posZ += ((double) rand() / RAND_MAX - .6) *.1;
+//    }
+    graph->update();
 
     glLineWidth(4.0);
 

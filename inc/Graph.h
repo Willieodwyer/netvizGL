@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <vector>
 #include <string>
-#include "Point.h"
+#include "Vertex.h"
 
 #ifndef NETVIZGL_GRAPH_H
 #define NETVIZGL_GRAPH_H
@@ -19,9 +19,13 @@ class Graph {
   Graph(const char *filePath);
   void draw();
 
+  vector<Vertex *> vertices;
+  int **edges;
+
+  void update();
+
  private:
 
-  vector<Point *> points;
   int * split(string x);
 
 };

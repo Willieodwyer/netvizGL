@@ -8,17 +8,17 @@
 #include <cmath>
 #include "Line.h"
 #include <vector>
+
 using namespace std;
-class Point {
+class Vertex {
  public:
+
   static const unsigned int rings = 18, sectors = 18;
   static const double radius = .01;
 
-  vector<Point *> attachedPoints;
+  vector<Vertex *> attachedPoints;
 
-  int pointIndex = 0;
-
-  void attachPoint(Point *p);
+  void attachPoint(Vertex *p);
 
   vector<Line *> lines;
 
@@ -26,14 +26,16 @@ class Point {
   GLdouble colourG;
   GLdouble colourB;
 
-  Point(float OFFSETX, float OFFSETY, float OFFSETZ, int index);
+  Vertex(float offsetx, float offsety, float offsetz);
 
-  GLdouble offsetX, offsetY, offsetZ;
+  GLdouble posX, posY, posZ;
+  GLdouble forceX, forceY, forceZ;
+  GLdouble velocityX, velocityY, velocityZ;
 
   GLuint *indices;
   GLint indIndex;
 
-  virtual ~Point();
+  virtual ~Vertex();
 
   void draw();
 
@@ -43,7 +45,7 @@ class Point {
 
   GLdouble *vertices;
   GLdouble *colours;
-  GLdouble *black;
+  void update();
 };
 
 #endif //NETVIZGL_SPHERE_H
