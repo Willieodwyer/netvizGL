@@ -2,7 +2,8 @@
 #include <iostream>
 #include <stdio.h>
 #include "../inc/Window.h"
-#include "../inc/Line.h"
+#include <glm/geometric.hpp>
+#include <glm/gtx/transform.hpp>
 
 //
 // Created by werl on 21/09/16.
@@ -10,67 +11,66 @@
 
 Window *Window::windowInstance = NULL;
 
-Window *Window::Instance() {
-    if (!windowInstance)   // Only allow one instance of class to be generated.
-        windowInstance = new Window(1280, 720);
-    return windowInstance;
-}
+class vec3;
 
+Window *Window::Instance() {
+  if (!windowInstance)   // Only allow one instance of class to be generated.
+    windowInstance = new Window(1280, 720);
+  return windowInstance;
+}
 
 Window::Window(const int WIDTH, const int HEIGHT) {
 
-    pitch = 0;
-    heading = 0;
-    bank = 0;
+  pitch = 0;
+  yaw = 0;
+  bank = 0;
 
-    translateX = 0;
-    translateY = 0;
-    translateZ = 1;
+  translateX = 0;
+  translateY = 0;
+  translateZ = 1;
 
-    mouseLEFT = false;
-    mouseRIGHT = false;
+  mouseLEFT = false;
+  mouseRIGHT = false;
 
-    this->windowWidth = WIDTH;
-    this->windowHeight = HEIGHT;
+  this->windowWidth = WIDTH;
+  this->windowHeight = HEIGHT;
 
-    GLInit();
+  GLInit();
 
-    point = new Point(10, 10, 0);
-    point2 = new Point(2, 2, 2);
-    point3 = new Point(10, 10, 10);
-    point4 = new Point(30, -5, 10);
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LEQUAL);
 
-    point->setColour(1,0,1);
-    point->attachPoint(point2);
+  //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  //glEnable(GL_CULL_FACE);
 
-    point2->setColour(1,0,0);
-    point2->attachPoint(point3);
-
-    point3->setColour(0,0,0);
-    point3->attachPoint(point);
-
-    point4->setColour(0,0,1);
-    point4->attachPoint(point);
-
-
-
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  graph = new Graph("../Graphs/graph.txt");
+  algorithm = new SimpleForceDirected(graph);
 }
 
 void Window::display() {
-    while (!glfwWindowShouldClose(window)) {
 
-        glfwGetWindowSize(window, &windowWidth, &windowHeight);
-        glViewport(0, 0, windowWidth, windowHeight);
+  static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+  static glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+  static glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+  static glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+  static glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+  static glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-        glClearColor(0.0, 1.0, 1.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glm::mat4 view;
+  view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+                     glm::vec3(0.0f, 0.0f, 0.0f),
+                     glm::vec3(0.0f, 1.0f, 0.0f));
 
-        glLoadIdentity();
-        gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
+  while (!glfwWindowShouldClose(window)) {
+
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
+
+    glClearColor(0.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glLoadIdentity();
+    gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
 //
 //        if(mouseLEFT || (mouseLEFT == mouseRIGHT)){
 //            glRotatef(pitch, 1, 0, 0);
@@ -83,121 +83,125 @@ void Window::display() {
 //            glRotatef(heading, 0, 1, 0);
 //        }
 
-        glTranslatef(translateX, translateY, -translateZ);
-        glRotatef(pitch, 1, 0, 0);
-        glRotatef(heading, 0, 1, 0);
+    glTranslatef(translateX, translateY, -translateZ);
 
-        glLineWidth(4.0);
+    glRotatef(pitch, 1, 0, 0);   //pitch
+    glRotatef(yaw, 0, 1, 0);     //yaw
 
-        point->draw();
-        point2->draw();
-        point3->draw();
-        point4->draw();
+    graph->draw();
+    algorithm->simpleAL();
+//    std::srand(std::time(0));
+//    for (int i = 0; i < graph->vertices.size(); ++i) {
+//      graph->vertices[i]->posX += ((double) rand() / RAND_MAX - .6) *.1;
+//      graph->vertices[i]->posY += ((double) rand() / RAND_MAX - .6) *.1;
+//      graph->vertices[i]->posZ += ((double) rand() / RAND_MAX - .6) *.1;
+//    }
+    graph->update();
 
-        glfwSwapBuffers(window);
+    glLineWidth(4.0);
 
-        glfwPollEvents();
-    }
+    glfwSwapBuffers(window);
+
+    glfwPollEvents();
+  }
 }
 
 void Window::GLInit() {
 
-    if (!glfwInit()) {
-        fprintf(stderr, "Failed to initialize GLFW\n");
-    }
-    glfwWindowHint(GLFW_SAMPLES, 8);
+  if (!glfwInit()) {
+    fprintf(stderr, "Failed to initialize GLFW\n");
+  }
+  glfwWindowHint(GLFW_SAMPLES, 8);
 
-    // Open a window and create its OpenGL context
-    window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
+  // Open a window and create its OpenGL context
+  window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
 
-    if (window == NULL) {
-        fprintf(stderr, "Failed to open GLFW window.\n");
-        glfwTerminate();
-    }
+  if (window == NULL) {
+    fprintf(stderr, "Failed to open GLFW window.\n");
+    glfwTerminate();
+  }
 
-    glfwMakeContextCurrent(window);
+  glfwMakeContextCurrent(window);
 
-    glfwSetWindowPos(window, 320, 180);
+  glfwSetWindowPos(window, 320, 180);
 
-    glewExperimental = GL_TRUE;
+  glewExperimental = GL_TRUE;
 
-    GLenum err = glewInit();
+  GLenum err = glewInit();
 
-    if (GLEW_OK != err) {
-        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
-    }
+  if (GLEW_OK != err) {
+    fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+  }
 
-    glfwSetKeyCallback(window, keyPressedEvent);
-    glfwSetMouseButtonCallback(window, mousePressedEvent);
-    glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, 1);
+  glfwSetKeyCallback(window, keyPressedEvent);
+  glfwSetMouseButtonCallback(window, mousePressedEvent);
+  glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
-    glfwSetCursorPosCallback(window, mousePositionEvent);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  glfwSetCursorPosCallback(window, mousePositionEvent);
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    glfwSetScrollCallback(window, this->scrollEvent);
-
+  glfwSetScrollCallback(window, this->scrollEvent);
 
 }
 
 void Window::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
-    Window::Instance()->translateZ += yoffset / 16;
+  Window::Instance()->translateZ += yoffset / 16;
 }
 
 void Window::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
 
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-        Window::Instance()->mouseRIGHT = true;
-        //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
-    }
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
-        Window::Instance()->mouseRIGHT = false;
-        //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
-    }
+  if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+    Window::Instance()->mouseRIGHT = true;
+    //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
+  }
+  if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
+    Window::Instance()->mouseRIGHT = false;
+    //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
+  }
 
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        Window::Instance()->mouseLEFT = true;
-        //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
-    }
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
-        Window::Instance()->mouseLEFT = false;
-        //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
-    }
+  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+    Window::Instance()->mouseLEFT = true;
+    //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+  }
+  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+    Window::Instance()->mouseLEFT = false;
+    //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+  }
 }
 
 void Window::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
 
-
-    if (Window::Instance()->mouseLEFT || Window::Instance()->mouseRIGHT) {
-        Window::Instance()->heading += (xpos - Window::Instance()->mouseX) / 8;
-        Window::Instance()->pitch += (ypos - Window::Instance()->mouseY) / 8;
-        Window::Instance()->mouseX = xpos;
-        Window::Instance()->mouseY = ypos;
-    }
-
+  if (Window::Instance()->mouseLEFT || Window::Instance()->mouseRIGHT) {
+    Window::Instance()->yaw += (xpos - Window::Instance()->mouseX) / 8;
+    Window::Instance()->pitch += (ypos - Window::Instance()->mouseY) / 8;
     Window::Instance()->mouseX = xpos;
     Window::Instance()->mouseY = ypos;
+  }
+
+  Window::Instance()->mouseX = xpos;
+  Window::Instance()->mouseY = ypos;
 }
 
 void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
 
-    //printf("Window::keyPressedEvent::%d\n", key);
+  //printf("Window::keyPressedEvent::%d\n", key);
 
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, GL_TRUE);
 
-    if (key == GLFW_KEY_LEFT) {
-        Window::Instance()->translateX += .01;
-    }
-    if (key == GLFW_KEY_RIGHT) {
-        Window::Instance()->translateX -= .01;
-    }
+  if (key == GLFW_KEY_LEFT) {
+    Window::Instance()->translateX += .01;
+  }
+  if (key == GLFW_KEY_RIGHT) {
+    Window::Instance()->translateX -= .01;
+  }
 
-    if (key == GLFW_KEY_DOWN) {
-        Window::Instance()->translateY += .01;
-    }
-    if (key == GLFW_KEY_UP) {
-        Window::Instance()->translateY -= .01;
-    }
+  if (key == GLFW_KEY_DOWN) {
+    Window::Instance()->translateY += .01;
+  }
+  if (key == GLFW_KEY_UP) {
+    Window::Instance()->translateY -= .01;
+  }
 
 }
 

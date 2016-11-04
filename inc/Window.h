@@ -5,54 +5,56 @@
 #ifndef NETVIZGL_WINDOW_H
 #define NETVIZGL_WINDOW_H
 
-#include "Point.h"
+#include "Vertex.h"
+#include "Graph.h"
+#include "SimpleForceDirected.h"
 #include <GLFW/glfw3.h>
 
 class Window {
 
-public:
+ public:
 
-    static Window *Instance();
+  static Window *Instance();
 
+  GLFWwindow *window;
 
-    GLFWwindow *window;
+  int windowWidth;
+  int windowHeight;
 
-    Point *point;
-    Point *point2;
-    Point *point3;
-    Point *point4;
+  double pitch;
+  double yaw;
+  double bank;
 
-    int windowWidth;
-    int windowHeight;
+  double translateX;
+  double translateY;
+  double translateZ;
 
-    double pitch;
-    double heading;
-    double bank;
+  double mouseX;
+  double mouseY;
 
-    double translateX;
-    double translateY;
-    double translateZ;
+  bool mouseLEFT;
+  bool mouseRIGHT;
 
-    double mouseX;
-    double mouseY;
+  void display();
 
-    bool mouseLEFT;
-    bool mouseRIGHT;
+  void GLInit();
 
-    void display();
+  static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
 
-    void GLInit();
+  static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
 
-    static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
-    static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
-    static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
-    static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
+  static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
 
-private:
+  static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
-    Window(const int WIDTH, const int HEIGHT);
+ private:
 
-    static Window *windowInstance;
+  Graph *graph;
+  SimpleForceDirected *algorithm;
+
+  Window(const int WIDTH, const int HEIGHT);
+
+  static Window *windowInstance;
 };
 
 #endif //NETVIZGL_WINDOW_H

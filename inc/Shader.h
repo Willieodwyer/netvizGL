@@ -11,19 +11,18 @@
 #include <iostream>
 #include <GL/gl.h>
 
-
 using namespace std;
 
 class Shader {
 
-public:
-    GLuint Program;
+ public:
+  GLuint Program;
 
-    Shader(const GLchar *vertexPath, const GLchar *fragmentPath);
+  Shader(const GLchar *vertexPath, const GLchar *fragmentPath);
 
-    virtual ~Shader();
+  virtual ~Shader();
 
-    void Use();
+  void Use();
 };
 
 #endif //NETVIZGL_SHADER_H
