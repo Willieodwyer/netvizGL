@@ -52,7 +52,7 @@ Graph::Graph(const char *filePath) {
 
   std::srand(std::time(0));
   for (int j = 0; j < numVertices; ++j) {
-    vertices.push_back(new Vertex(rand() % 20, rand() % 20, 0));
+    vertices.push_back(new Vertex(rand() % 100, rand() % 100, 0));
     vertices[j]->setColour(((double) rand() / (RAND_MAX)),
                          ((double) rand() / (RAND_MAX)),
                          ((double) rand() / (RAND_MAX)));
@@ -61,6 +61,7 @@ Graph::Graph(const char *filePath) {
   for (int k = 0; k < edgeList.size(); ++k) {
     vertices[edgeList[k][0]]->attachPoint(vertices[edgeList[k][1]]);
     edges[edgeList[k][0]][edgeList[k][1]] = 1;
+    edges[edgeList[k][1]][edgeList[k][0]] = 1;
   }
 
 }

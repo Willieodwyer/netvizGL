@@ -43,7 +43,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new Graph("../Graphs/edge-links.txt");
+  graph = new Graph("../Graphs/graph.txt");
   algorithm = new SimpleForceDirected(graph);
 }
 
