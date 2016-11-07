@@ -1,0 +1,157 @@
+	public static double [][] force_based_layout(int index) throws FileNotFoundException, InterruptedException
+	{		
+		
+		//dynamics.preparing_for_graphviz(variables.adj, variables.v);
+		// matrix_manipulation.shabnet_data(variables.adj, variables.v);
+		forms.initing();
+		File cor = new File("intern.txt");
+		PrintWriter in = new PrintWriter(cor);
+		
+		matrix_manipulation.shabnet_data(variables.adj, variables.v); 
+		GA_run=0;
+		variables.initial_force=0;
+		long start_point=0,end_point=0;
+		long GA_run_start=0,GA_run_end=0;
+		start_point=System.nanoTime();
+		double temp_pos [][] = new double [2][variables.v];
+		GA=0;
+		System.out.println("Time: ");
+		if(GA==1)
+		{
+			variables.smart_distribution=true;
+			gin =300;
+			//gin=variables.v*5;
+			//GA_run_start=System.nanoTime();
+			//linear_force_directed(int index)
+			//temp_pos=GA_Drawing.GA(variables.adj , variables.v, 100 , 50, gin);
+			//temp_pos=hill_climbing.initial_placement( variables.v);
+			temp_pos=simulated_anealing.initial_placement( variables.v, variables.adj);
+			//temp_pos=GA_gecco2015.GA_2015(variables.adj,  variables.v, 100, 4,  1000,70, 20);
+			//temp_pos=simulated_aneal.initial_placement(variables.v, ad,100);
+			GA_run_end=System.nanoTime();
+			//System.out.println("TimeGA: "+(end_point-start_point));
+			//temp_pos=simulated_anealing.cartesian_initial(variables.v);
+			GA_run=GA_run_end-GA_run_start;
+		}
+		
+		double eng0,eng1 = 0;
+		boolean ch=false;
+		eng0=0;
+		System.out.println(GA_run);
+		
+		double a,b;
+	//	a=1.0;
+		a=1.0; 
+		b=1.0;
+		double poss [][] = new double [2][variables.v];
+		
+		int eng_w=0;
+		
+		
+		double interval =Math.PI/variables.v;
+		double vv=variables.v;
+		double k=Math.sqrt(1.0/vv);
+		
+		if(GA==1)
+		{
+			for(int i=0;i<variables.v;i++)
+			{
+				
+				variables.x_pos[0][i]=temp_pos[0][i];
+				variables.y_pos[0][i]=temp_pos[1][i];
+			}
+		}	
+		else
+		{
+			//temp_pos=linear_force_directed(0);
+			for(int i=0;i<variables.v;i++)
+			{
+				variables.x_pos[0][i]= (double) Math.random() * (2 - 0.0)-1;
+				variables.y_pos[0][i]= (double) Math.random() * (2 - 0.0)-1;
+				
+				/*variables.x_pos[0][i]=Math.cos(Math.PI*i);
+				variables.y_pos[0][i]=Math.sin(Math.PI*i);*/
+			}
+		}
+	
+		double c4=0.1;
+		//double aneal_rate=c4/(variables.v*(double)variables.round);
+		//variables.time=variables.v*5;
+		double aneal_rate=c4/variables.time;
+		
+		double x_force [][] = new double [variables.time][variables.v];
+		double y_force [][] = new double [variables.time][variables.v];
+	
+		
+		//start_point=System.nanoTime();
+		//End metric --------------
+		
+		for(int t=1;t<variables.time;t++)
+		{
+			double max_displacemnet[]=new double [2];
+			in.println("time:  "+t);
+			for(int i=0;i<variables.v;i++)
+			{
+				x_force[t][i]=0;
+				y_force[t][i]=0;
+				double dis=0;
+					
+				for(int j=0;j<variables.v;j++)
+				{
+					if(i != j)
+					{
+						double diss= Math.sqrt((Math.pow(variables.x_pos[t-1][i]-variables.x_pos[t-1][j], 2)) + ( Math.pow(variables.y_pos[t-1][i]-variables.y_pos[t-1][j], 2)));
+								
+						/*dis= (Math.abs(variables.x_pos[t-1][i]-variables.x_pos[t-1][j]) + (Math.abs(variables.y_pos[t-1][i]-variables.y_pos[t-1][j])));
+						double diss=1.0*dis;*/
+						
+						double cos=((variables.x_pos[t-1][j]-variables.x_pos[t-1][i]))/diss;
+						double sin=((variables.y_pos[t-1][j]-variables.y_pos[t-1][i]))/diss;
+		
+						if(i != j && variables.adj[i][j]==1)
+						{
+							x_force[t][i]+=cos*(((diss)*(diss))/k);
+							y_force[t][i]+=sin*(((diss)*(diss))/k);
+						}	
+						x_force[t][i]+=cos*((k*k)/(-(diss)));
+						y_force[t][i]+=sin*((k*k)/(-(diss)));
+					}
+				}
+					
+			if(max_displacemnet[0]<x_force[t][i])
+				max_displacemnet[0]=x_force[t][i];
+					
+			if(max_displacemnet[1]<y_force[t][i])
+				max_displacemnet[1]=y_force[t][i];
+					
+		}
+				
+				for(int i=0;i<variables.v;i++)
+				{	
+					if(t>variables.v*variables.round)
+					{
+						variables.x_pos[t][i]=variables.x_pos[t-1][i];
+						variables.y_pos[t][i]=variables.y_pos[t-1][i];
+					}
+					else
+					{
+						variables.x_pos[t][i]=(variables.x_pos[t-1][i]+((x_force[t][i])*(c4))/max_displacemnet[0]);
+						variables.y_pos[t][i]=(variables.y_pos[t-1][i]+((y_force[t][i])*(c4))/max_displacemnet[1]);
+						in.println("Node: "+i+"   x:  "+ variables.x_pos[t][i]+"   y:  "+variables.y_pos[t][i]);
+					}
+				}
+				
+					c4-=aneal_rate;
+				//variables.forces_in_synchronization[1][t]=c4;
+				//System.out.println(variables.forces_in_synchronization[0][t]);
+					in.println();in.println();in.println();in.println();in.println();
+		}
+		
+		end_point=System.nanoTime();
+		variables.running_time=end_point-start_point;
+		
+		//System.out.print(variables.running_time);
+		
+	
+	}
+	

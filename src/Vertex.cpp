@@ -5,7 +5,7 @@
 #include <cstdio>
 #include "../inc/Vertex.h"
 
-Vertex::Vertex(float offsetx, float offsety, float offsetz) {
+Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
 
   forceX = 0, forceY = 0, forceZ = 0;
   velocityX = 0, velocityY = 0, velocityZ = 0;

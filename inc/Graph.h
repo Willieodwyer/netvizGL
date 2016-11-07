@@ -16,7 +16,7 @@ class Graph {
  public:
 
   int numVertices;
-  Graph(const char *filePath);
+  Graph(const char *filePath, const char *type);
   void draw();
 
   vector<Vertex *> vertices;
@@ -28,6 +28,9 @@ class Graph {
 
   int * split(string x);
 
+  unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
+  void readEdgeList(const char *filePath);
+  void readAdjacencyList(const char *filePath);
 };
 
 #endif //NETVIZGL_GRAPHREADER_H

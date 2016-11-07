@@ -43,7 +43,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new Graph("../Graphs/graph.txt");
+  graph = new Graph("../Graphs/edge-links.txt", "edge");
   algorithm = new SimpleForceDirected(graph);
 }
 
@@ -90,12 +90,6 @@ void Window::display() {
 
     graph->draw();
     algorithm->simpleAL();
-//    std::srand(std::time(0));
-//    for (int i = 0; i < graph->vertices.size(); ++i) {
-//      graph->vertices[i]->posX += ((double) rand() / RAND_MAX - .6) *.1;
-//      graph->vertices[i]->posY += ((double) rand() / RAND_MAX - .6) *.1;
-//      graph->vertices[i]->posZ += ((double) rand() / RAND_MAX - .6) *.1;
-//    }
     graph->update();
 
     glLineWidth(4.0);
