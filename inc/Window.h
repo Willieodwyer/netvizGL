@@ -6,8 +6,8 @@
 #define NETVIZGL_WINDOW_H
 
 #include "Vertex.h"
-#include "Graph.h"
-#include "SimpleForceDirected.h"
+#include "Graphs/Graph.h"
+#include "Algorithms/SimpleForceDirected.h"
 #include <GLFW/glfw3.h>
 
 class Window {
@@ -50,7 +50,7 @@ class Window {
  private:
 
   Graph *graph;
-  SimpleForceDirected *algorithm;
+  Algorithm *algorithm;
 
   Window(const int WIDTH, const int HEIGHT);
 

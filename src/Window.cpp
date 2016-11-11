@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "../inc/Window.h"
+#include "../inc/Graphs/EdgeGraph.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
 
@@ -43,7 +44,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new Graph("../Graphs/sirpenski5.txt", "adj");
+  graph = new EdgeGraph("../Graphs/graph.txt");
   algorithm = new SimpleForceDirected(graph);
 }
 
@@ -71,17 +72,6 @@ void Window::display() {
 
     glLoadIdentity();
     gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
-//
-//        if(mouseLEFT || (mouseLEFT == mouseRIGHT)){
-//            glRotatef(pitch, 1, 0, 0);
-//            glTranslatef(translateX, translateY, -translateZ);
-//            glRotatef(heading, 0, 1, 0);
-//        }
-//        if(mouseRIGHT){
-//            glTranslatef(translateX, translateY, -translateZ);
-//            glRotatef(pitch, 1, 0, 0);
-//            glRotatef(heading, 0, 1, 0);
-//        }
 
     glTranslatef(translateX, translateY, -translateZ);
 
@@ -89,7 +79,7 @@ void Window::display() {
     glRotatef(yaw, 0, 1, 0);     //yaw
 
     graph->draw();
-    algorithm->simpleAL();
+    algorithm->apply();
     graph->update();
 
     glLineWidth(4.0);

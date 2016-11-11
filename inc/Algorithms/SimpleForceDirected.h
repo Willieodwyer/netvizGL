@@ -6,18 +6,14 @@
 #define NETVIZGL_SIMPLEFORCEDIRECTED_H
 
 #include <GL/glew.h>
-#include "Vertex.h"
-#include "Graph.h"
+#include "../Vertex.h"
+#include "../Graphs/Graph.h"
+#include "Algorithm.h"
 
-class SimpleForceDirected {
- private:
-
-  Graph *graph;
-
+class SimpleForceDirected : public Algorithm {
  public:
   SimpleForceDirected(Graph *g);
-
-  void simpleAL();
+  void apply();
 };
 
 #endif //NETVIZGL_SIMPLEFORCEDIRECTED_H

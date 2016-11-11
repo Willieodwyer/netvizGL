@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <vector>
 #include <string>
-#include "Vertex.h"
+#include "../Vertex.h"
 
 #ifndef NETVIZGL_GRAPH_H
 #define NETVIZGL_GRAPH_H
@@ -14,23 +14,20 @@ using namespace std;
 
 class Graph {
  public:
-
-  int numVertices;
-  Graph(const char *filePath, const char *type);
-  void draw();
+  Graph(const char *filePath);
 
   vector<Vertex *> vertices;
+  int numVertices;
   int **edges;
 
-  void update();
+  virtual void draw() = 0;
+  virtual void update() = 0;
+
+  int *split(string x);
+  unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
 
  private:
-
-  int * split(string x);
-
-  unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
-  void readEdgeList(const char *filePath);
-  void readAdjacencyList(const char *filePath);
+  virtual void read(const char *filePath) = 0;
 };
 
 #endif //NETVIZGL_GRAPHREADER_H

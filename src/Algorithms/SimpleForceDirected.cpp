@@ -2,12 +2,8 @@
 // Created by werl on 01/11/16.
 //
 
-#include "../inc/SimpleForceDirected.h"
-SimpleForceDirected::SimpleForceDirected(Graph *g) {
-  graph = g;
-}
-
-void SimpleForceDirected::simpleAL() {
+#include "../../inc/Algorithms/SimpleForceDirected.h"
+void SimpleForceDirected::apply() {
 
   Vertex *v;
   Vertex *u;
@@ -26,17 +22,15 @@ void SimpleForceDirected::simpleAL() {
       GLdouble rsq = ((v->posX - u->posX) * (v->posX - u->posX)
           + (v->posY - u->posY) * (v->posY - u->posY));
 
-      v->forceX += 20 * ((v->posX - u->posX) / rsq);
-      v->forceY += 20 * ((v->posY - u->posY) / rsq);
-
-      //fprintf(stderr, "PUSH[%d][%d]\n", i,j);
+      v->forceX += 10 * ((v->posX - u->posX) / rsq);
+      v->forceY += 10 * ((v->posY - u->posY) / rsq);
     }
 
     for (int j = 0; j < graph->numVertices; ++j) {
       if (graph->edges[i][j]) {
         u = graph->vertices[j];
-        v->forceX += 2 * (u->posX - v->posX);
-        v->forceY += 2 * (u->posY - v->posY);
+        v->forceX += 3 * (u->posX - v->posX);
+        v->forceY += 3 * (u->posY - v->posY);
         //fprintf(stderr, "PULL[%d][%d]\n", i,j);
       }
     }
@@ -50,6 +44,10 @@ void SimpleForceDirected::simpleAL() {
     v->posX += v->velocityX;
     v->posY += v->velocityY;
   }
+}
+
+SimpleForceDirected::SimpleForceDirected(Graph *g)
+    : Algorithm(g) {
 }
 
 
