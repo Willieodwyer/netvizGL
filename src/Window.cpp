@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "../inc/Window.h"
 #include "../inc/Graphs/EdgeGraph.h"
+#include "../inc/Graphs/AdjacencyGraph.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
 
@@ -44,7 +45,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new EdgeGraph("../Graphs/graph.txt");
+  graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
   algorithm = new SimpleForceDirected(graph);
 }
 
