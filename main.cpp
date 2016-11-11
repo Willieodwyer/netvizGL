@@ -4,14 +4,14 @@
 
 int main(int argc, char **argv) {
 
-    Window *window = Window::Instance();
+  Window *window = Window::Instance();
 
-    if (NULL != window->window) {
-        window->display();
-        glDisableClientState(GL_COLOR_ARRAY);
-    }
+  if (NULL != window->window) {
+    window->display();
+    glDisableClientState(GL_COLOR_ARRAY);
+  }
 
-    glfwDestroyWindow(window->window);
-    glfwTerminate();
-    return 0;
+  glfwDestroyWindow(window->window);
+  glfwTerminate();
+  return 0;
 }

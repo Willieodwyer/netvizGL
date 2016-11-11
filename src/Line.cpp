@@ -5,8 +5,7 @@
 #include "../inc/Line.h"
 #include "../inc/Vertex.h"
 
-const double Line::scale = Vertex::radius *10;
-
+const double Line::scale = Vertex::radius * 10;
 
 Line::Line(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2) {
 
@@ -22,7 +21,7 @@ Line::Line(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdo
     colors[i] = 0;
   }
   vertices = new GLdouble[6];
-  vertices[0] = X1 * scale ;
+  vertices[0] = X1 * scale;
   vertices[1] = Y1 * scale;
   vertices[2] = Z1 * scale;
   vertices[3] = X2 * scale;
@@ -30,7 +29,7 @@ Line::Line(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdo
   vertices[5] = Z2 * scale;
 }
 
-void Line::update(){
+void Line::update() {
   vertices[0] = posX1 * scale;
   vertices[1] = posY1 * scale;
   vertices[2] = posZ1 * scale;

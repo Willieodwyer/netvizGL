@@ -26,7 +26,7 @@ class Vertex {
   GLdouble colourG;
   GLdouble colourB;
 
-  Vertex(float offsetx, float offsety, float offsetz);
+  Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz);
 
   GLdouble posX, posY, posZ;
   GLdouble forceX, forceY, forceZ;
