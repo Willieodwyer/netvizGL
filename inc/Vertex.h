@@ -14,7 +14,7 @@ class Vertex {
  public:
 
   static const unsigned int rings = 18, sectors = 18;
-  static const double radius = .01;
+  static constexpr double radius = .01;
 
   vector<Vertex *> attachedPoints;
 

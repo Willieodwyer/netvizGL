@@ -9,32 +9,33 @@
 #include "Graphs/Graph.h"
 #include "Algorithms/SimpleForceDirected.h"
 #include <GLFW/glfw3.h>
+#include <pthread.h>
+#include <thread>
 
 class Window {
 
  public:
-
   static Window *Instance();
 
   GLFWwindow *window;
 
   int windowWidth;
-  int windowHeight;
 
+  int windowHeight;
   double pitch;
+
   double yaw;
   double bank;
-
   double translateX;
+
   double translateY;
   double translateZ;
-
   double mouseX;
+
   double mouseY;
-
   bool mouseLEFT;
-  bool mouseRIGHT;
 
+  bool mouseRIGHT;
   void display();
 
   void GLInit();
@@ -47,7 +48,9 @@ class Window {
 
   static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
- private:
+  std::thread *updateThread;
+  std::thread *applyThread;
+  bool endThread = false;
 
   Graph *graph;
   Algorithm *algorithm;
@@ -55,6 +58,9 @@ class Window {
   Window(const int WIDTH, const int HEIGHT);
 
   static Window *windowInstance;
+
+  static void Update();
+  static void Apply();
 };
 
 #endif //NETVIZGL_WINDOW_H

@@ -1,14 +1,23 @@
 #include <GL/glew.h>
 #include <iostream>
-#include <stdio.h>
 #include "../inc/Window.h"
-#include "../inc/Graphs/EdgeGraph.h"
+#include "../inc/Graphs/AdjacencyGraph.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
-
 //
 // Created by werl on 21/09/16.
 //
+void Window::Update() {
+  while (!Window::Instance()->endThread) {
+    Window::Instance()->graph->update();
+  }
+}
+
+void Window::Apply() {
+  while (!Window::Instance()->endThread) {
+    Window::Instance()->algorithm->apply();
+  }
+}
 
 Window *Window::windowInstance = NULL;
 
@@ -44,8 +53,11 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new EdgeGraph("../Graphs/graph.txt");
+  graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
   algorithm = new SimpleForceDirected(graph);
+
+  updateThread = new thread(Update);
+  applyThread = new thread(Apply);
 }
 
 void Window::display() {
@@ -79,8 +91,6 @@ void Window::display() {
     glRotatef(yaw, 0, 1, 0);     //yaw
 
     graph->draw();
-    algorithm->apply();
-    graph->update();
 
     glLineWidth(4.0);
 
@@ -172,6 +182,12 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
+
+  if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
+    Window::Instance()->endThread = true;
+    Window::Instance()->updateThread->join();
+    Window::Instance()->applyThread->join();
+  }
 
   if (key == GLFW_KEY_LEFT) {
     Window::Instance()->translateX += .01;
