@@ -52,6 +52,9 @@ Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
 }
 
 void Vertex::update() {
+
+  mtx.lock();
+
   const GLfloat RINGS = (float) 1.0 / (rings - 1);
   const GLfloat SECTORS = (float) 1.0 / (sectors - 1);
 
@@ -97,9 +100,13 @@ void Vertex::update() {
     lines[i]->update();
   }
 
+  mtx.unlock();
+
 }
 
 void Vertex::draw() {
+
+  mtx.lock();
 
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -126,6 +133,8 @@ void Vertex::draw() {
       lines[i]->draw();
     }
   }
+
+  mtx.unlock();
 }
 
 Vertex::~Vertex() {

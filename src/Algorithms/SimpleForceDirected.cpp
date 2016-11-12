@@ -22,15 +22,15 @@ void SimpleForceDirected::apply() {
       GLdouble rsq = ((v->posX - u->posX) * (v->posX - u->posX)
           + (v->posY - u->posY) * (v->posY - u->posY));
 
-      v->forceX += 10 * ((v->posX - u->posX) / rsq);
-      v->forceY += 10 * ((v->posY - u->posY) / rsq);
+      v->forceX += 20 * ((v->posX - u->posX) / rsq);
+      v->forceY += 20 * ((v->posY - u->posY) / rsq);
     }
 
     for (int j = 0; j < graph->numVertices; ++j) {
       if (graph->edges[i][j]) {
         u = graph->vertices[j];
-        v->forceX += 3 * (u->posX - v->posX);
-        v->forceY += 3 * (u->posY - v->posY);
+        v->forceX += 1 * (u->posX - v->posX);
+        v->forceY += 1 * (u->posY - v->posY);
         //fprintf(stderr, "PULL[%d][%d]\n", i,j);
       }
     }
