@@ -45,7 +45,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
+  graph = new EdgeGraph("../Graphs/edge-links.txt");
   algorithm = new SimpleForceDirected(graph);
 }
 

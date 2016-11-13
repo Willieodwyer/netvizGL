@@ -22,8 +22,8 @@ void SimpleForceDirected::apply() {
       GLdouble rsq = ((v->posX - u->posX) * (v->posX - u->posX)
           + (v->posY - u->posY) * (v->posY - u->posY));
 
-      v->forceX += 10 * ((v->posX - u->posX) / rsq);
-      v->forceY += 10 * ((v->posY - u->posY) / rsq);
+      v->forceX += 20 * ((v->posX - u->posX) / rsq);
+      v->forceY += 20 * ((v->posY - u->posY) / rsq);
     }
 
     for (int j = 0; j < graph->numVertices; ++j) {
@@ -35,8 +35,8 @@ void SimpleForceDirected::apply() {
       }
     }
 
-    v->velocityX = (v->velocityX + v->forceX) * 0.085;
-    v->velocityY = (v->velocityY + v->forceY) * 0.085;
+    v->velocityX = (v->velocityX + v->forceX) * 0.0085;
+    v->velocityY = (v->velocityY + v->forceY) * 0.0085;
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {
