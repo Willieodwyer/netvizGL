@@ -55,8 +55,8 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glEnable(GL_CULL_FACE);
 
   //graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
-  //graph = new EdgeGraph("../Graphs/edge-links2.txt");
-  graph = new EdgeGraph("../Graphs/edge-links.txt");
+  graph = new EdgeGraph("../Graphs/edge-links2.txt");
+  //graph = new EdgeGraph("../Graphs/edge-links.txt");
   algorithm = new SimpleForceDirected(graph);
 
   updateThread = new thread(Update);
@@ -196,6 +196,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
   if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
     Window::Instance()->endThread = false;
     Window::Instance()->applyThread = new thread(Apply);
+    Window::Instance()->updateThread = new thread(Update);
   }
 
   if (key == GLFW_KEY_LEFT) {
