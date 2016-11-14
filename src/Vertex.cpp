@@ -3,6 +3,7 @@
 //
 
 #include <cstdio>
+#include <iostream>
 #include "../inc/Vertex.h"
 
 Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
@@ -71,10 +72,6 @@ void Vertex::update() {
       vertices[vertIndex++] = x * radius;
       vertices[vertIndex++] = y * radius;
       vertices[vertIndex++] = z * radius;
-
-      colours[colIndex] = colourR;
-      colours[colIndex] = colourG;
-      colours[colIndex] = colourB;
     }
   }
 

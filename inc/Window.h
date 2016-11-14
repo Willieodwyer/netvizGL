@@ -48,7 +48,6 @@ class Window {
 
   static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
-  std::thread *updateThread;
   std::thread *applyThread;
   bool endThread = false;
 
@@ -59,7 +58,6 @@ class Window {
 
   static Window *windowInstance;
 
-  static void Update();
   static void Apply();
 };
 

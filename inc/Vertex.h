@@ -29,9 +29,9 @@ class Vertex {
 
   Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz);
 
-  GLdouble posX, posY, posZ;
-  GLdouble forceX, forceY, forceZ;
-  GLdouble velocityX, velocityY, velocityZ;
+  volatile GLdouble posX, posY, posZ;
+  volatile GLdouble forceX, forceY, forceZ;
+  volatile GLdouble velocityX, velocityY, velocityZ;
 
   GLuint *indices;
   GLint indIndex;

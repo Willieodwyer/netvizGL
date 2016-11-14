@@ -8,12 +8,6 @@
 //
 // Created by werl on 21/09/16.
 //
-void Window::Update() {
-  while (!Window::Instance()->endThread) {
-    Window::Instance()->graph->update();
-  }
-}
-
 void Window::Apply() {
   while (!Window::Instance()->endThread) {
     Window::Instance()->algorithm->apply();
@@ -54,12 +48,11 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  //graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
-  graph = new EdgeGraph("../Graphs/edge-links2.txt");
+  graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
+  //graph = new EdgeGraph("../Graphs/edge-links2.txt");
   //graph = new EdgeGraph("../Graphs/edge-links.txt");
   algorithm = new SimpleForceDirected(graph);
 
-  updateThread = new thread(Update);
   applyThread = new thread(Apply);
 }
 
@@ -93,8 +86,8 @@ void Window::display() {
     glRotatef(pitch, 1, 0, 0);   //pitch
     glRotatef(yaw, 0, 1, 0);     //yaw
 
+    graph->update();
     graph->draw();
-    //graph->update();
 
     glLineWidth(4.0);
 
@@ -196,7 +189,6 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
   if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
     Window::Instance()->endThread = false;
     Window::Instance()->applyThread = new thread(Apply);
-    Window::Instance()->updateThread = new thread(Update);
   }
 
   if (key == GLFW_KEY_LEFT) {
