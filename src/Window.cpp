@@ -3,6 +3,7 @@
 #include "../inc/Window.h"
 #include "../inc/Graphs/AdjacencyGraph.h"
 #include "../inc/Graphs/EdgeGraph.h"
+#include "../inc/Graphs/AdjacencyGraph.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
 //
@@ -182,8 +183,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
     Window::Instance()->endThread = true;
-//    Window::Instance()->updateThread->join();
-//    Window::Instance()->applyThread->join();
+    Window::Instance()->applyThread->join();
   }
 
   if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {

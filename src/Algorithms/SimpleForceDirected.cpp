@@ -35,8 +35,8 @@ void SimpleForceDirected::apply() {
       }
     }
 
-    v->velocityX = (v->velocityX + v->forceX) * 0.085;
-    v->velocityY = (v->velocityY + v->forceY) * 0.085;
+    v->velocityX = (v->velocityX + v->forceX) * 0.0085;
+    v->velocityY = (v->velocityY + v->forceY) * 0.0085;
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {
