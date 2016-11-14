@@ -29,8 +29,8 @@ void SimpleForceDirected::apply() {
     for (int j = 0; j < graph->numVertices; ++j) {
       if (graph->edges[i][j]) {
         u = graph->vertices[j];
-        v->forceX += 3 * (u->posX - v->posX);
-        v->forceY += 3 * (u->posY - v->posY);
+        v->forceX += 1 * (u->posX - v->posX);
+        v->forceY += 1 * (u->posY - v->posY);
         //fprintf(stderr, "PULL[%d][%d]\n", i,j);
       }
     }

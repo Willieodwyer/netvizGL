@@ -8,13 +8,14 @@
 #include <cmath>
 #include "Line.h"
 #include <vector>
+#include <mutex>
 
 using namespace std;
 class Vertex {
  public:
 
-  static const unsigned int rings = 18, sectors = 18;
-  static const double radius = .01;
+  static const unsigned int rings = 8, sectors = 8;
+  static constexpr double radius = .01;
 
   vector<Vertex *> attachedPoints;
 
@@ -28,9 +29,9 @@ class Vertex {
 
   Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz);
 
-  GLdouble posX, posY, posZ;
-  GLdouble forceX, forceY, forceZ;
-  GLdouble velocityX, velocityY, velocityZ;
+  volatile GLdouble posX, posY, posZ;
+  volatile GLdouble forceX, forceY, forceZ;
+  volatile GLdouble velocityX, velocityY, velocityZ;
 
   GLuint *indices;
   GLint indIndex;
@@ -46,6 +47,8 @@ class Vertex {
   GLdouble *vertices;
   GLdouble *colours;
   void update();
+
+  std::mutex mtx;
 };
 
 #endif //NETVIZGL_SPHERE_H
