@@ -1,9 +1,9 @@
+#include <GL/glut.h>
 #include <GL/glew.h>
 #include <iostream>
 #include "../inc/Window.h"
 #include "../inc/Graphs/AdjacencyGraph.h"
-#include "../inc/Graphs/EdgeGraph.h"
-#include "../inc/Graphs/AdjacencyGraph.h"
+#include "../inc/FileReader.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
 //
@@ -49,7 +49,9 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  graph = new AdjacencyGraph("../Graphs/sirpenski5.txt");
+  std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
+
+  graph = new AdjacencyGraph((char *) filePath.c_str());
   //graph = new EdgeGraph("../Graphs/edge-links2.txt");
   //graph = new EdgeGraph("../Graphs/edge-links.txt");
   algorithm = new SimpleForceDirected(graph);

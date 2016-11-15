@@ -7,7 +7,7 @@
 #include <zconf.h>
 #include <fstream>
 #include "../../inc/Graphs/AdjacencyGraph.h"
-AdjacencyGraph::AdjacencyGraph(const char *filePath)
+AdjacencyGraph::AdjacencyGraph(char *filePath)
     : Graph(filePath) {
   read(filePath);
 }
@@ -24,7 +24,7 @@ void AdjacencyGraph::update() {
   }
 }
 
-void AdjacencyGraph::read(const char *filePath) {
+void AdjacencyGraph::read(char *filePath) {
   vector<int *> edgeList;
 
   string inString;
@@ -32,7 +32,7 @@ void AdjacencyGraph::read(const char *filePath) {
 
   inFile.open(filePath);
   if (inFile.is_open()) {
-    //fprintf(stderr,"Open %s \n", filePath);
+    fprintf(stderr,"Open %s \n", filePath);
   } else {
     fprintf(stderr, "Failed to open %s \n", filePath);
     exit(0);
