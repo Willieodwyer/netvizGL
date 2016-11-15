@@ -8,7 +8,7 @@
 #include "Graph.h"
 class EdgeGraph : public Graph {
  public:
-  EdgeGraph(const char *filePath);
+  EdgeGraph(char *filePath);
   virtual void draw();
   virtual void update();
  private:

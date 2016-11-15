@@ -7,7 +7,7 @@
 #include <zconf.h>
 #include <fstream>
 #include "../../inc/Graphs/EdgeGraph.h"
-EdgeGraph::EdgeGraph(const char *filePath)
+EdgeGraph::EdgeGraph(char *filePath)
     : Graph(filePath) {
   read(filePath);
 }

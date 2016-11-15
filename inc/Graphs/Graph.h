@@ -14,7 +14,7 @@ using namespace std;
 
 class Graph {
  public:
-  Graph(const char *filePath);
+  Graph(char *filePath);
 
   vector<Vertex *> vertices;
   int numVertices;
@@ -27,7 +27,7 @@ class Graph {
   unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
 
  private:
-  virtual void read(const char *filePath) = 0;
+  virtual void read(char *filePath) = 0;
 };
 
 #endif //NETVIZGL_GRAPHREADER_H

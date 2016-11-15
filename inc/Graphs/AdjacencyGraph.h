@@ -9,11 +9,11 @@
 
 class AdjacencyGraph : public Graph {
  public:
-  AdjacencyGraph(const char *filePath);
+  AdjacencyGraph(char *filePath);
   virtual void draw();
   virtual void update();
  private:
-  virtual void read(const char *filePath);
+  virtual void read(char *filePath);
 };
 
 #endif //NETVIZGL_ADJACENCYGRAPH_H
