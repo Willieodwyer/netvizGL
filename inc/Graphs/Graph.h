@@ -14,6 +14,9 @@ using namespace std;
 
 class Graph {
  public:
+
+  static int numGraphs;
+
   Graph(char *filePath);
 
   vector<Vertex *> vertices;

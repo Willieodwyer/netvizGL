@@ -1,4 +1,3 @@
-#include <GL/glut.h>
 #include <GL/glew.h>
 #include <iostream>
 #include "../inc/Window.h"
@@ -49,30 +48,10 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 
-  std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
-
-  graph = new AdjacencyGraph((char *) filePath.c_str());
-  //graph = new EdgeGraph("../Graphs/edge-links2.txt");
-  //graph = new EdgeGraph("../Graphs/edge-links.txt");
-  algorithm = new SimpleForceDirected(graph);
-
-  applyThread = new thread(Apply);
+  menu = new Menu((GLfloat) -.65, .36, -.5, .1);
 }
 
 void Window::display() {
-
-  static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-  static glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-  static glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-  static glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-  static glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-  static glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
-  glm::mat4 view;
-  view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
-                     glm::vec3(0.0f, 0.0f, 0.0f),
-                     glm::vec3(0.0f, 1.0f, 0.0f));
-
   while (!glfwWindowShouldClose(window)) {
 
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
@@ -84,13 +63,17 @@ void Window::display() {
     glLoadIdentity();
     gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
 
+    menu->draw();
+
     glTranslatef(translateX, translateY, -translateZ);
 
     glRotatef(pitch, 1, 0, 0);   //pitch
     glRotatef(yaw, 0, 1, 0);     //yaw
 
-    graph->update();
-    graph->draw();
+    if(Graph::numGraphs != 0){
+      graph->update();
+      graph->draw();
+    }
 
     glLineWidth(4.0);
 
@@ -189,6 +172,11 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
   }
 
   if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+    std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
+    Window::Instance()->graph = new AdjacencyGraph((char *) filePath.c_str());
+    //graph = new EdgeGraph("../Graphs/edge-links2.txt");
+    //graph = new EdgeGraph("../Graphs/edge-links.txt");
+    Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);
     Window::Instance()->endThread = false;
     Window::Instance()->applyThread = new thread(Apply);
   }

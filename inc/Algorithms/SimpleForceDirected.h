@@ -5,7 +5,6 @@
 #ifndef NETVIZGL_SIMPLEFORCEDIRECTED_H
 #define NETVIZGL_SIMPLEFORCEDIRECTED_H
 
-#include <GL/glew.h>
 #include "../Vertex.h"
 #include "../Graphs/Graph.h"
 #include "Algorithm.h"
