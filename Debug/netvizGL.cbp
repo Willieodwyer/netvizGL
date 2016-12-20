@@ -44,6 +44,23 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib64/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/libdrm"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib64/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-redhat-linux/6.2.1/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include"/>
@@ -65,6 +82,23 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib64/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/libdrm"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib64/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-redhat-linux/6.2.1/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include"/>
@@ -84,6 +118,9 @@
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/inc/Algorithms/SimpleForceDirected.h">
+			<Option target="netvizGL"/>
+		</Unit>
+		<Unit filename="/home/werl/College/netvizGL/inc/ButtonWidget.h">
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/inc/FileReader.h">
@@ -117,6 +154,9 @@
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/src/Algorithms/SimpleForceDirected.cpp">
+			<Option target="netvizGL"/>
+		</Unit>
+		<Unit filename="/home/werl/College/netvizGL/src/ButtonWidget.cpp">
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/src/FileReader.cpp">

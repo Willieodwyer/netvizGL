@@ -13,7 +13,7 @@ class Menu {
   Menu(GLfloat X1, GLfloat Y1, GLfloat X2, GLfloat Y2);
   void draw();
 
-  GLfloat X1,Y1,X2,Y2;
+  GLfloat X1, Y1, X2, Y2;
 };
 
 #endif //NETVIZGL_MENU_H

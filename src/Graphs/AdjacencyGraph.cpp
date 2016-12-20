@@ -32,7 +32,7 @@ void AdjacencyGraph::read(char *filePath) {
 
   inFile.open(filePath);
   if (inFile.is_open()) {
-    fprintf(stderr,"Open %s \n", filePath);
+    fprintf(stderr, "Open %s \n", filePath);
   } else {
     fprintf(stderr, "Failed to open %s \n", filePath);
     exit(0);

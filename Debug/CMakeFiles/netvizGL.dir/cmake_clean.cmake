@@ -10,6 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/netvizGL.dir/src/Graphs/EdgeGraph.cpp.o"
   "CMakeFiles/netvizGL.dir/src/FileReader.cpp.o"
   "CMakeFiles/netvizGL.dir/src/Menu.cpp.o"
+  "CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.o"
   "netvizGL.pdb"
   "netvizGL"
 )

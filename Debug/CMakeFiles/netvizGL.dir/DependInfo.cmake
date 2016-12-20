@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/werl/College/netvizGL/main.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/main.cpp.o"
   "/home/werl/College/netvizGL/src/Algorithms/SimpleForceDirected.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/src/Algorithms/SimpleForceDirected.cpp.o"
+  "/home/werl/College/netvizGL/src/ButtonWidget.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.o"
   "/home/werl/College/netvizGL/src/FileReader.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/src/FileReader.cpp.o"
   "/home/werl/College/netvizGL/src/Graphs/AdjacencyGraph.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/src/Graphs/AdjacencyGraph.cpp.o"
   "/home/werl/College/netvizGL/src/Graphs/EdgeGraph.cpp" "/home/werl/College/netvizGL/Debug/CMakeFiles/netvizGL.dir/src/Graphs/EdgeGraph.cpp.o"
@@ -20,6 +21,23 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/usr/include/gtk-3.0"
+  "/usr/include/at-spi2-atk/2.0"
+  "/usr/include/at-spi-2.0"
+  "/usr/include/dbus-1.0"
+  "/usr/lib64/dbus-1.0/include"
+  "/usr/include/gio-unix-2.0"
+  "/usr/include/cairo"
+  "/usr/include/pango-1.0"
+  "/usr/include/harfbuzz"
+  "/usr/include/atk-1.0"
+  "/usr/include/pixman-1"
+  "/usr/include/freetype2"
+  "/usr/include/libpng16"
+  "/usr/include/libdrm"
+  "/usr/include/gdk-pixbuf-2.0"
+  "/usr/include/glib-2.0"
+  "/usr/lib64/glib-2.0/include"
   )
 
 # Targets to which this target links.

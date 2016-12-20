@@ -1,8 +1,16 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "inc/Window.h"
+#include "inc/ButtonWidget.h"
+
+static void widget(ButtonWidget *x){
+  x = ButtonWidget::Instance();
+}
 
 int main(int argc, char **argv) {
+  ButtonWidget *buttonWidget;
+
+  std::thread widgetThread(widget, buttonWidget);
 
   Window *window = Window::Instance();
 

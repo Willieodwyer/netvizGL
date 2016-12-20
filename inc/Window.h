@@ -62,7 +62,6 @@ class Window {
 
   static void Apply();
 
-  Menu *menu;
 };
 
 #endif //NETVIZGL_WINDOW_H

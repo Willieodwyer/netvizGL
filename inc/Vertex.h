@@ -14,7 +14,7 @@ using namespace std;
 class Vertex {
  public:
 
-  static const unsigned int rings = 8, sectors = 8;
+  static const unsigned int rings = 12, sectors = 12;
   static constexpr double radius = .01;
 
   vector<Vertex *> attachedPoints;

@@ -177,6 +177,33 @@ src/Algorithms/SimpleForceDirected.cpp.s:
 	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/Algorithms/SimpleForceDirected.cpp.s
 .PHONY : src/Algorithms/SimpleForceDirected.cpp.s
 
+src/ButtonWidget.o: src/ButtonWidget.cpp.o
+
+.PHONY : src/ButtonWidget.o
+
+# target to build an object file
+src/ButtonWidget.cpp.o:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.o
+.PHONY : src/ButtonWidget.cpp.o
+
+src/ButtonWidget.i: src/ButtonWidget.cpp.i
+
+.PHONY : src/ButtonWidget.i
+
+# target to preprocess a source file
+src/ButtonWidget.cpp.i:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.i
+.PHONY : src/ButtonWidget.cpp.i
+
+src/ButtonWidget.s: src/ButtonWidget.cpp.s
+
+.PHONY : src/ButtonWidget.s
+
+# target to generate assembly for a file
+src/ButtonWidget.cpp.s:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.s
+.PHONY : src/ButtonWidget.cpp.s
+
 src/FileReader.o: src/FileReader.cpp.o
 
 .PHONY : src/FileReader.o
@@ -435,6 +462,9 @@ help:
 	@echo "... src/Algorithms/SimpleForceDirected.o"
 	@echo "... src/Algorithms/SimpleForceDirected.i"
 	@echo "... src/Algorithms/SimpleForceDirected.s"
+	@echo "... src/ButtonWidget.o"
+	@echo "... src/ButtonWidget.i"
+	@echo "... src/ButtonWidget.s"
 	@echo "... src/FileReader.o"
 	@echo "... src/FileReader.i"
 	@echo "... src/FileReader.s"

@@ -193,6 +193,9 @@ OPENGL_glu_LIBRARY:FILEPATH=/usr/lib64/libGLU.so
 //Path to a file.
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //Path to a program.
 ProcessorCount_cmd_getconf:FILEPATH=/usr/bin/getconf
 
@@ -538,8 +541,44 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib64/libGL.so][/usr/include][v()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29()]
 //Details about finding X11
 FIND_PACKAGE_MESSAGE_DETAILS_X11:INTERNAL=[/usr/lib64/libX11.so][/usr/include]
+GTK3_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib64/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0/;-I/usr/include/cairo;-I/usr/include/pango-1.0;-I/usr/include/harfbuzz;-I/usr/include/pango-1.0;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/freetype2;-I/usr/include/libdrm;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libpng16;-I/usr/include/glib-2.0;-I/usr/lib64/glib-2.0/include
+GTK3_CFLAGS_I:INTERNAL=
+GTK3_CFLAGS_OTHER:INTERNAL=-pthread
+GTK3_FOUND:INTERNAL=1
+GTK3_INCLUDEDIR:INTERNAL=/usr/include
+GTK3_INCLUDE_DIRS:INTERNAL=/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib64/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0/;/usr/include/cairo;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/freetype2;/usr/include/libdrm;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libpng16;/usr/include/glib-2.0;/usr/lib64/glib-2.0/include
+GTK3_LDFLAGS:INTERNAL=-lgtk-3;-lgdk-3;-lpangocairo-1.0;-lpango-1.0;-latk-1.0;-lcairo-gobject;-lcairo;-lgdk_pixbuf-2.0;-lgio-2.0;-lgobject-2.0;-lglib-2.0
+GTK3_LDFLAGS_OTHER:INTERNAL=
+GTK3_LIBDIR:INTERNAL=/usr/lib64
+GTK3_LIBRARIES:INTERNAL=gtk-3;gdk-3;pangocairo-1.0;pango-1.0;atk-1.0;cairo-gobject;cairo;gdk_pixbuf-2.0;gio-2.0;gobject-2.0;glib-2.0
+GTK3_LIBRARY_DIRS:INTERNAL=
+GTK3_LIBS:INTERNAL=
+GTK3_LIBS_L:INTERNAL=
+GTK3_LIBS_OTHER:INTERNAL=
+GTK3_LIBS_PATHS:INTERNAL=
+GTK3_PREFIX:INTERNAL=/usr
+GTK3_STATIC_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib64/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0/;-I/usr/include/cairo;-I/usr/include/pango-1.0;-I/usr/include/harfbuzz;-I/usr/include/pango-1.0;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/freetype2;-I/usr/include/libdrm;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libpng16;-I/usr/include/glib-2.0;-I/usr/lib64/glib-2.0/include
+GTK3_STATIC_CFLAGS_I:INTERNAL=
+GTK3_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
+GTK3_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib64/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0/;/usr/include/cairo;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/freetype2;/usr/include/libdrm;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libpng16;/usr/include/glib-2.0;/usr/lib64/glib-2.0/include
+GTK3_STATIC_LDFLAGS:INTERNAL=-lgtk-3;-latk-bridge-2.0;-latspi;-ldbus-1;-lpthread;-lsystemd;-lgdk-3;-lgio-2.0;-lXinerama;-lXi;-lXrandr;-lXcursor;-lXcomposite;-lxkbcommon;-lwayland-cursor;-lwayland-egl;-lwayland-client;-lepoxy;-ldl;-lpangocairo-1.0;-lpangoft2-1.0;-lharfbuzz;-lgraphite2;-lpango-1.0;-lm;-latk-1.0;-lcairo-gobject;-lcairo;-lz;-lGL;-lpixman-1;-lfontconfig;-lexpat;-lfreetype;-lexpat;-lfreetype;-lz;-lbz2;-lEGL;-lm;-lpthread;-ldl;-lGL;-lm;-lpthread;-ldl;-ldrm;-lXdamage;-lXfixes;-lX11-xcb;-lxcb-glx;-lxcb-dri2;-lXxf86vm;-lpng16;-lm;-lz;-lm;-lxcb-shm;-lxcb-render;-lXrender;-lXext;-lX11;-lpthread;-lxcb;-lXau;-lgdk_pixbuf-2.0;-lm;-lpng16;-lm;-lz;-lm;-lgio-2.0;-lz;-lresolv;-lselinux;-lgmodule-2.0;-pthread;-ldl;-lgobject-2.0;-lffi;-lglib-2.0;-pthread;-lpcre;-pthread
+GTK3_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+GTK3_STATIC_LIBDIR:INTERNAL=
+GTK3_STATIC_LIBRARIES:INTERNAL=gtk-3;atk-bridge-2.0;atspi;dbus-1;pthread;systemd;gdk-3;gio-2.0;Xinerama;Xi;Xrandr;Xcursor;Xcomposite;xkbcommon;wayland-cursor;wayland-egl;wayland-client;epoxy;dl;pangocairo-1.0;pangoft2-1.0;harfbuzz;graphite2;pango-1.0;m;atk-1.0;cairo-gobject;cairo;z;GL;pixman-1;fontconfig;expat;freetype;expat;freetype;z;bz2;EGL;m;pthread;dl;GL;m;pthread;dl;drm;Xdamage;Xfixes;X11-xcb;xcb-glx;xcb-dri2;Xxf86vm;png16;m;z;m;xcb-shm;xcb-render;Xrender;Xext;X11;pthread;xcb;Xau;gdk_pixbuf-2.0;m;png16;m;z;m;gio-2.0;z;resolv;selinux;gmodule-2.0;dl;gobject-2.0;ffi;glib-2.0;pcre
+GTK3_STATIC_LIBRARY_DIRS:INTERNAL=
+GTK3_STATIC_LIBS:INTERNAL=
+GTK3_STATIC_LIBS_L:INTERNAL=
+GTK3_STATIC_LIBS_OTHER:INTERNAL=
+GTK3_STATIC_LIBS_PATHS:INTERNAL=
+GTK3_VERSION:INTERNAL=3.20.9
+GTK3_gtk+-3.0_INCLUDEDIR:INTERNAL=
+GTK3_gtk+-3.0_LIBDIR:INTERNAL=
+GTK3_gtk+-3.0_PREFIX:INTERNAL=
+GTK3_gtk+-3.0_VERSION:INTERNAL=
 //ADVANCED property for variable: OPENGL_INCLUDE_DIR
 OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_gl_LIBRARY
@@ -548,6 +587,8 @@ OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
 OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
 OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_getconf
 ProcessorCount_cmd_getconf-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_sysctl
@@ -676,4 +717,6 @@ X11_dpms_INCLUDE_PATH-ADVANCED:INTERNAL=1
 X11_xf86misc_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_xf86vmode_INCLUDE_PATH
 X11_xf86vmode_INCLUDE_PATH-ADVANCED:INTERNAL=1
+__pkg_config_checked_GTK3:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib64
 

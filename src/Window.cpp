@@ -5,6 +5,7 @@
 #include "../inc/FileReader.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
+
 //
 // Created by werl on 21/09/16.
 //
@@ -47,8 +48,6 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
-
-  menu = new Menu((GLfloat) -.65, .36, -.5, .1);
 }
 
 void Window::display() {
@@ -63,14 +62,14 @@ void Window::display() {
     glLoadIdentity();
     gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
 
-    menu->draw();
+    //menu->draw();
 
-    glTranslatef(translateX, translateY, -translateZ);
+    glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
 
-    glRotatef(pitch, 1, 0, 0);   //pitch
-    glRotatef(yaw, 0, 1, 0);     //yaw
+    glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
+    glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if(Graph::numGraphs != 0){
+    if (Graph::numGraphs != 0) {
       graph->update();
       graph->draw();
     }
