@@ -3,6 +3,7 @@
 #include "../inc/Window.h"
 #include "../inc/Graphs/AdjacencyGraph.h"
 #include "../inc/FileReader.h"
+#include "../inc/Graphs/EdgeGraph.h"
 #include <glm/geometric.hpp>
 #include <glm/gtx/transform.hpp>
 
@@ -172,7 +173,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
     std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
-    Window::Instance()->graph = new AdjacencyGraph((char *) filePath.c_str());
+    Window::Instance()->graph = new EdgeGraph((char *) filePath.c_str());
     //graph = new EdgeGraph("../Graphs/edge-links2.txt");
     //graph = new EdgeGraph("../Graphs/edge-links.txt");
     Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);

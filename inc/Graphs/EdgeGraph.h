@@ -12,7 +12,7 @@ class EdgeGraph : public Graph {
   virtual void draw();
   virtual void update();
  private:
-  virtual void read(const char *filePath);
+  virtual void read(char *filePath);
 };
 
 #endif //NETVIZGL_EDGEGRAPH_H

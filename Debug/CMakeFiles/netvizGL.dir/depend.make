@@ -1267,6 +1267,7 @@ CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Algorithms/Algorithm.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Algorithms/SimpleForceDirected.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/FileReader.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Graphs/AdjacencyGraph.h
+CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Graphs/EdgeGraph.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Graphs/Graph.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Line.h
 CMakeFiles/netvizGL.dir/src/Window.cpp.o: ../inc/Menu.h

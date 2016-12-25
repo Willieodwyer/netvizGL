@@ -197,6 +197,8 @@ iostream
 /home/werl/College/netvizGL/inc/Graphs/AdjacencyGraph.h
 ../inc/FileReader.h
 /home/werl/College/netvizGL/inc/FileReader.h
+../inc/Graphs/EdgeGraph.h
+/home/werl/College/netvizGL/inc/Graphs/EdgeGraph.h
 glm/geometric.hpp
 -
 glm/gtx/transform.hpp
