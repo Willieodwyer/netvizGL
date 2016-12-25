@@ -5,6 +5,8 @@
 #ifndef NETVIZGL_WINDOW_H
 #define NETVIZGL_WINDOW_H
 
+#include <GL/glew.h>
+#include "Menu.h"
 #include "Vertex.h"
 #include "Graphs/Graph.h"
 #include "Algorithms/SimpleForceDirected.h"
@@ -59,6 +61,7 @@ class Window {
   static Window *windowInstance;
 
   static void Apply();
+
 };
 
 #endif //NETVIZGL_WINDOW_H

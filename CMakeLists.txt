@@ -12,6 +12,9 @@ project(${PROJ_NAME})
 find_package(OpenGL)
 find_package(X11)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+
 # Find glfw header
 find_path(GLFW_INCLUDE_DIR GLFW/glfw3.h ${HEADER_SEARCH_PATH})
 
@@ -20,6 +23,7 @@ find_library(GLFW_LIBRARIES glfw3 ${LIBRARY_SEARCH_PATH})
 
 # Set additional libs
 set(ADDITIONAL_LIBS
+        -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
         -fopenmp
         -lglut
         -lGLEW
@@ -44,7 +48,6 @@ set(INCLUDE_PATH
         ${GLFW_INCLUDE_DIR}
         )
 
-
 # Libraries needed on all platforms for this project
 set(LIBRARIES
         ${OPENGL_LIBRARIES}
@@ -52,6 +55,9 @@ set(LIBRARIES
         ${X11_LIBRARIES}
         ${ADDITIONAL_LIBS}
         )
+
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
 
 # Windows and Linux need GLEW, the OpenGL Extension Wrangler
 find_path(GLEW_INCLUDE_DIR GL/glew.h
@@ -67,7 +73,7 @@ set(CMAKE_CXX_STANDARD 11)
 # Add a target executable
 add_executable(${PROJ_NAME}
         main.cpp
-        inc/Shader.h src/Window.cpp inc/Window.h src/Vertex.cpp inc/Vertex.h src/Shader.cpp src/Line.cpp inc/Line.h src/Graphs/Graph.cpp inc/Graphs/Graph.h src/Algorithms/SimpleForceDirected.cpp inc/Algorithms/SimpleForceDirected.h inc/Algorithms/Algorithm.h src/Graphs/AdjacencyGraph.cpp inc/Graphs/AdjacencyGraph.h src/Graphs/EdgeGraph.cpp inc/Graphs/EdgeGraph.h src/FileReader.cpp inc/FileReader.h)
+        inc/Shader.h src/Window.cpp inc/Window.h src/Vertex.cpp inc/Vertex.h src/Shader.cpp src/Line.cpp inc/Line.h src/Graphs/Graph.cpp inc/Graphs/Graph.h src/Algorithms/SimpleForceDirected.cpp inc/Algorithms/SimpleForceDirected.h inc/Algorithms/Algorithm.h src/Graphs/AdjacencyGraph.cpp inc/Graphs/AdjacencyGraph.h src/Graphs/EdgeGraph.cpp inc/Graphs/EdgeGraph.h src/FileReader.cpp inc/FileReader.h src/Menu.cpp inc/Menu.h src/ButtonWidget.cpp inc/ButtonWidget.h)
 
 
 # Libraries to be linked

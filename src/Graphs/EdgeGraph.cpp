@@ -24,7 +24,7 @@ void EdgeGraph::update() {
   }
 }
 
-void EdgeGraph::read(const char *filePath) {
+void EdgeGraph::read(char *filePath) {
   vector<int *> edgeList;
 
   string inString;

@@ -9,7 +9,10 @@
 #include <iostream>
 #include "../../inc/Graphs/Graph.h"
 
+int Graph::numGraphs = 0;
+
 Graph::Graph(char *filePath) {
+  numGraphs++;
   numVertices = 0;
 }
 
