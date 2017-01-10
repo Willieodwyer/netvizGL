@@ -10,9 +10,10 @@ static void widget(ButtonWidget *x){
 int main(int argc, char **argv) {
   ButtonWidget *buttonWidget;
 
-  std::thread widgetThread(widget, buttonWidget);
 
   Window *window = Window::Instance();
+
+  //std::thread widgetThread(widget, buttonWidget);
 
   if (NULL != window->window) {
     window->display();

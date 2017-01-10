@@ -40,6 +40,7 @@ set(ADDITIONAL_LIBS
         -lm
         -pthread
         -ldl
+        -lz -lpngwriter -lfreetype -lpng
         )
 
 # Include directories for this project
