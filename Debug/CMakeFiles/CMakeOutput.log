@@ -1,4 +1,4 @@
-The system is: Linux - 4.8.14-200.fc24.x86_64 - x86_64
+The system is: Linux - 4.8.15-200.fc24.x86_64 - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/werl/College/netvizGL/Debug/CMakeFiles/3.6.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/werl/College/netvizGL/Debug/CMakeFiles/3.6.3/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,45 +23,45 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/werl/College/netvizGL/Debug/CMakeFiles/3.6.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/werl/College/netvizGL/Debug/CMakeFiles/3.6.3/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_b1853/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_b1853.dir/build.make CMakeFiles/cmTC_b1853.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_569b3/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_569b3.dir/build.make CMakeFiles/cmTC_569b3.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b1853.dir/testCCompiler.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_b1853.dir/testCCompiler.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_b1853
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b1853.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_b1853.dir/testCCompiler.c.o  -o cmTC_b1853 -rdynamic 
+Building C object CMakeFiles/cmTC_569b3.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_569b3.dir/testCCompiler.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_569b3
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_569b3.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_569b3.dir/testCCompiler.c.o  -o cmTC_569b3 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_b9b65/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_b9b65.dir/build.make CMakeFiles/cmTC_b9b65.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_3bb40/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_3bb40.dir/build.make CMakeFiles/cmTC_3bb40.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_b9b65
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9b65.dir/link.txt --verbose=1
-/usr/bin/cc      -v CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o  -o cmTC_b9b65 -rdynamic  
+Building C object CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_3bb40
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3bb40.dir/link.txt --verbose=1
+/usr/bin/cc      -v CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o  -o cmTC_3bb40 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
-COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper
 Target: x86_64-redhat-linux
 Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --disable-libgcj --with-isl --enable-libmpx --enable-gnu-indirect-function --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
 Thread model: posix
-gcc version 6.2.1 20160916 (Red Hat 6.2.1-2) (GCC) 
-COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b9b65' '-rdynamic' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFOnG5X.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b9b65 /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../.. CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b9b65' '-rdynamic' '-mtune=generic' '-march=x86-64'
+gcc version 6.3.1 20161221 (Red Hat 6.3.1-1) (GCC) 
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3bb40' '-rdynamic' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHyCjAM.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_3bb40 /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../.. CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3bb40' '-rdynamic' '-mtune=generic' '-march=x86-64'
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -69,30 +69,30 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_b9b65/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_b9b65.dir/build.make CMakeFiles/cmTC_b9b65.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_3bb40/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_3bb40.dir/build.make CMakeFiles/cmTC_3bb40.dir/build]
   ignore line: [gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_b9b65]
-  ignore line: [/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9b65.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o  -o cmTC_b9b65 -rdynamic  ]
+  ignore line: [Building C object CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_3bb40]
+  ignore line: [/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3bb40.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o  -o cmTC_3bb40 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
-  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper]
   ignore line: [Target: x86_64-redhat-linux]
   ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --disable-libgcj --with-isl --enable-libmpx --enable-gnu-indirect-function --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux]
   ignore line: [Thread model: posix]
-  ignore line: [gcc version 6.2.1 20160916 (Red Hat 6.2.1-2) (GCC) ]
-  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b9b65' '-rdynamic' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFOnG5X.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b9b65 /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../.. CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o]
-    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2] ==> ignore
+  ignore line: [gcc version 6.3.1 20161221 (Red Hat 6.3.1-1) (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3bb40' '-rdynamic' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHyCjAM.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_3bb40 /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../.. CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2] ==> ignore
     arg [-plugin] ==> ignore
-    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccFOnG5X.res] ==> ignore
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccHyCjAM.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -108,16 +108,16 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_b9b65] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o] ==> ignore
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1]
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64]
+    arg [cmTC_3bb40] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64]
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..]
-    arg [CMakeFiles/cmTC_b9b65.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..]
+    arg [CMakeFiles/cmTC_3bb40.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -127,19 +127,19 @@ Parsed C implicit link information from above output:
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
     arg [--no-as-needed] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o] ==> ignore
   remove lib [gcc]
   remove lib [gcc_s]
   remove lib [gcc]
   remove lib [gcc_s]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1] ==> [/usr/lib/gcc/x86_64-redhat-linux/6.2.1]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1] ==> [/usr/lib/gcc/x86_64-redhat-linux/6.3.1]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64] ==> [/usr/lib64]
   collapse library dir [/lib/../lib64] ==> [/lib64]
   collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..] ==> [/usr/lib]
   implicit libs: [c]
-  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/6.2.1;/usr/lib64;/lib64;/usr/lib]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/6.3.1;/usr/lib64;/lib64;/usr/lib]
   implicit fwks: []
 
 
@@ -148,14 +148,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_ff1e8/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_ff1e8.dir/build.make CMakeFiles/cmTC_ff1e8.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_fa914/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_fa914.dir/build.make CMakeFiles/cmTC_fa914.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ff1e8.dir/feature_tests.c.o
-/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_ff1e8.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_ff1e8
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ff1e8.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_ff1e8.dir/feature_tests.c.o  -o cmTC_ff1e8 -rdynamic 
+Building C object CMakeFiles/cmTC_fa914.dir/feature_tests.c.o
+/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_fa914.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_fa914
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa914.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_fa914.dir/feature_tests.c.o  -o cmTC_fa914 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -168,14 +168,14 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_60066/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_60066.dir/build.make CMakeFiles/cmTC_60066.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_15eca/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_15eca.dir/build.make CMakeFiles/cmTC_15eca.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_60066.dir/feature_tests.c.o
-/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_60066.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_60066
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_60066.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_60066.dir/feature_tests.c.o  -o cmTC_60066 -rdynamic 
+Building C object CMakeFiles/cmTC_15eca.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_15eca.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_15eca
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15eca.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_15eca.dir/feature_tests.c.o  -o cmTC_15eca -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -188,14 +188,14 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_07b38/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_07b38.dir/build.make CMakeFiles/cmTC_07b38.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_4b0d0/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_4b0d0.dir/build.make CMakeFiles/cmTC_4b0d0.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_07b38.dir/feature_tests.c.o
-/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_07b38.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_07b38
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_07b38.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_07b38.dir/feature_tests.c.o  -o cmTC_07b38 -rdynamic 
+Building C object CMakeFiles/cmTC_4b0d0.dir/feature_tests.c.o
+/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_4b0d0.dir/feature_tests.c.o   -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_4b0d0
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b0d0.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_4b0d0.dir/feature_tests.c.o  -o cmTC_4b0d0 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -206,40 +206,40 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_08a06/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_08a06.dir/build.make CMakeFiles/cmTC_08a06.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_798f7/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_798f7.dir/build.make CMakeFiles/cmTC_798f7.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_08a06.dir/testCXXCompiler.cxx.o
-/usr/bin/c++      -o CMakeFiles/cmTC_08a06.dir/testCXXCompiler.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_08a06
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08a06.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_08a06.dir/testCXXCompiler.cxx.o  -o cmTC_08a06 -rdynamic 
+Building CXX object CMakeFiles/cmTC_798f7.dir/testCXXCompiler.cxx.o
+/usr/bin/c++      -o CMakeFiles/cmTC_798f7.dir/testCXXCompiler.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_798f7
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_798f7.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_798f7.dir/testCXXCompiler.cxx.o  -o cmTC_798f7 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_5c3a0/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_5c3a0.dir/build.make CMakeFiles/cmTC_5c3a0.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_cfd2c/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_cfd2c.dir/build.make CMakeFiles/cmTC_cfd2c.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++      -o CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_5c3a0
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5c3a0.dir/link.txt --verbose=1
-/usr/bin/c++       -v CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_5c3a0 -rdynamic  
+Building CXX object CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++      -o CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_cfd2c
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cfd2c.dir/link.txt --verbose=1
+/usr/bin/c++       -v CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_cfd2c -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
-COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper
 Target: x86_64-redhat-linux
 Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --disable-libgcj --with-isl --enable-libmpx --enable-gnu-indirect-function --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
 Thread model: posix
-gcc version 6.2.1 20160916 (Red Hat 6.2.1-2) (GCC) 
-COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5c3a0' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccx2vl1m.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5c3a0 /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../.. CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5c3a0' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+gcc version 6.3.1 20161221 (Red Hat 6.3.1-1) (GCC) 
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_cfd2c' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqXxrDP.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_cfd2c /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../.. CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_cfd2c' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -247,30 +247,30 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_5c3a0/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_5c3a0.dir/build.make CMakeFiles/cmTC_5c3a0.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_cfd2c/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_cfd2c.dir/build.make CMakeFiles/cmTC_cfd2c.dir/build]
   ignore line: [gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_5c3a0]
-  ignore line: [/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5c3a0.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_5c3a0 -rdynamic  ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_cfd2c]
+  ignore line: [/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cfd2c.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_cfd2c -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
-  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper]
   ignore line: [Target: x86_64-redhat-linux]
   ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --disable-libgcj --with-isl --enable-libmpx --enable-gnu-indirect-function --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux]
   ignore line: [Thread model: posix]
-  ignore line: [gcc version 6.2.1 20160916 (Red Hat 6.2.1-2) (GCC) ]
-  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.2.1/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5c3a0' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccx2vl1m.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5c3a0 /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../.. CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o]
-    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/collect2] ==> ignore
+  ignore line: [gcc version 6.3.1 20161221 (Red Hat 6.3.1-1) (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_cfd2c' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqXxrDP.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_cfd2c /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../.. CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/collect2] ==> ignore
     arg [-plugin] ==> ignore
-    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.2.1/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccx2vl1m.res] ==> ignore
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.3.1/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccqXxrDP.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -286,16 +286,16 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_5c3a0] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crt1.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crti.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtbegin.o] ==> ignore
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1]
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64]
+    arg [cmTC_cfd2c] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64]
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..]
-    arg [CMakeFiles/cmTC_5c3a0.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..]
+    arg [CMakeFiles/cmTC_cfd2c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -303,19 +303,19 @@ Parsed CXX implicit link information from above output:
     arg [-lc] ==> lib [c]
     arg [-lgcc_s] ==> lib [gcc_s]
     arg [-lgcc] ==> lib [gcc]
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/crtend.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64/crtn.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/crtn.o] ==> ignore
   remove lib [gcc_s]
   remove lib [gcc]
   remove lib [gcc_s]
   remove lib [gcc]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1] ==> [/usr/lib/gcc/x86_64-redhat-linux/6.2.1]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1] ==> [/usr/lib/gcc/x86_64-redhat-linux/6.3.1]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64] ==> [/usr/lib64]
   collapse library dir [/lib/../lib64] ==> [/lib64]
   collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.2.1/../../..] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../..] ==> [/usr/lib]
   implicit libs: [stdc++;m;c]
-  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/6.2.1;/usr/lib64;/lib64;/usr/lib]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/6.3.1;/usr/lib64;/lib64;/usr/lib]
   implicit fwks: []
 
 
@@ -324,14 +324,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_f05ac/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_f05ac.dir/build.make CMakeFiles/cmTC_f05ac.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_9cff6/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_9cff6.dir/build.make CMakeFiles/cmTC_9cff6.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f05ac.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++14 -o CMakeFiles/cmTC_f05ac.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_f05ac
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f05ac.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_f05ac.dir/feature_tests.cxx.o  -o cmTC_f05ac -rdynamic 
+Building CXX object CMakeFiles/cmTC_9cff6.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++14 -o CMakeFiles/cmTC_9cff6.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_9cff6
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9cff6.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_9cff6.dir/feature_tests.cxx.o  -o cmTC_9cff6 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -397,14 +397,14 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_d64a7/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_d64a7.dir/build.make CMakeFiles/cmTC_d64a7.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_e12aa/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_e12aa.dir/build.make CMakeFiles/cmTC_e12aa.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_d64a7.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++11 -o CMakeFiles/cmTC_d64a7.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_d64a7
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d64a7.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_d64a7.dir/feature_tests.cxx.o  -o cmTC_d64a7 -rdynamic 
+Building CXX object CMakeFiles/cmTC_e12aa.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++11 -o CMakeFiles/cmTC_e12aa.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_e12aa
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e12aa.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_e12aa.dir/feature_tests.cxx.o  -o cmTC_e12aa -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -470,14 +470,14 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_6b8f2/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_6b8f2.dir/build.make CMakeFiles/cmTC_6b8f2.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_cc910/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_cc910.dir/build.make CMakeFiles/cmTC_cc910.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_6b8f2.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_6b8f2.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_6b8f2
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6b8f2.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_6b8f2.dir/feature_tests.cxx.o  -o cmTC_6b8f2 -rdynamic 
+Building CXX object CMakeFiles/cmTC_cc910.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_cc910.dir/feature_tests.cxx.o -c /home/werl/College/netvizGL/Debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_cc910
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc910.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_cc910.dir/feature_tests.cxx.o  -o cmTC_cc910 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
@@ -541,84 +541,84 @@ gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeT
 Determining if the function XOpenDisplay exists in the /usr/lib64/libX11.so;/usr/lib64/libXext.so passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_959ee/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_959ee.dir/build.make CMakeFiles/cmTC_959ee.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_eefa9/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_eefa9.dir/build.make CMakeFiles/cmTC_eefa9.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_959ee.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTC_959ee.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_959ee
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_959ee.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTC_959ee.dir/CheckFunctionExists.c.o  -o cmTC_959ee -rdynamic /usr/lib64/libX11.so /usr/lib64/libXext.so 
+Building C object CMakeFiles/cmTC_eefa9.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTC_eefa9.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_eefa9
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eefa9.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTC_eefa9.dir/CheckFunctionExists.c.o  -o cmTC_eefa9 -rdynamic /usr/lib64/libX11.so /usr/lib64/libXext.so 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Determining if the function gethostbyname exists passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_f9726/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_f9726.dir/build.make CMakeFiles/cmTC_f9726.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_350ff/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_350ff.dir/build.make CMakeFiles/cmTC_350ff.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_f9726.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTC_f9726.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_f9726
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f9726.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTC_f9726.dir/CheckFunctionExists.c.o  -o cmTC_f9726 -rdynamic 
+Building C object CMakeFiles/cmTC_350ff.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTC_350ff.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_350ff
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_350ff.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTC_350ff.dir/CheckFunctionExists.c.o  -o cmTC_350ff -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Determining if the function connect exists passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_50d92/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_50d92.dir/build.make CMakeFiles/cmTC_50d92.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_9479b/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_9479b.dir/build.make CMakeFiles/cmTC_9479b.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_50d92.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTC_50d92.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_50d92
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_50d92.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTC_50d92.dir/CheckFunctionExists.c.o  -o cmTC_50d92 -rdynamic 
+Building C object CMakeFiles/cmTC_9479b.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTC_9479b.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_9479b
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9479b.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTC_9479b.dir/CheckFunctionExists.c.o  -o cmTC_9479b -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Determining if the function remove exists passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_1575d/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_1575d.dir/build.make CMakeFiles/cmTC_1575d.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_4b568/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_4b568.dir/build.make CMakeFiles/cmTC_4b568.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_1575d.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTC_1575d.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_1575d
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1575d.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTC_1575d.dir/CheckFunctionExists.c.o  -o cmTC_1575d -rdynamic 
+Building C object CMakeFiles/cmTC_4b568.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTC_4b568.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_4b568
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b568.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTC_4b568.dir/CheckFunctionExists.c.o  -o cmTC_4b568 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Determining if the function shmat exists passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_72a67/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_72a67.dir/build.make CMakeFiles/cmTC_72a67.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_18d88/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_18d88.dir/build.make CMakeFiles/cmTC_18d88.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_72a67.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTC_72a67.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_72a67
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72a67.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTC_72a67.dir/CheckFunctionExists.c.o  -o cmTC_72a67 -rdynamic 
+Building C object CMakeFiles/cmTC_18d88.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTC_18d88.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_18d88
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_18d88.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTC_18d88.dir/CheckFunctionExists.c.o  -o cmTC_18d88 -rdynamic 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 
 Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
 Change Dir: /home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_7d005/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_7d005.dir/build.make CMakeFiles/cmTC_7d005.dir/build
+Run Build Command:"/usr/bin/gmake" "cmTC_cef34/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_cef34.dir/build.make CMakeFiles/cmTC_cef34.dir/build
 gmake[1]: Entering directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7d005.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTC_7d005.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
-Linking C executable cmTC_7d005
-/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7d005.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTC_7d005.dir/CheckFunctionExists.c.o  -o cmTC_7d005 -rdynamic -lICE 
+Building C object CMakeFiles/cmTC_cef34.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTC_cef34.dir/CheckFunctionExists.c.o   -c /home/werl/Downloads/clion-2016.3.1/bin/cmake/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_cef34
+/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cef34.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTC_cef34.dir/CheckFunctionExists.c.o  -o cmTC_cef34 -rdynamic -lICE 
 gmake[1]: Leaving directory '/home/werl/College/netvizGL/Debug/CMakeFiles/CMakeTmp'
 
 

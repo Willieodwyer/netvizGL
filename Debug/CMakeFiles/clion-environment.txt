@@ -1,1 +1,1 @@
-CMake: 3.6.2@/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake
+CMake: 3.6.3@/home/werl/Downloads/clion-2016.3.1/bin/cmake/bin/cmake

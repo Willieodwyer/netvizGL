@@ -62,6 +62,9 @@ class Window {
 
   static void Apply();
 
+  int screenshot();
+  bool screenShot;
+  bool fullscreen;
 };
 
 #endif //NETVIZGL_WINDOW_H

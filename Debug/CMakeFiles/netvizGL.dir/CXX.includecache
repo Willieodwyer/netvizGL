@@ -201,7 +201,7 @@ iostream
 /home/werl/College/netvizGL/inc/Graphs/EdgeGraph.h
 glm/geometric.hpp
 -
-glm/gtx/transform.hpp
+pngwriter.h
 -
 
 /usr/include/atk-1.0/atk/atk-enum-types.h

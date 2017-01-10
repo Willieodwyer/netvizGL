@@ -5,7 +5,7 @@
 #include "../inc/FileReader.h"
 #include "../inc/Graphs/EdgeGraph.h"
 #include <glm/geometric.hpp>
-#include <glm/gtx/transform.hpp>
+#include <pngwriter.h>
 
 //
 // Created by werl on 21/09/16.
@@ -21,12 +21,14 @@ Window *Window::windowInstance = NULL;
 class vec3;
 
 Window *Window::Instance() {
-  if (!windowInstance)   // Only allow one instance of class to be generated.
+  if (!windowInstance)
     windowInstance = new Window(1280, 720);
   return windowInstance;
 }
 
 Window::Window(const int WIDTH, const int HEIGHT) {
+  screenShot = false;
+  fullscreen = false;
 
   pitch = 0;
   yaw = 0;
@@ -44,16 +46,12 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 
   GLInit();
 
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LEQUAL);
-
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 }
 
 void Window::display() {
   while (!glfwWindowShouldClose(window)) {
-
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
     glViewport(0, 0, windowWidth, windowHeight);
 
@@ -77,6 +75,11 @@ void Window::display() {
 
     glLineWidth(4.0);
 
+    if (screenShot) {
+      screenshot();
+      screenShot = false;
+    }
+
     glfwSwapBuffers(window);
 
     glfwPollEvents();
@@ -91,7 +94,13 @@ void Window::GLInit() {
   glfwWindowHint(GLFW_SAMPLES, 8);
 
   // Open a window and create its OpenGL context
-  window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
+
+  if (!Window::fullscreen)
+    window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
+  else {
+    const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    window = glfwCreateWindow(mode->width, mode->height, "netvizGL", glfwGetPrimaryMonitor(), window);
+  }
 
   if (window == NULL) {
     fprintf(stderr, "Failed to open GLFW window.\n");
@@ -118,6 +127,9 @@ void Window::GLInit() {
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
   glfwSetScrollCallback(window, this->scrollEvent);
+
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LEQUAL);
 
 }
 
@@ -163,6 +175,9 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   //printf("Window::keyPressedEvent::%d\n", key);
 
+  if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
+    Window::Instance()->screenShot = true;
+
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
 
@@ -195,6 +210,47 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
     Window::Instance()->translateY -= .01;
   }
 
+}
+
+int Window::screenshot() {
+
+//  fullscreen = true;
+//
+//  GLInit();
+//
+//  system("scrot");
+
+  const int pix = 3 * windowWidth * windowHeight;
+  GLfloat *pixels = new GLfloat[pix];
+
+  glReadPixels(0, 0, windowWidth, windowHeight, GL_RGB, GL_FLOAT, pixels);
+  pngwriter PNG(windowWidth, windowHeight, 0.0, "screenshot.png");
+  size_t x = 1;
+  size_t y = 1;
+  double R, G, B;
+  for (size_t i = 0; i < pix; i++) {
+    switch (i % 3) {
+      case 2:B = (double) pixels[i];
+        break;
+      case 1:G = (double) pixels[i];
+        break;
+      case 0:R = (double) pixels[i];
+        PNG.plot(x, y, R, G, B);
+        if (x == windowWidth) {
+          x = 1;
+          y++;
+        } else { x++; }
+        break;
+    }
+  }
+  PNG.close();
+
+  delete[] pixels;
+
+
+//  for(int i = 0; i < pix; i ++){
+//    std::cout << pixels[i];Z
+//  }
 }
 
 
