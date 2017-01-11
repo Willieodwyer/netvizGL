@@ -10,6 +10,7 @@
 #include "Vertex.h"
 #include "Graphs/Graph.h"
 #include "Algorithms/SimpleForceDirected.h"
+#include "ButtonWidget.h"
 #include <GLFW/glfw3.h>
 #include <pthread.h>
 #include <thread>
@@ -51,6 +52,7 @@ class Window {
   static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
   std::thread *applyThread;
+  std::thread *widgetThread;
   bool endThread = false;
 
   Graph *graph;
@@ -65,6 +67,10 @@ class Window {
   int screenshot();
   bool screenShot;
   bool fullscreen;
+
+  ButtonWidget *buttonWidget;
+
+  static void widget(ButtonWidget *x);
 };
 
 #endif //NETVIZGL_WINDOW_H
