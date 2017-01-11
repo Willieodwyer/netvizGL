@@ -1,3 +1,0 @@
-/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir
