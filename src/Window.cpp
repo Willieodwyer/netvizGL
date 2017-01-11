@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "../inc/Window.h"
-#include "../inc/Graphs/AdjacencyGraph.h"
 #include "../inc/FileReader.h"
 #include "../inc/Graphs/EdgeGraph.h"
 #include <glm/geometric.hpp>
@@ -10,15 +9,7 @@
 //
 // Created by werl on 21/09/16.
 //
-void Window::Apply() {
-  while (!Window::Instance()->endThread) {
-    Window::Instance()->algorithm->apply();
-  }
-}
-
 Window *Window::windowInstance = NULL;
-
-class vec3;
 
 Window *Window::Instance() {
   if (!windowInstance)
@@ -46,9 +37,25 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 
   GLInit();
 
+  //GTK Widget
+  //Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
+
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 }
+
+//Threads
+void Window::Apply() {
+  while (!Window::Instance()->endThread) {
+    Window::Instance()->algorithm->apply();
+  }
+}
+
+void Window::widget(ButtonWidget *x) {
+  x = ButtonWidget::Instance();
+  //fprintf(stderr,"HEREER");
+}
+//
 
 void Window::display() {
   while (!glfwWindowShouldClose(window)) {
@@ -175,6 +182,16 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   //printf("Window::keyPressedEvent::%d\n", key);
 
+  if (key == GLFW_KEY_T && action == GLFW_PRESS) {
+    if ((Window::Instance()->widgetThread)) {
+      ButtonWidget::Instance()->toggleView();
+    }
+    else{
+      Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
+      fprintf(stderr,"HERE");
+    }
+  }
+
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
     Window::Instance()->screenShot = true;
 
@@ -186,15 +203,15 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
     Window::Instance()->applyThread->join();
   }
 
-  if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
-    std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
-    Window::Instance()->graph = new EdgeGraph((char *) filePath.c_str());
-    //graph = new EdgeGraph("../Graphs/edge-links2.txt");
-    //graph = new EdgeGraph("../Graphs/edge-links.txt");
-    Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);
-    Window::Instance()->endThread = false;
-    Window::Instance()->applyThread = new thread(Apply);
-  }
+//  if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+//    std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
+//    Window::Instance()->graph = new EdgeGraph((char *) filePath.c_str());
+//    //graph = new EdgeGraph("../Graphs/edge-links2.txt");
+//    //graph = new EdgeGraph("../Graphs/edge-links.txt");
+//    Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);
+//    Window::Instance()->endThread = false;
+//    Window::Instance()->applyThread = new thread(Apply);
+//  }
 
   if (key == GLFW_KEY_LEFT) {
     Window::Instance()->translateX += .01;

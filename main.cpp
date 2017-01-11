@@ -3,12 +3,12 @@
 #include "inc/Window.h"
 #include "inc/ButtonWidget.h"
 
-static void widget(ButtonWidget *x){
-  x = ButtonWidget::Instance();
-}
+//static void widget(ButtonWidget *x){
+//  x = ButtonWidget::Instance();
+//}
 
 int main(int argc, char **argv) {
-  ButtonWidget *buttonWidget;
+  //ButtonWidget *buttonWidget;
 
 
   Window *window = Window::Instance();
