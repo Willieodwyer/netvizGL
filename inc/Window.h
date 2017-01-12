@@ -6,7 +6,6 @@
 #define NETVIZGL_WINDOW_H
 
 #include <GL/glew.h>
-#include "Menu.h"
 #include "Vertex.h"
 #include "Graphs/Graph.h"
 #include "Algorithms/SimpleForceDirected.h"
