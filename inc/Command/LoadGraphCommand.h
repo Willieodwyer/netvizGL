@@ -8,9 +8,12 @@
 #include "Command.h"
 #include "../Window.h"
 
-class LoadGraphCommand : Command{
+class LoadGraphCommand : Command {
  private:
-   Window *window;
+  Window *window;
+  char * filePath;
+ public:
+  LoadGraphCommand(Window *window, char *path);
 
  public:
   void Execute();

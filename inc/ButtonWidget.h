@@ -15,6 +15,7 @@ class ButtonWidget {
   GtkWidget *dialog;
   GtkWidget *algorithmButton;
   GtkWidget *exitButton;
+  GtkWidget *separator;
   GtkWidget *deleteNodeButton;
   GtkWidget *deleteEdgeButton;
   GtkWidget *colourNodeButton;
@@ -36,6 +37,7 @@ class ButtonWidget {
   static void quitEvent();
   static void toggleView();
   static void openFile();
+  static void quitNetviz();
 };
 
 #endif //NETVIZGL_BUTTONS_H

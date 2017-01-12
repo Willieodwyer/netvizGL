@@ -3,6 +3,12 @@
 //
 
 #include "../../inc/Command/LoadGraphCommand.h"
+
+LoadGraphCommand::LoadGraphCommand(Window *window, char *path)
+    : window(window), filePath(path) {
+
+}
+
 void LoadGraphCommand::Execute() {
 
 }

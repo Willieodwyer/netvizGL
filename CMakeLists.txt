@@ -74,7 +74,7 @@ set(CMAKE_CXX_STANDARD 11)
 # Add a target executable
 add_executable(${PROJ_NAME}
         main.cpp
-        inc/Shader.h src/Window.cpp inc/Window.h src/Vertex.cpp inc/Vertex.h src/Shader.cpp src/Line.cpp inc/Line.h src/Graphs/Graph.cpp inc/Graphs/Graph.h src/Algorithms/SimpleForceDirected.cpp inc/Algorithms/SimpleForceDirected.h inc/Algorithms/Algorithm.h src/Graphs/AdjacencyGraph.cpp inc/Graphs/AdjacencyGraph.h src/Graphs/EdgeGraph.cpp inc/Graphs/EdgeGraph.h src/FileReader.cpp inc/FileReader.h src/Menu.cpp inc/Menu.h src/ButtonWidget.cpp inc/ButtonWidget.h inc/Command/Command.h src/Command/LoadGraphCommand.cpp inc/Command/LoadGraphCommand.h)
+        inc/Shader.h src/Window.cpp inc/Window.h src/Vertex.cpp inc/Vertex.h src/Shader.cpp src/Line.cpp inc/Line.h src/Graphs/Graph.cpp inc/Graphs/Graph.h src/Algorithms/SimpleForceDirected.cpp inc/Algorithms/SimpleForceDirected.h inc/Algorithms/Algorithm.h src/Graphs/AdjacencyGraph.cpp inc/Graphs/AdjacencyGraph.h src/Graphs/EdgeGraph.cpp inc/Graphs/EdgeGraph.h src/FileReader.cpp inc/FileReader.h src/Menu.cpp src/ButtonWidget.cpp inc/ButtonWidget.h inc/Command/Command.h src/Command/LoadGraphCommand.cpp inc/Command/LoadGraphCommand.h)
 
 
 # Libraries to be linked

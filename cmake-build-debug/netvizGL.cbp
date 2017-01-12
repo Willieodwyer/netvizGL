@@ -144,9 +144,6 @@
 		<Unit filename="/home/werl/College/netvizGL/inc/Line.h">
 			<Option target="netvizGL"/>
 		</Unit>
-		<Unit filename="/home/werl/College/netvizGL/inc/Menu.h">
-			<Option target="netvizGL"/>
-		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/inc/Shader.h">
 			<Option target="netvizGL"/>
 		</Unit>

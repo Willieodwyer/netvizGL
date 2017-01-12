@@ -35,17 +35,17 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   this->windowWidth = WIDTH;
   this->windowHeight = HEIGHT;
 
-  GLInit();
+  init();
 
   //GTK Widget
-  //Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
+  widgetThread = new thread(widget, buttonWidget);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 }
 
 //Threads
-void Window::Apply() {
+void Window::algorithmFunction() {
   while (!Window::Instance()->endThread) {
     Window::Instance()->algorithm->apply();
   }
@@ -93,7 +93,7 @@ void Window::display() {
   }
 }
 
-void Window::GLInit() {
+void Window::init() {
 
   if (!glfwInit()) {
     fprintf(stderr, "Failed to initialize GLFW\n");
@@ -188,7 +188,6 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
     }
     else{
       Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
-      fprintf(stderr,"HERE");
     }
   }
 
@@ -200,7 +199,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
     Window::Instance()->endThread = true;
-    Window::Instance()->applyThread->join();
+    Window::Instance()->algorithmThread->join();
   }
 
 //  if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
@@ -210,7 +209,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 //    //graph = new EdgeGraph("../Graphs/edge-links.txt");
 //    Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);
 //    Window::Instance()->endThread = false;
-//    Window::Instance()->applyThread = new thread(Apply);
+//    Window::Instance()->algorithmThread = new thread(algorithmFunction);
 //  }
 
   if (key == GLFW_KEY_LEFT) {
@@ -233,7 +232,7 @@ int Window::screenshot() {
 
 //  fullscreen = true;
 //
-//  GLInit();
+//  init();
 //
 //  system("scrot");
 
@@ -268,6 +267,11 @@ int Window::screenshot() {
 //  for(int i = 0; i < pix; i ++){
 //    std::cout << pixels[i];Z
 //  }
+}
+
+void Window::quit(){
+  glfwDestroyWindow(window);
+  exit(0);
 }
 
 
