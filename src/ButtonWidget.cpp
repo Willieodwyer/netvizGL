@@ -32,8 +32,8 @@ ButtonWidget::~ButtonWidget() {
 void ButtonWidget::activate(GtkApplication *app, gpointer user_data) {
   ButtonWidget::Instance()->window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW (ButtonWidget::Instance()->window), "Toolbox");
-  gtk_window_set_default_size(GTK_WINDOW (ButtonWidget::Instance()->window), 200, 200);
-  gtk_window_move(GTK_WINDOW (ButtonWidget::Instance()->window), 350, 210);
+  gtk_window_set_default_size(GTK_WINDOW (ButtonWidget::Instance()->window), 197, 200);
+  gtk_window_move(GTK_WINDOW (ButtonWidget::Instance()->window), 270, 152);
 
   ButtonWidget::Instance()->button_box = gtk_button_box_new(GTK_ORIENTATION_VERTICAL);
   gtk_container_add(GTK_CONTAINER (ButtonWidget::Instance()->window), ButtonWidget::Instance()->button_box);

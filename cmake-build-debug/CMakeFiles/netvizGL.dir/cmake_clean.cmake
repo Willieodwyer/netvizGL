@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/netvizGL.dir/src/FileReader.cpp.o"
   "CMakeFiles/netvizGL.dir/src/Menu.cpp.o"
   "CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.o"
+  "CMakeFiles/netvizGL.dir/src/Command/LoadGraphCommand.cpp.o"
   "netvizGL.pdb"
   "netvizGL"
 )

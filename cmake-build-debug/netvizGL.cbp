@@ -123,6 +123,12 @@
 		<Unit filename="/home/werl/College/netvizGL/inc/ButtonWidget.h">
 			<Option target="netvizGL"/>
 		</Unit>
+		<Unit filename="/home/werl/College/netvizGL/inc/Command/Command.h">
+			<Option target="netvizGL"/>
+		</Unit>
+		<Unit filename="/home/werl/College/netvizGL/inc/Command/LoadGraphCommand.h">
+			<Option target="netvizGL"/>
+		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/inc/FileReader.h">
 			<Option target="netvizGL"/>
 		</Unit>
@@ -157,6 +163,9 @@
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/src/ButtonWidget.cpp">
+			<Option target="netvizGL"/>
+		</Unit>
+		<Unit filename="/home/werl/College/netvizGL/src/Command/LoadGraphCommand.cpp">
 			<Option target="netvizGL"/>
 		</Unit>
 		<Unit filename="/home/werl/College/netvizGL/src/FileReader.cpp">

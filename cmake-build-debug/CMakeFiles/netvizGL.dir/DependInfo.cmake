@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/werl/College/netvizGL/main.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/main.cpp.o"
   "/home/werl/College/netvizGL/src/Algorithms/SimpleForceDirected.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/Algorithms/SimpleForceDirected.cpp.o"
   "/home/werl/College/netvizGL/src/ButtonWidget.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.o"
+  "/home/werl/College/netvizGL/src/Command/LoadGraphCommand.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/Command/LoadGraphCommand.cpp.o"
   "/home/werl/College/netvizGL/src/FileReader.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/FileReader.cpp.o"
   "/home/werl/College/netvizGL/src/Graphs/AdjacencyGraph.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/Graphs/AdjacencyGraph.cpp.o"
   "/home/werl/College/netvizGL/src/Graphs/EdgeGraph.cpp" "/home/werl/College/netvizGL/cmake-build-debug/CMakeFiles/netvizGL.dir/src/Graphs/EdgeGraph.cpp.o"

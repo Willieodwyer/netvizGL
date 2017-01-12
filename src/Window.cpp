@@ -116,7 +116,7 @@ void Window::GLInit() {
 
   glfwMakeContextCurrent(window);
 
-  glfwSetWindowPos(window, 320, 180);
+  glfwSetWindowPos(window, 470, 180);
 
   glewExperimental = GL_TRUE;
 

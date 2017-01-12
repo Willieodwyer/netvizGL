@@ -22,6 +22,14 @@ Algorithm.h
 gtk/gtk.h
 -
 
+/home/werl/College/netvizGL/inc/Command/Command.h
+
+/home/werl/College/netvizGL/inc/Command/LoadGraphCommand.h
+Command.h
+/home/werl/College/netvizGL/inc/Command/Command.h
+../Window.h
+/home/werl/College/netvizGL/inc/Window.h
+
 /home/werl/College/netvizGL/inc/FileReader.h
 
 /home/werl/College/netvizGL/inc/Graphs/AdjacencyGraph.h
@@ -119,6 +127,10 @@ inc/ButtonWidget.h
 /home/werl/College/netvizGL/inc/FileReader.h
 ../inc/Graphs/EdgeGraph.h
 /home/werl/College/netvizGL/inc/Graphs/EdgeGraph.h
+
+/home/werl/College/netvizGL/src/Command/LoadGraphCommand.cpp
+../../inc/Command/LoadGraphCommand.h
+/home/werl/College/netvizGL/inc/Command/LoadGraphCommand.h
 
 /home/werl/College/netvizGL/src/FileReader.cpp
 cstdio

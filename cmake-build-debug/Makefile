@@ -204,6 +204,33 @@ src/ButtonWidget.cpp.s:
 	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/ButtonWidget.cpp.s
 .PHONY : src/ButtonWidget.cpp.s
 
+src/Command/LoadGraphCommand.o: src/Command/LoadGraphCommand.cpp.o
+
+.PHONY : src/Command/LoadGraphCommand.o
+
+# target to build an object file
+src/Command/LoadGraphCommand.cpp.o:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/Command/LoadGraphCommand.cpp.o
+.PHONY : src/Command/LoadGraphCommand.cpp.o
+
+src/Command/LoadGraphCommand.i: src/Command/LoadGraphCommand.cpp.i
+
+.PHONY : src/Command/LoadGraphCommand.i
+
+# target to preprocess a source file
+src/Command/LoadGraphCommand.cpp.i:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/Command/LoadGraphCommand.cpp.i
+.PHONY : src/Command/LoadGraphCommand.cpp.i
+
+src/Command/LoadGraphCommand.s: src/Command/LoadGraphCommand.cpp.s
+
+.PHONY : src/Command/LoadGraphCommand.s
+
+# target to generate assembly for a file
+src/Command/LoadGraphCommand.cpp.s:
+	$(MAKE) -f CMakeFiles/netvizGL.dir/build.make CMakeFiles/netvizGL.dir/src/Command/LoadGraphCommand.cpp.s
+.PHONY : src/Command/LoadGraphCommand.cpp.s
+
 src/FileReader.o: src/FileReader.cpp.o
 
 .PHONY : src/FileReader.o
@@ -465,6 +492,9 @@ help:
 	@echo "... src/ButtonWidget.o"
 	@echo "... src/ButtonWidget.i"
 	@echo "... src/ButtonWidget.s"
+	@echo "... src/Command/LoadGraphCommand.o"
+	@echo "... src/Command/LoadGraphCommand.i"
+	@echo "... src/Command/LoadGraphCommand.s"
 	@echo "... src/FileReader.o"
 	@echo "... src/FileReader.i"
 	@echo "... src/FileReader.s"
