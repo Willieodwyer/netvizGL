@@ -3,6 +3,7 @@
 #include "../inc/Window.h"
 #include "../inc/FileReader.h"
 #include "../inc/Graphs/EdgeGraph.h"
+#include "../inc/Command/LoadGraphCommand.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 
@@ -40,6 +41,9 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   //GTK Widget
   widgetThread = new thread(widget, buttonWidget);
 
+  //Graph command
+  loadGraph = new LoadGraphCommand(this);
+
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
 }
@@ -51,8 +55,8 @@ void Window::algorithmFunction() {
   }
 }
 
-void Window::widget(ButtonWidget *x) {
-  x = ButtonWidget::Instance();
+void Window::widget(Widget *x) {
+  x = Widget::Instance();
   //fprintf(stderr,"HEREER");
 }
 //
@@ -184,7 +188,7 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_T && action == GLFW_PRESS) {
     if ((Window::Instance()->widgetThread)) {
-      ButtonWidget::Instance()->toggleView();
+      Widget::Instance()->toggleView();
     }
     else{
       Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
@@ -196,11 +200,6 @@ void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int acti
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
-
-  if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
-    Window::Instance()->endThread = true;
-    Window::Instance()->algorithmThread->join();
-  }
 
 //  if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 //    std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();

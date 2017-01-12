@@ -7,8 +7,8 @@
 
 #include <gtk/gtk.h>
 
-class ButtonWidget {
-  static ButtonWidget *instance;
+class Widget {
+  static Widget *instance;
   bool visible;
 
   GtkWidget *openFileButton;
@@ -28,11 +28,11 @@ class ButtonWidget {
 
   static void activate(GtkApplication *app, gpointer user_data);
  public:
-  ButtonWidget();
+  Widget();
 
-  virtual ~ButtonWidget();
+  virtual ~Widget();
 
-  static ButtonWidget *Instance();
+  static Widget *Instance();
 
   static void quitEvent();
   static void toggleView();

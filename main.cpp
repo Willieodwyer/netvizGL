@@ -1,14 +1,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "inc/Window.h"
-#include "inc/ButtonWidget.h"
+#include "inc/Widget.h"
 
-//static void widget(ButtonWidget *x){
-//  x = ButtonWidget::Instance();
+//static void widget(Widget *x){
+//  x = Widget::Instance();
 //}
 
 int main(int argc, char **argv) {
-  //ButtonWidget *buttonWidget;
+  //Widget *buttonWidget;
 
 
   Window *window = Window::Instance();

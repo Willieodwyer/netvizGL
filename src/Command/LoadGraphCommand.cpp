@@ -3,12 +3,22 @@
 //
 
 #include "../../inc/Command/LoadGraphCommand.h"
+#include "../../inc/Graphs/EdgeGraph.h"
 
-LoadGraphCommand::LoadGraphCommand(Window *window, char *path)
-    : window(window), filePath(path) {
+LoadGraphCommand::LoadGraphCommand(Window *window)
+    : window(window){
 
 }
 
-void LoadGraphCommand::Execute() {
+void LoadGraphCommand::execute() {
+  window->graph = new EdgeGraph((window->graphFilePath));
+  if (window->algorithmThread) {
+    window->endThread = true;
+    window->algorithmThread->join();
+    delete window->algorithmThread;
+  }
 
+  window->algorithm = new SimpleForceDirected(Window::Instance()->graph);
+  window->endThread = false;
+  window->algorithmThread = new thread(Window::algorithmFunction);
 }

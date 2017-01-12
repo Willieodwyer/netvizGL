@@ -8,15 +8,14 @@
 #include "Command.h"
 #include "../Window.h"
 
-class LoadGraphCommand : Command {
- private:
-  Window *window;
-  char * filePath;
- public:
-  LoadGraphCommand(Window *window, char *path);
+class LoadGraphCommand : public Command {
+private:
+    Window *window;
+public:
+    LoadGraphCommand(Window *window);
 
- public:
-  void Execute();
+public:
+    void execute();
 };
 
 #endif //NETVIZGL_LOADGRAPHCOMMAND_H
