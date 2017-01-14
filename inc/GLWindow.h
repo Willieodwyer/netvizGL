@@ -9,18 +9,21 @@
 #include "Vertex.h"
 #include "Graphs/Graph.h"
 #include "Algorithms/SimpleForceDirected.h"
-#include "ButtonWidget.h"
+#include "Widget.h"
 #include "Command/Command.h"
 #include <GLFW/glfw3.h>
 #include <pthread.h>
 #include <thread>
 
-class Window {
+class GLWindow {
 
  public:
-  Window(const int WIDTH, const int HEIGHT);
-  static Window *windowInstance;
-  static Window *Instance();
+  GLWindow(const int WIDTH, const int HEIGHT);
+
+  static GLWindow *windowInstance;
+
+  static GLWindow *Instance();
+
   GLFWwindow *window;
 
   int windowWidth;
@@ -38,11 +41,17 @@ class Window {
 
   bool mouseLEFT;
   bool mouseRIGHT;
+
   void display();
+
   void init();
+
   static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
+
   static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
+
   static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
+
   static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
   std::thread *algorithmThread;
@@ -53,16 +62,20 @@ class Window {
   Algorithm *algorithm;
 
   Command *loadGraph;
+  char *graphFilePath;
 
   static void algorithmFunction();
 
-  int screenshot();
-  bool screenShot;
-  bool fullscreen;
+  int GLScreenshot();
 
-  ButtonWidget *buttonWidget;
-  static void widget(ButtonWidget *x);
+  bool screenShot;
+
+  Widget *buttonWidget;
+
+  static void widgetFunction(Widget *x);
+
   void quit();
+  void X11Screenshot();
 };
 
 #endif //NETVIZGL_WINDOW_H

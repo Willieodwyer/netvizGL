@@ -6,17 +6,16 @@
 #define NETVIZGL_LOADGRAPHCOMMAND_H
 
 #include "Command.h"
-#include "../Window.h"
+#include "../GLWindow.h"
 
-class LoadGraphCommand : Command {
- private:
-  Window *window;
-  char * filePath;
- public:
-  LoadGraphCommand(Window *window, char *path);
+class LoadGraphCommand : public Command {
+private:
+  GLWindow *window;
+public:
+    LoadGraphCommand(GLWindow *window);
 
- public:
-  void Execute();
+public:
+    void execute();
 };
 
 #endif //NETVIZGL_LOADGRAPHCOMMAND_H
