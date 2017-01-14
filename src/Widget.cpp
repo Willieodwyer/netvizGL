@@ -3,7 +3,7 @@
 //
 
 #include "../inc/Widget.h"
-#include "../inc/Window.h"
+#include "../inc/GLWindow.h"
 #include "../inc/FileReader.h"
 #include "../inc/Graphs/EdgeGraph.h"
 
@@ -88,17 +88,17 @@ void Widget::openFile() {
   res = gtk_dialog_run(GTK_DIALOG (Widget::Instance()->dialog));
   if (res == GTK_RESPONSE_ACCEPT) {
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Instance()->dialog);
-    Window::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
+    GLWindow::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
   }
 
   gtk_widget_destroy(Widget::Instance()->dialog);
 
-  Window::Instance()->loadGraph->execute();
+  GLWindow::Instance()->loadGraph->execute();
 }
 
 void Widget::quitEvent() {
-  fprintf(stderr, "%d", Window::Instance()->windowHeight);
-  fprintf(stderr, "\nClosing widget\n");
+  fprintf(stderr, "%d", GLWindow::Instance()->windowHeight);
+  fprintf(stderr, "\nClosing widgetFunction\n");
   gtk_widget_destroy(GTK_WIDGET(Widget::Instance()->window));
 }
 
@@ -113,6 +113,6 @@ void Widget::toggleView() {
 }
 
 void Widget::quitNetviz() {
-  Window::Instance()->quit();
+  GLWindow::Instance()->quit();
 }
 

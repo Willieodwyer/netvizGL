@@ -15,14 +15,14 @@
 #include <pthread.h>
 #include <thread>
 
-class Window {
+class GLWindow {
 
  public:
-  Window(const int WIDTH, const int HEIGHT);
+  GLWindow(const int WIDTH, const int HEIGHT);
 
-  static Window *windowInstance;
+  static GLWindow *windowInstance;
 
-  static Window *Instance();
+  static GLWindow *Instance();
 
   GLFWwindow *window;
 
@@ -66,16 +66,16 @@ class Window {
 
   static void algorithmFunction();
 
-  int screenshot();
+  int GLScreenshot();
 
   bool screenShot;
-  bool fullscreen;
 
   Widget *buttonWidget;
 
-  static void widget(Widget *x);
+  static void widgetFunction(Widget *x);
 
   void quit();
+  void X11Screenshot();
 };
 
 #endif //NETVIZGL_WINDOW_H

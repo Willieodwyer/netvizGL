@@ -1,9 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "inc/Window.h"
+#include "inc/GLWindow.h"
 #include "inc/Widget.h"
 
-//static void widget(Widget *x){
+//static void widgetFunction(Widget *x){
 //  x = Widget::Instance();
 //}
 
@@ -11,9 +11,9 @@ int main(int argc, char **argv) {
   //Widget *buttonWidget;
 
 
-  Window *window = Window::Instance();
+  GLWindow *window = GLWindow::Instance();
 
-  //std::thread widgetThread(widget, buttonWidget);
+  //std::thread widgetThread(widgetFunction, buttonWidget);
 
   if (NULL != window->window) {
     window->display();

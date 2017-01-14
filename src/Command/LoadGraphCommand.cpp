@@ -5,7 +5,7 @@
 #include "../../inc/Command/LoadGraphCommand.h"
 #include "../../inc/Graphs/EdgeGraph.h"
 
-LoadGraphCommand::LoadGraphCommand(Window *window)
+LoadGraphCommand::LoadGraphCommand(GLWindow *window)
     : window(window){
 
 }
@@ -18,7 +18,7 @@ void LoadGraphCommand::execute() {
     delete window->algorithmThread;
   }
 
-  window->algorithm = new SimpleForceDirected(Window::Instance()->graph);
+  window->algorithm = new SimpleForceDirected(GLWindow::Instance()->graph);
   window->endThread = false;
-  window->algorithmThread = new thread(Window::algorithmFunction);
+  window->algorithmThread = new thread(GLWindow::algorithmFunction);
 }

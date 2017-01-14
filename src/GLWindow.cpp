@@ -1,26 +1,27 @@
 #include <GL/glew.h>
 #include <iostream>
-#include "../inc/Window.h"
+#include "../inc/GLWindow.h"
 #include "../inc/FileReader.h"
 #include "../inc/Graphs/EdgeGraph.h"
 #include "../inc/Command/LoadGraphCommand.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 
 //
 // Created by werl on 21/09/16.
 //
-Window *Window::windowInstance = NULL;
+GLWindow *GLWindow::windowInstance = NULL;
 
-Window *Window::Instance() {
+GLWindow *GLWindow::Instance() {
   if (!windowInstance)
-    windowInstance = new Window(1280, 720);
+    windowInstance = new GLWindow(1280, 720);
   return windowInstance;
 }
 
-Window::Window(const int WIDTH, const int HEIGHT) {
+GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
   screenShot = false;
-  fullscreen = false;
 
   pitch = 0;
   yaw = 0;
@@ -39,7 +40,7 @@ Window::Window(const int WIDTH, const int HEIGHT) {
   init();
 
   //GTK Widget
-  widgetThread = new thread(widget, buttonWidget);
+  widgetThread = new thread(widgetFunction, buttonWidget);
 
   //Graph command
   loadGraph = new LoadGraphCommand(this);
@@ -49,19 +50,18 @@ Window::Window(const int WIDTH, const int HEIGHT) {
 }
 
 //Threads
-void Window::algorithmFunction() {
-  while (!Window::Instance()->endThread) {
-    Window::Instance()->algorithm->apply();
+void GLWindow::algorithmFunction() {
+  while (!GLWindow::Instance()->endThread) {
+    GLWindow::Instance()->algorithm->apply();
   }
 }
 
-void Window::widget(Widget *x) {
+void GLWindow::widgetFunction(Widget *x) {
   x = Widget::Instance();
-  //fprintf(stderr,"HEREER");
 }
 //
 
-void Window::display() {
+void GLWindow::display() {
   while (!glfwWindowShouldClose(window)) {
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
     glViewport(0, 0, windowWidth, windowHeight);
@@ -71,8 +71,6 @@ void Window::display() {
 
     glLoadIdentity();
     gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
-
-    //menu->draw();
 
     glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
 
@@ -87,7 +85,7 @@ void Window::display() {
     glLineWidth(4.0);
 
     if (screenShot) {
-      screenshot();
+      GLScreenshot();
       screenShot = false;
     }
 
@@ -97,7 +95,7 @@ void Window::display() {
   }
 }
 
-void Window::init() {
+void GLWindow::init() {
 
   if (!glfwInit()) {
     fprintf(stderr, "Failed to initialize GLFW\n");
@@ -106,12 +104,9 @@ void Window::init() {
 
   // Open a window and create its OpenGL context
 
-  if (!Window::fullscreen)
-    window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
-  else {
-    const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    window = glfwCreateWindow(mode->width, mode->height, "netvizGL", glfwGetPrimaryMonitor(), window);
-  }
+  window = glfwCreateWindow(windowWidth, windowHeight, "netvizGL", NULL, NULL);
+//  const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+//  window = glfwCreateWindow(2560, 1440, "netvizGL", glfwGetPrimaryMonitor(), window);
 
   if (window == NULL) {
     fprintf(stderr, "Failed to open GLFW window.\n");
@@ -130,7 +125,9 @@ void Window::init() {
     fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
   }
 
+  glfwSetWindowUserPointer(window, this);
   glfwSetKeyCallback(window, keyPressedEvent);
+
   glfwSetMouseButtonCallback(window, mousePressedEvent);
   glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
@@ -144,90 +141,119 @@ void Window::init() {
 
 }
 
-void Window::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
-  Window::Instance()->translateZ += yoffset / 16;
+void GLWindow::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
+  wind->translateZ += yoffset / 20;
 }
 
-void Window::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
+void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-    Window::Instance()->mouseRIGHT = true;
-    //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
+    wind->mouseRIGHT = true;
   }
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
-    Window::Instance()->mouseRIGHT = false;
-    //printf("GLFW_MOUSE_BUTTON_RIGHT::%d\n",Window::Instance()->mouseRIGHT);
+    wind->mouseRIGHT = false;
   }
-
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-    Window::Instance()->mouseLEFT = true;
-    //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+    wind->mouseLEFT = true;
   }
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
-    Window::Instance()->mouseLEFT = false;
-    //printf("GLFW_MOUSE_BUTTON_LEFT::%d\n",Window::Instance()->mouseLEFT);
+    wind->mouseLEFT = false;
   }
 }
 
-void Window::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
+void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
-  if (Window::Instance()->mouseLEFT || Window::Instance()->mouseRIGHT) {
-    Window::Instance()->yaw += (xpos - Window::Instance()->mouseX) / 8;
-    Window::Instance()->pitch += (ypos - Window::Instance()->mouseY) / 8;
-    Window::Instance()->mouseX = xpos;
-    Window::Instance()->mouseY = ypos;
+  if (wind->mouseLEFT || GLWindow::Instance()->mouseRIGHT) {
+    wind->yaw += (xpos - GLWindow::Instance()->mouseX) / 8;
+    wind->pitch += (ypos - GLWindow::Instance()->mouseY) / 8;
+    wind->mouseX = xpos;
+    wind->mouseY = ypos;
   }
-
-  Window::Instance()->mouseX = xpos;
-  Window::Instance()->mouseY = ypos;
+  wind->mouseX = xpos;
+  wind->mouseY = ypos;
 }
 
-void Window::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
-
-  //printf("Window::keyPressedEvent::%d\n", key);
+void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
   if (key == GLFW_KEY_T && action == GLFW_PRESS) {
-    if ((Window::Instance()->widgetThread)) {
-      Widget::Instance()->toggleView();
-    }
-    else{
-      Window::Instance()->widgetThread = new thread(widget, Window::Instance()->buttonWidget);
+    if ((wind->widgetThread)) {
+      wind->buttonWidget->toggleView();
+    } else {
+      fprintf(stderr, "Widget not running");
     }
   }
 
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
-    Window::Instance()->screenShot = true;
+    wind->X11Screenshot();
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
 
-//  if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
-//    std::string filePath = FileReader::openFile("zenity --file-selection > temp").c_str();
-//    Window::Instance()->graph = new EdgeGraph((char *) filePath.c_str());
-//    //graph = new EdgeGraph("../Graphs/edge-links2.txt");
-//    //graph = new EdgeGraph("../Graphs/edge-links.txt");
-//    Window::Instance()->algorithm = new SimpleForceDirected(Window::Instance()->graph);
-//    Window::Instance()->endThread = false;
-//    Window::Instance()->algorithmThread = new thread(algorithmFunction);
-//  }
-
   if (key == GLFW_KEY_LEFT) {
-    Window::Instance()->translateX += .01;
+    wind->translateX -= .01;
   }
   if (key == GLFW_KEY_RIGHT) {
-    Window::Instance()->translateX -= .01;
+    wind->translateX += .01;
   }
 
   if (key == GLFW_KEY_DOWN) {
-    Window::Instance()->translateY += .01;
+    wind->translateY -= .01;
   }
   if (key == GLFW_KEY_UP) {
-    Window::Instance()->translateY -= .01;
+    wind->translateY += .01;
   }
 
 }
 
-int Window::screenshot() {
+void GLWindow::X11Screenshot() {
+  Display *openDisplay = XOpenDisplay(NULL);
+  Window root = DefaultRootWindow(openDisplay);
+  XWindowAttributes gwa;
+  int revert = RevertToNone;
+  Window active;
+  XGetInputFocus(openDisplay, &active, &revert);
+
+  XGetWindowAttributes(openDisplay, root, &gwa);
+  if (!XGetWindowAttributes(openDisplay, active, &gwa))
+    std::cout << "XGetWindowAttributes failed" << std::endl;
+
+  uint width = (uint) gwa.width;
+  uint height = (uint) gwa.height;
+  fprintf(stderr, "%d,%d", width, height);
+
+  XImage
+      *image = XGetImage(openDisplay, active, 0, 0, (unsigned int) width, (unsigned int) height, XAllPlanes(), ZPixmap);
+
+  unsigned long red_mask = image->red_mask;
+  unsigned long green_mask = image->green_mask;
+  unsigned long blue_mask = image->blue_mask;
+
+  pngwriter PNG(width, height, 0.0, "screenshot.png");
+  uint x, y;
+  for (y = 0; y < height; y++) {
+    for (x = 0; x < width; x++) {
+      unsigned long pixel = XGetPixel (image, x, y);
+
+      double blue = pixel & blue_mask;
+      double green = (pixel & green_mask) >> 8;
+      double red = (pixel & red_mask) >> 16;
+
+      PNG.plot(x, height - y, red / 256.00, green / 256.00, blue / 256.00);
+    }
+  }
+  PNG.close();
+}
+
+int GLWindow::GLScreenshot() {
+
+  int width, height;
+  glfwGetFramebufferSize(window, &width, &height);
+
+  fprintf(stderr, "%d,%d", width, height);
 
 //  fullscreen = true;
 //
@@ -239,7 +265,7 @@ int Window::screenshot() {
   GLfloat *pixels = new GLfloat[pix];
 
   glReadPixels(0, 0, windowWidth, windowHeight, GL_RGB, GL_FLOAT, pixels);
-  pngwriter PNG(windowWidth, windowHeight, 0.0, "screenshot.png");
+  pngwriter PNG(windowWidth, windowHeight, 0.0, "GLScreenshot.png");
   size_t x = 1;
   size_t y = 1;
   double R, G, B;
@@ -268,9 +294,9 @@ int Window::screenshot() {
 //  }
 }
 
-void Window::quit(){
+void GLWindow::quit() {
   glfwDestroyWindow(window);
-  exit(0);
+  glfwTerminate();
 }
 
 
