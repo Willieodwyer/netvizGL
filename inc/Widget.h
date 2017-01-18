@@ -24,17 +24,18 @@ class Widget {
   GtkWidget *filterButton;
   GtkWidget *runButton;
   GtkWidget *button_box;
+  GtkWidget *colourNodeLabel;
+
+
   GtkWidget *window;
-
-
   static void activate(GtkApplication *app, gpointer user_data);
  public:
+
   Widget();
 
   virtual ~Widget();
 
   static Widget *Instance();
-
   static void toggleView();
   static void openFile();
   static void quitNetviz();

@@ -49,6 +49,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   Widget::Instance()->separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
   // Colour Node
+  Widget::Instance()->colourNodeLabel = gtk_label_new("Colour Node");
   Widget::Instance()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
 
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->openFileButton);
@@ -59,6 +60,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   //TODO
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteNodeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteEdgeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), (GtkWidget *) Widget::Instance()->colourNodeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourEdgeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->filterButton);
