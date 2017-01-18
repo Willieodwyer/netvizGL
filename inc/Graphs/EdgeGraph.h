@@ -13,6 +13,7 @@ class EdgeGraph : public Graph {
   virtual void update();
  private:
   virtual void read(char *filePath);
+  bool validate(char *filePath);
 };
 
 #endif //NETVIZGL_EDGEGRAPH_H

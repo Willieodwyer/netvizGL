@@ -49,6 +49,8 @@ class Vertex {
   void update();
 
   std::mutex mtx;
+  bool isPointerOver(double x, double y);
+  double getDepth();
 };
 
 #endif //NETVIZGL_SPHERE_H

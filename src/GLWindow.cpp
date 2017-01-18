@@ -1,9 +1,8 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "../inc/GLWindow.h"
-#include "../inc/FileReader.h"
-#include "../inc/Graphs/EdgeGraph.h"
 #include "../inc/Command/LoadGraphCommand.h"
+#include "../inc/Command/ColourNodeCommand.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -44,6 +43,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
   //Graph command
   loadGraph = new LoadGraphCommand(this);
+  colourNode = new ColourNodeCommand(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
@@ -77,7 +77,7 @@ void GLWindow::display() {
     glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
     glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if (Graph::numGraphs != 0) {
+    if (Graph::numGraphs != 0 && graph != NULL) {
       graph->update();
       graph->draw();
     }
@@ -161,14 +161,18 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
     wind->mouseLEFT = false;
   }
+
+  if (wind->mouseRIGHT) {
+    wind->colourNode->execute();
+  }
 }
 
 void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
   static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
-  if (wind->mouseLEFT || GLWindow::Instance()->mouseRIGHT) {
-    wind->yaw += (xpos - GLWindow::Instance()->mouseX) / 8;
-    wind->pitch += (ypos - GLWindow::Instance()->mouseY) / 8;
+  if (wind->mouseLEFT) {
+    wind->yaw += (xpos - wind->mouseX) / 8;
+    wind->pitch += (ypos - wind->mouseY) / 8;
     wind->mouseX = xpos;
     wind->mouseY = ypos;
   }
@@ -190,8 +194,13 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
     wind->X11Screenshot();
 
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+  if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+    wind->GLScreenshot();
+  }
+
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, GL_TRUE);
+  }
 
   if (key == GLFW_KEY_LEFT) {
     wind->translateX -= .01;
@@ -264,6 +273,7 @@ int GLWindow::GLScreenshot() {
   const int pix = 3 * windowWidth * windowHeight;
   GLfloat *pixels = new GLfloat[pix];
 
+  glReadBuffer(GL_FRONT);
   glReadPixels(0, 0, windowWidth, windowHeight, GL_RGB, GL_FLOAT, pixels);
   pngwriter PNG(windowWidth, windowHeight, 0.0, "GLScreenshot.png");
   size_t x = 1;
@@ -282,6 +292,7 @@ int GLWindow::GLScreenshot() {
           y++;
         } else { x++; }
         break;
+      default:break;
     }
   }
   PNG.close();
@@ -295,8 +306,7 @@ int GLWindow::GLScreenshot() {
 }
 
 void GLWindow::quit() {
-  glfwDestroyWindow(window);
-  glfwTerminate();
+  glfwSetWindowShouldClose(window, true);
 }
 
 

@@ -2,8 +2,10 @@
 // Created by werl on 23/09/16.
 //
 
+#include "../inc/GLWindow.h"
 #include <cstdio>
 #include <iostream>
+#include <GL/glu.h>
 #include "../inc/Vertex.h"
 
 Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
@@ -167,6 +169,70 @@ void Vertex::attachPoint(Vertex *p) {
   attachedPoints.push_back(p);
   Line *l = new Line(posX * 0.1, posY * 0.1, posZ * 0.1,
                      p->posX * 0.1, p->posY * 0.1, p->posZ * 0.1);
-  //l->setColour(colourR,colourG,colourB,p->colourR,p->colourG,p->colourB);
   lines.push_back(l);
+}
+
+bool Vertex::isPointerOver(double x, double y) {
+  GLdouble proj[16];
+  GLdouble model[16];
+  GLint view[4];
+  GLdouble center[3];
+  GLdouble edge[3];
+
+  glGetDoublev(GL_PROJECTION_MATRIX, proj);
+  glGetDoublev(GL_MODELVIEW_MATRIX, model);
+  glGetIntegerv(GL_VIEWPORT, view);
+
+  gluProject(posX * Line::scale * .1,
+             posY * Line::scale * .1,
+             posZ * Line::scale * .1,
+             model,
+             proj,
+             view,
+             center,
+             center + 1,
+             center + 2);
+
+  gluProject(vertices[15],
+             vertices[16],
+             vertices[17],
+             model,
+             proj,
+             view,
+             edge,
+             edge + 1,
+             edge + 2);
+
+  double maxMouseDistance =
+      sqrt(((center[0] - edge[0]) * (center[0] - edge[0])) +
+          ((center[1] - edge[1]) * (center[1] - edge[1])));
+
+  double pointerDistance = sqrt(((center[0] - x) * (center[0] - x))
+                                    + ((center[1] - (GLWindow::Instance()->windowHeight - y))
+                                        * (center[1] - (GLWindow::Instance()->windowHeight - y))));
+
+  return pointerDistance < maxMouseDistance;
+}
+
+double Vertex::getDepth() {
+  GLdouble proj[16];
+  GLdouble model[16];
+  GLint view[4];
+  GLdouble center[3];
+
+  glGetDoublev(GL_PROJECTION_MATRIX, proj);
+  glGetDoublev(GL_MODELVIEW_MATRIX, model);
+  glGetIntegerv(GL_VIEWPORT, view);
+
+  gluProject(posX * Line::scale * .1,
+             posY * Line::scale * .1,
+             posZ * Line::scale * .1,
+             model,
+             proj,
+             view,
+             center,
+             center + 1,
+             center + 2);
+
+  return center[2];
 }
