@@ -8,6 +8,7 @@
 #include <gtk/gtk.h>
 
 class Widget {
+  GtkApplication *app;
   static Widget *instance;
   bool visible;
 
@@ -18,7 +19,7 @@ class Widget {
   GtkWidget *separator;
   GtkWidget *deleteNodeButton;
   GtkWidget *deleteEdgeButton;
-  GtkWidget *colourNodeButton;
+  GtkColorChooser *colourNodeButton;
   GtkWidget *colourEdgeButton;
   GtkWidget *filterButton;
   GtkWidget *runButton;
@@ -34,10 +35,13 @@ class Widget {
 
   static Widget *Instance();
 
-  static void quitEvent();
   static void toggleView();
   static void openFile();
   static void quitNetviz();
+  static void updateColour();
+  double redColour;
+  double blueColour;
+  double greenColour;
 };
 
 #endif //NETVIZGL_BUTTONS_H

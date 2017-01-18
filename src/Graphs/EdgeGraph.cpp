@@ -32,7 +32,7 @@ void EdgeGraph::read(char *filePath) {
 
   inFile.open(filePath);
   if (inFile.is_open()) {
-    //fprintf(stderr,"Open %s \n", filePath);
+    fprintf(stderr,"Opened: %s \n", filePath);
   } else {
     fprintf(stderr, "Failed to open %s \n", filePath);
     exit(0);
@@ -89,4 +89,8 @@ void EdgeGraph::read(char *filePath) {
     edges[edgeList[k][0]][edgeList[k][1]] = 1;
     edges[edgeList[k][1]][edgeList[k][0]] = 1;
   }
+}
+
+bool EdgeGraph::validate(char * filePath){
+
 }

@@ -76,6 +76,7 @@ class GLWindow {
 
   void quit();
   void X11Screenshot();
+  Command *colourNode;
 };
 
 #endif //NETVIZGL_WINDOW_H

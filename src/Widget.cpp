@@ -4,8 +4,6 @@
 
 #include "../inc/Widget.h"
 #include "../inc/GLWindow.h"
-#include "../inc/FileReader.h"
-#include "../inc/Graphs/EdgeGraph.h"
 
 Widget *Widget::instance = NULL;
 
@@ -17,12 +15,9 @@ Widget *Widget::Instance() {
 
 Widget::Widget() {
   visible = true;
-
-  GtkApplication *app;
-  int status;
-  app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
-  g_signal_connect (app, "activate", G_CALLBACK(activate), NULL);
-  status = g_application_run(G_APPLICATION (app), 0, 0);
+  app = gtk_application_new("org.gtk.Netviz", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+  g_application_run(G_APPLICATION(app), 0, 0);
   g_object_unref(app);
 }
 
@@ -34,25 +29,27 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_window_set_title(GTK_WINDOW (Widget::Instance()->window), "Toolbox");
   gtk_window_set_default_size(GTK_WINDOW (Widget::Instance()->window), 197, 200);
   gtk_window_move(GTK_WINDOW (Widget::Instance()->window), 270, 152);
+  g_signal_connect ((Widget::Instance()->window), "delete-event", G_CALLBACK(toggleView), Widget::Instance());
 
   Widget::Instance()->button_box = gtk_button_box_new(GTK_ORIENTATION_VERTICAL);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->window), Widget::Instance()->button_box);
 
   //File Dialog button
   Widget::Instance()->openFileButton = gtk_button_new_with_label("Open File");
-  g_signal_connect (Widget::Instance()->openFileButton, "clicked", G_CALLBACK(openFile), NULL);
+  g_signal_connect (Widget::Instance()->openFileButton, "clicked", G_CALLBACK(openFile), Widget::Instance());
 
   //Algorithm select button
   Widget::Instance()->algorithmButton = gtk_combo_box_new();
-  //g_signal_connect (Widget::Instance()->openFileButton, "clicked", G_CALLBACK(openFile), NULL);
 
   // Exit button
   Widget::Instance()->exitButton = gtk_button_new_with_label("Exit");
-  g_signal_connect (Widget::Instance()->exitButton, "clicked", G_CALLBACK(quitNetviz), NULL);
+  g_signal_connect (Widget::Instance()->exitButton, "clicked", G_CALLBACK(quitNetviz), Widget::Instance());
 
   // Separator
   Widget::Instance()->separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-  g_signal_connect ((Widget::Instance()->window), "delete-event", G_CALLBACK(toggleView), NULL);
+
+  // Colour Node
+  Widget::Instance()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
 
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->openFileButton);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->algorithmButton);
@@ -62,7 +59,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   //TODO
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteNodeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteEdgeButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourNodeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), (GtkWidget *) Widget::Instance()->colourNodeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourEdgeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->filterButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->runButton);
@@ -86,20 +83,31 @@ void Widget::openFile() {
                                   NULL);
 
   res = gtk_dialog_run(GTK_DIALOG (Widget::Instance()->dialog));
+
   if (res == GTK_RESPONSE_ACCEPT) {
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Instance()->dialog);
     GLWindow::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
+    fprintf(stderr, "%s", gtk_file_chooser_get_filename(chooser));
+  }
+
+  if (res == GTK_RESPONSE_CANCEL) {
+    gtk_widget_destroy(Widget::Instance()->dialog);
+    return;
   }
 
   gtk_widget_destroy(Widget::Instance()->dialog);
 
-  GLWindow::Instance()->loadGraph->execute();
+  if (GLWindow::Instance()->graphFilePath)
+    GLWindow::Instance()->loadGraph->execute();
 }
 
-void Widget::quitEvent() {
-  fprintf(stderr, "%d", GLWindow::Instance()->windowHeight);
-  fprintf(stderr, "\nClosing widgetFunction\n");
-  gtk_widget_destroy(GTK_WIDGET(Widget::Instance()->window));
+void Widget::updateColour() {
+  GdkRGBA *colour = new GdkRGBA;
+  gtk_color_chooser_get_rgba(Widget::Instance()->colourNodeButton, colour);
+
+  Widget::Instance()->redColour = colour->red;
+  Widget::Instance()->blueColour = colour->blue;
+  Widget::Instance()->greenColour = colour->green;
 }
 
 void Widget::toggleView() {

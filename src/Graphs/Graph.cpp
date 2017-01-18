@@ -20,7 +20,7 @@ int *Graph::split(string str) {
   std::istringstream buf(str);
   std::istream_iterator<std::string> beg(buf), end;
 
-  std::vector<std::string> tokens(beg, end); // done!
+  std::vector<std::string> tokens(beg, end);
 
   int *ret = new int[tokens.size()];
   for (int i = 0; i < tokens.size(); ++i)
