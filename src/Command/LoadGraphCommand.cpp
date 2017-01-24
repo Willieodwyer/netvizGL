@@ -6,7 +6,7 @@
 #include "../../inc/Graphs/EdgeGraph.h"
 
 LoadGraphCommand::LoadGraphCommand(GLWindow *window)
-    : window(window){
+    : window(window) {
 
 }
 

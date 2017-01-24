@@ -8,8 +8,8 @@
 #include "../GLWindow.h"
 #include "Command.h"
 
-class ColourNodeCommand : public Command{
-
+class ColourNodeCommand : public Command {
+ private:
   GLWindow *window;
  public:
   ColourNodeCommand(GLWindow *pWindow);

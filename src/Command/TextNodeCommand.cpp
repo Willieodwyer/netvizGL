@@ -1,14 +1,11 @@
 //
-// Created by werl on 15/01/17.
+// Created by william on 24/01/17.
 //
 
 #include <algorithm>
-#include "../../inc/Command/ColourNodeCommand.h"
+#include "../../inc/Command/TextNodeCommand.h"
 
-ColourNodeCommand::ColourNodeCommand(GLWindow *pWindow) {
-  this->window = pWindow;
-}
-void ColourNodeCommand::execute() {
+void TextNodeCommand::execute() {
   vector<Vertex *> pointerOver;
   vector<double> depthValues;
 
@@ -31,9 +28,10 @@ void ColourNodeCommand::execute() {
 
   for (int i = 0; i < pointerOver.size(); i++) {
     if (closest == depthValues[i]) {
-      pointerOver[i]->setColour(Widget::Instance()->redColour,
-                                Widget::Instance()->greenColour,
-                                Widget::Instance()->blueColour);
+      pointerOver[i]->setText(Widget::Instance()->textNodeText);
     }
   }
+}
+TextNodeCommand::TextNodeCommand(GLWindow *pWindow) : window(pWindow){
+
 }

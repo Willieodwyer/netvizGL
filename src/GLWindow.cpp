@@ -3,6 +3,7 @@
 #include "../inc/GLWindow.h"
 #include "../inc/Command/LoadGraphCommand.h"
 #include "../inc/Command/ColourNodeCommand.h"
+#include "../inc/Command/TextNodeCommand.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -44,6 +45,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
   //Graph command
   loadGraph = new LoadGraphCommand(this);
   colourNode = new ColourNodeCommand(this);
+  textNode = new TextNodeCommand(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
@@ -61,12 +63,11 @@ void GLWindow::widgetFunction(Widget *x) {
 }
 //
 
-void GLWindow::display() {
+void GLWindow::render() {
   while (!glfwWindowShouldClose(window)) {
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
     glViewport(0, 0, windowWidth, windowHeight);
 
-    glClearColor(0.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
@@ -82,7 +83,7 @@ void GLWindow::display() {
       graph->draw();
     }
 
-    glLineWidth(4.0);
+    glLineWidth(2.0);
 
     if (screenShot) {
       GLScreenshot();
@@ -139,18 +140,21 @@ void GLWindow::init() {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
+  glClearColor(0.0, 1.0, 1.0, 1.0);
+
 }
 
 void GLWindow::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
-  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
   wind->translateZ += yoffset / 20;
 }
 
 void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
-  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
 
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
     wind->mouseRIGHT = true;
+    wind->colourNode->execute();
   }
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
     wind->mouseRIGHT = false;
@@ -162,13 +166,12 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
     wind->mouseLEFT = false;
   }
 
-  if (wind->mouseRIGHT) {
-    wind->colourNode->execute();
-  }
+  if(button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS){
+    wind->textNode->execute();
 }
 
 void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
-  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
 
   if (wind->mouseLEFT) {
     wind->yaw += (xpos - wind->mouseX) / 8;
@@ -181,7 +184,7 @@ void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) 
 }
 
 void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
-  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
 
   if (key == GLFW_KEY_T && action == GLFW_PRESS) {
     if ((wind->widgetThread)) {

@@ -22,8 +22,8 @@ void SimpleForceDirected::apply() {
       GLdouble rsq = ((v->posX - u->posX) * (v->posX - u->posX)
           + (v->posY - u->posY) * (v->posY - u->posY));
 
-      v->forceX += 12 * ((v->posX - u->posX) / rsq);
-      v->forceY += 12 * ((v->posY - u->posY) / rsq);
+      v->forceX += 16 * ((v->posX - u->posX) / rsq);
+      v->forceY += 16 * ((v->posY - u->posY) / rsq);
     }
 
     for (int j = 0; j < graph->numVertices; ++j) {

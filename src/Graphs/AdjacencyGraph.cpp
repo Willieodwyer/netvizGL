@@ -14,7 +14,7 @@ AdjacencyGraph::AdjacencyGraph(char *filePath)
 
 void AdjacencyGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-    vertices[i]->draw();
+    vertices[i]->drawPoints();
   }
 }
 
