@@ -4,6 +4,7 @@
 #include "../inc/Command/LoadGraphCommand.h"
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
+#include "../inc/Graphs/MatrixMarketGraph.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -53,7 +54,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
 //Threads
 void GLWindow::algorithmFunction() {
-  while (!GLWindow::Instance()->endThread) {
+  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph) {
     GLWindow::Instance()->algorithm->apply();
   }
 }
@@ -140,7 +141,7 @@ void GLWindow::init() {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
-  glClearColor(0.0, 1.0, 1.0, 1.0);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
 
 }
 
@@ -199,7 +200,8 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    wind->GLScreenshot();
+    MatrixMarketGraph test("Asdas");
+    test.read("asdsa");
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {

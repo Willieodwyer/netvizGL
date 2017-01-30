@@ -18,6 +18,7 @@ class Graph {
   static int numGraphs;
 
   Graph(char *filePath);
+  virtual ~Graph();
 
   vector<Vertex *> vertices;
   int numVertices;
@@ -28,7 +29,6 @@ class Graph {
 
   int *split(string x);
   unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
-
  private:
   virtual void read(char *filePath) = 0;
 };
