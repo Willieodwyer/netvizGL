@@ -1,0 +1,801 @@
+package open;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class GA_gecco2015 {
+
+	static int [][] ordering;
+	static int [][] up ;
+	
+	static double [][] GA_2015(int adj[][], int v, int population, int mating_pool,  int gins,int cp, int crs) throws FileNotFoundException
+	{
+		
+		double [][] pos = new double [2][v];
+		
+		ordering = new  int [population][v+1];
+		up = new int [population][v+1];
+		
+		
+		adj = matrix_change_to_distance_cells(adj, v);
+		
+		ArrayList <Integer> temp = new ArrayList <Integer>();
+		
+		
+		for(int i=0;i<population;i++)
+		{
+			for(int i1=0;i1<v;i1++)
+				temp.add(i1);
+			
+			
+			int q=v;
+			for(int j=0;j<v;j++)
+			{
+				int p=(int) ((double) Math.random()*(q-0));
+				ordering[i][j]=temp.get(p);
+				temp.remove(p);
+				q--;
+			}
+
+			//***********checking none-repeated orderings ***********
+			if(i>0)
+			for(int k=0;k<(i-1);k++)
+			{
+				int t1[] = new int [v];
+				int t2[] = new int [v];
+				
+				for(int j=0;j<v;j++)
+				{
+					t1[j]=ordering[k][j];
+					t2[j]=ordering[i][j];
+				}
+				
+				if(Arrays.equals(t1, t2))
+				{
+					k=population+10;
+					i--;
+				}
+			}
+			//**********End checking none-repeated orderings ********
+		}
+		
+		
+		
+		
+		
+		
+		
+		for(int i=0;i<population;i++)
+		{
+			int mat [] = new int [v];
+			for(int j=0;j<v;j++)
+			{
+				mat[j]=ordering[i][j];
+				
+			}
+			ordering[i][v]=fitness(variables.adj,mat,v);
+			
+		}
+		
+		
+		
+		//*************Above code has been called only once at beginning***************
+	
+		
+		up=mating_pool( v, population, mating_pool, ordering);
+		
+		int abs_min[]= new int [v+1];
+		
+		
+		for(int genet=0;genet<gins;genet++)
+		{		
+			ordering=probablity_operations(up, v, population, crs , cp);
+			
+			for(int i=0;i<population;i++)
+			{
+				int mat [] = new int [v];
+				
+				for(int j=0;j<v;j++)
+				{
+					mat[j]=ordering[i][j];
+				}
+				
+				//ordering[i][v]=fitness_calculation(mat,v,adj);
+				ordering[i][v]=fitness(variables.adj,mat,v);
+			}
+			
+			up=mating_pool( v, population, mating_pool, ordering);
+			
+			abs_min=minimum_fitness(up, v, population);
+		}
+	
+		
+		
+		//extracting the ordering with a minimum fittness
+		
+		abs_min=minimum_fitness(up, v, population);
+	    
+		double chunk = Math.PI/(double)v;
+		
+		for(double i=0;i<v;i++)
+		{
+			pos[0][abs_min[(int)i]]=Math.cos(i*chunk);
+			pos[1][abs_min[(int)i]]=Math.sin(i*chunk);
+		}
+		
+		return pos;
+		
+	}
+	
+	static int [] minimum_fitness_temp(int ordering[][], int v, int population)
+	{
+		int max=-1;
+		int order []= new int[v+1];
+		for(int i=0;i<population;i++)
+		{
+			if(max<ordering[i][v])
+			{
+				for(int j=0;j<v+1;j++)
+				{
+					order[j]=ordering[i][j];
+				}
+				max=ordering[i][v];
+			}
+		}
+		return order;
+	}
+	
+	
+	static int [] minimum_fitness(int ordering[][], int v, int population)
+	{
+		int order []= new int[v+1];
+		
+		for(int j=0;j<v+1;j++)
+			order[j]=ordering[0][j];
+		
+		for(int i=0;i<population;i++)
+		{
+			if(order[v]>ordering[i][v])
+			{
+				for(int j=0;j<v+1;j++)
+				{
+					order[j]=ordering[i][j];
+				}
+				order[v]=ordering[i][v];
+			}
+		}
+
+		return order;
+	}
+	
+	
+	static int maximum_fitness(int ordering[][], int v, int population)
+	{
+		int max=0;
+		
+		for(int i=0;i<population;i++)
+		{
+			if(max<ordering[i][v])
+				max=ordering[i][v];
+		}
+		
+		return max;
+	}
+	
+	
+	static double average_fitness(int ordering[][], int v, int population)
+	{
+		double ave=0;
+		
+		for(int i=0;i<population;i++)
+		{
+			ave+=ordering[i][v];
+		}
+		
+		return (ave/population);
+	}
+	
+	
+	static int [][] cross_over(int order1[], int order2[], int v)
+	{
+		int [][]cross_over =new int [2][v];
+		int []cross1 =new int [v];
+		ArrayList <Integer> par1 = new ArrayList <Integer>();
+		int []cross2 =new int [v];
+		ArrayList <Integer> par2 = new ArrayList <Integer>();
+		//***** New Version ******
+		int [] all = new int [2*v];
+		int j=0;
+		
+		int p=(int) ((double) Math.random()*(v-2)+1);
+		int cross_type=1;
+		//cross_type=1 POS
+		//cross_type=3 voting crossover
+		//cross_type=2 partially
+		//cross_type=4 alternating
+		if(cross_type==2)
+		{
+			
+			for(int i=0;i<v;i++)
+			{
+				cross_over[0][i]=-1;
+				cross_over[1][i]=-1;
+			}
+			int cr1=0;
+			
+			for(int i=0;i<v;i++)
+			{
+				cross1[cr1]=order1[i];
+				cr1++;
+			}
+			cr1=0;
+			for(int i=0;i<v;i++)
+			{
+				cross2[cr1]=order2[i];
+				cr1++;
+			}
+			
+			for(int i=0;i<v;i++)
+			{
+				if(cross1[i]==cross2[i])
+				{
+					cross_over[0][i]=cross1[i];
+					cross_over[1][i]=cross1[i];
+					cross1[i]=-1;
+					cross2[i]=-1;
+				}
+			}
+			for(int i=v-1;i>=0;i--)
+			{
+				if(cross1[i]!=-1)
+					for(int j1=0;j1<v;j1++)
+					{
+						if(cross_over[0][j1]==-1)
+						{
+							cross_over[0][j1]=cross1[i];
+							break;
+						}
+					}
+			}
+			
+			for(int i=v-1;i>=0;i--)
+			{
+				if(cross2[i]!=-1)
+					for(int j1=0;j1<v;j1++)
+					{
+						if(cross_over[1][j1]==-1)
+						{
+							cross_over[1][j1]=cross2[i];
+							break;
+						}
+					}
+			}
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		if(cross_type==1)
+		{
+			int n=(int) ((double) Math.random()*(v-1));
+			//n--;
+			for(int i=0;i<v;i++)
+			{
+				cross_over[0][i]=-1;
+				cross_over[1][i]=-1;
+			}
+			
+			
+			for(int i=0;i<v;i++)
+			{
+				par1.add(order1[i]);
+			}
+		
+			for(int i=0;i<v;i++)
+			{
+				par2.add(order2[i]);
+			}
+			
+			for(int i=0;i<n;i++)
+			{
+				int m=(int) ((double) Math.random()*(v-0));
+				if(par1.get(m)==-1)
+					i--;
+				else
+				{
+					cross_over[0][m]=par1.get(m);
+					par1.set(m, -1);
+					for(int j1=0;j1<v;j1++)
+					{
+						if(par2.get(j1)==cross_over[0][m])
+						{
+							par2.remove(j1);
+							break;
+						}
+					}
+				}
+				
+			}
+			int c=0;
+			for(int i=0;i<v;i++)
+			{
+				if(cross_over[0][i]==-1)
+				{
+					cross_over[0][i]=par2.get(c);
+					c++;
+				}
+			}
+			
+			//**second child
+			
+			ArrayList <Integer> par11 = new ArrayList <Integer>();
+			ArrayList <Integer> par21 = new ArrayList <Integer>();
+			n=(int) ((double) Math.random()*(v-1));
+			//n--;
+			
+			
+			for(int i=0;i<v;i++)
+			{
+				par11.add(order1[i]);
+			}
+		
+			for(int i=0;i<v;i++)
+			{
+				par21.add(order2[i]);
+			}
+			
+			for(int i=0;i<n;i++)
+			{
+				int m=(int) ((double) Math.random()*(v-0));
+				if(par21.get(m)==-1)
+					i--;
+				else
+				{
+					cross_over[1][m]=par21.get(m);
+					par21.set(m, -1);
+					for(int j1=0;j1<v;j1++)
+					{
+						if(par11.get(j1)==cross_over[1][m])
+						{
+							par11.remove(j1);
+							break;
+						}
+					}
+				}
+				
+			}
+			c=0;
+			for(int i=0;i<v;i++)
+			{
+				if(cross_over[1][i]==-1)
+				{
+					cross_over[1][i]=par11.get(c);
+					c++;
+				}
+			}
+			
+			//*********
+		}
+		
+		if(cross_type==2)
+		{
+		//***new version
+		int cr1=0;
+		for(int i=0;i<p;i++)
+		{
+			cross1[cr1]=order1[i];
+			cr1++;
+		}
+		for(int i=0;i<v-p;i++)
+		{
+			cross1[cr1]=order2[i];
+			cr1++;
+		}
+		
+		cr1=0;
+		for(int i=p;i<v;i++)
+		{
+			cross2[cr1]=order1[i];
+			cr1++;
+		}
+		for(int i=v-p;i<v;i++)
+		{
+			cross2[cr1]=order2[i];
+			cr1++;
+		}
+		}
+		
+		//***end new version
+		
+		
+		if(cross_type==4)
+		{
+		for(int i=0;i<v;i++)
+		{
+			all[j]=order1[i];
+			j++;
+			all[j]=order2[i];
+			j++;
+		}
+		
+		
+		for(int i=0;i<v;i++)
+		{
+			cross1[i]=all[i];
+		}
+		j=0;
+		for(int i=v;i<2*v;i++)
+		{
+			cross2[j]=all[i];
+			j++;
+		}
+		}
+		
+		if(cross_type==2 || cross_type==4)
+		{
+		boolean check=true;
+		while(check)
+		{
+			
+			check=false;
+			int c1=0,c2=0;
+			for(int i=0;i<v;i++)
+			{
+				for(j=i+1;j<v;j++)
+				{
+					if(cross1[i]==cross1[j])
+					{
+						c1=i;
+						j=v*10;
+						i=v*10;
+						check=true;
+					}
+				}
+			}
+			
+			for(int i=0;i<v;i++)
+			{
+				for(j=i+1;j<v;j++)
+				{
+					if(cross2[i]==cross2[j])
+					{
+						c2=i;
+						j=v*10;
+						i=v*10;
+						check=true;
+					}
+				}
+			}
+			if(check)
+			{
+				int temp=cross1[c1];
+				cross1[c1]=cross2[c2];
+				cross2[c2]=temp;
+			}
+			
+			
+		}
+		
+		for(int i=0;i<v;i++)
+		{
+			cross_over[0][i]=cross1[i];
+			cross_over[1][i]=cross2[i];
+		}
+		//****End New Version ****
+		
+		}
+		
+		
+		
+		
+		return cross_over;
+	}
+	
+	
+	static int [][] probablity_operations(int ordering[][], int v, int population, int cross,  int copy)
+	{
+		int [][] updated_mating = new int [population][v+1];
+		
+		ArrayList <Integer> temp = new ArrayList <Integer>();
+		
+		for(int i=0;i<population;i++)
+			temp.add(i);
+		
+		//***********
+		int pop=population;
+		int mating=0;
+		while(mating<population)
+		{
+			int p=(int) ((double) Math.random()*(100-0));
+			
+			if(p<copy)
+			{
+					int q=0;
+					for(int i=0;i<v;i++)
+					{
+						updated_mating[mating][i]=ordering[temp.get(q)][i];
+					}
+					temp.remove(q);
+					pop--;
+					mating++;
+			}
+			if(p>=copy && p<(cross+copy) && mating <(population-1))
+			{
+				//**************CrossOver******
+				int crossing[][] = new int [2][v];
+				int order1[] = new int [v];
+				int order2[] = new int [v];
+				
+				int h1=0;
+				int h2=0;
+				while(h1==h2)
+				{
+					h1=(int) ((double) Math.random()*(pop-0));
+					h2=(int) ((double) Math.random()*(pop-0));
+				}
+				for(int i=0;i<v;i++)
+				{
+					order1[i]=ordering[temp.get(h1)][i];
+					order2[i]=ordering[temp.get(h2)][i];
+				}
+				
+				crossing=cross_over( order1, order2, v);
+				
+				for(int i=0;i<v;i++)
+				{
+					updated_mating[mating][i]=crossing[0][i];
+					updated_mating[mating+1][i]=crossing[1][i];
+				}
+				
+				//*********************
+				if(h1>h2)
+				{
+					temp.remove(h1);
+					temp.remove(h2);
+				}
+				else
+				{
+					temp.remove(h2);
+					temp.remove(h1);
+				}
+				pop--;
+				pop--;
+				mating+=2;
+			}
+			if(p>=(cross+copy))
+			{
+				//************Mutation*****************
+				int q=(int) ((double) Math.random()*(pop-0));
+				int perm1=0;
+				int perm2=0;
+				while(perm1==perm2)
+				{
+					perm1=(int) ((double) Math.random()*(v-1)+1);
+					perm2=(int) ((double) Math.random()*(v-0));
+				}
+				for(int i=0;i<v;i++)
+				{
+					updated_mating[mating][i]=ordering[temp.get(q)][i];
+				}
+				
+				int sw=updated_mating[temp.get(q)][perm1];
+				updated_mating[temp.get(q)][perm1]=updated_mating[temp.get(q)][perm2];
+				updated_mating[temp.get(q)][perm2]=sw;
+	
+				
+				
+				perm1=0;
+				perm2=0;
+				while(perm1==perm2)
+				{
+					perm1=(int) ((double) Math.random()*(v-0));
+					perm2=(int) ((double) Math.random()*(v-0));
+				}
+				
+				
+				sw=updated_mating[temp.get(q)][perm1];
+				updated_mating[temp.get(q)][perm1]=updated_mating[temp.get(q)][perm2];
+				updated_mating[temp.get(q)][perm2]=sw;
+				
+		
+				
+				//****************************
+				temp.remove(q);
+				pop--;			
+				
+				mating++;
+			}
+			
+			
+		}
+		temp.clear();
+		return updated_mating;
+	}
+	
+	
+	static int [][] mating_pool(int v, int population, int mating_pool, int ordering[][])
+		{	
+			int [][] mating = new int [population][v+1];
+		
+			for(int i=0;i<population;i++)
+			{
+					int [][] temp = new int [mating_pool][v+1];
+						
+					ArrayList <Integer> pop = new ArrayList<Integer> ();
+					
+					for(int j=0;j<population;j++)
+						pop.add(j);
+					
+					int g=population;
+					for(int j=0;j<mating_pool;j++)
+					{
+							
+						int p =(int) ((double) Math.random()*(g-0));
+						for(int k=0;k<v+1;k++)
+							temp[j][k]=ordering[pop.get(p)][k];
+						pop.remove(p);
+						g--;
+					}
+					pop.clear();
+					
+					int [] min = new int [v+1];
+					
+					for(int q=0;q<v+1;q++)
+						min[q]=temp[0][q];
+					
+					/*if(variables.GA_factor)
+					{
+						for(int j=0;j<mating_pool;j++)
+						{
+								if(min[v]<temp[j][v])
+									for(int q=0;q<v+1;q++)
+										min[q]=temp[j][q];
+						}
+					}
+					else
+					{*/
+						for(int j=0;j<mating_pool;j++)
+						{
+								if(min[v]>temp[j][v])
+									for(int q=0;q<v+1;q++)
+										min[q]=temp[j][q];
+						}
+					//}
+					for(int j=0;j<v+1;j++)
+					{
+							mating[i][j]=min[j];
+					}
+			}
+			
+			return mating;
+	}
+	
+
+	
+	
+	static int fitness (int adj[][], int order[], int v)
+	{
+		int fit=0;
+		double chunk = Math.PI/(double)v;
+		for(int i=0;i<v;i++)
+		{
+			for(int j=i+1;j<v;j++)
+			{	
+				fit+= Math.abs(adj[order[i]][order[j]]-Math.abs(i*chunk-j*chunk));
+			}
+		}
+		return fit;
+	}
+	
+	
+
+	static int [][] matrix_change_to_distance_cells  ( int [][]mat, int v) throws FileNotFoundException
+	{
+			variables.longest_theoritical_disctance=mat[0][0];
+		
+			for(int i=0;i<v;i++)
+			{			
+				for(int j=0;j<v;j++)
+				{					
+					if(mat[i][j]!=0)
+					{
+						for(int z=j+1;z<v;z++)
+						{						
+							if(mat[i][z]!=0 )
+							{
+								if((mat[j][z]==0  || mat[j][z]>(mat[i][z]+mat[i][j]) ) )
+								{
+									mat[j][z]=mat[i][z]+mat[i][j];
+									mat[z][j]=mat[j][z];
+								}
+								if(mat[j][z]!=0 && i!=z && (mat[i][z]==0 || mat[i][z]>(mat[j][z]+mat[i][j])))
+								{
+									mat[i][z]=mat[j][z]+ mat[i][j];
+									mat[z][i]=mat[i][z];
+								}
+							}							
+						}
+					}					
+				}				
+			}
+			
+			
+			
+			for(int i=0;i<v;i++)
+			{
+				for(int j=i+1;j<v;j++)
+				{
+					if(variables.longest_theoritical_disctance<mat[i][j])
+						variables.longest_theoritical_disctance=mat[i][j];
+				}
+			}			
+			//---------------------------------------
+			
+		
+		//*************
+		
+		//*************
+		return mat;
+	}
+	
+	static int [][] randomly_reordering(int adj[][], int v) // it takes the adjacency matrix and generate a random oreding and based on the random ordering generates the matrix and fitness
+	{
+		
+			int temp [][] = new int[v][v];
+		
+			ArrayList <Integer> rand_order = new ArrayList <Integer>();
+			
+			for(int i=0;i<v;i++)
+				rand_order.add(i);
+			
+			int order[]= new int[v];
+		
+			int q=v;
+			for(int i=0;i<v;i++)
+			{
+				int p=(int) ((double) Math.random()*(q-0));
+				order[i]=rand_order.get(p);
+				q--;
+				rand_order.remove(p);
+				
+			}
+			
+			
+		for(int i=0;i<v;i++)
+		{
+			for(int j=0;j<v;j++)
+			{
+				temp[i][j]=adj[i][j];
+				
+			}
+		}
+		
+		
+		for(int i=0;i<v;i++)
+		{
+			for(int j=0;j<v;j++)
+			{
+				int t=temp[order[i]][j];
+				temp[order[i]][j]=temp[i][j];
+				temp[i][j]=t;
+			}
+			for(int j=0;j<v;j++)
+			{
+				int t=temp[j][order[i]];
+				temp[j][order[i]]=temp[j][i];
+				temp[j][i]=t;
+			}
+		}
+		
+		return temp;
+		
+	}
+	
+}

@@ -145,12 +145,12 @@ void GLWindow::init() {
 }
 
 void GLWindow::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
-  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
   wind->translateZ += yoffset / 20;
 }
 
 void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
-  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
     wind->mouseRIGHT = true;
@@ -166,12 +166,13 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
     wind->mouseLEFT = false;
   }
 
-  if(button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS){
+  if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) {
     wind->textNode->execute();
+  }
 }
 
 void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
-  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
   if (wind->mouseLEFT) {
     wind->yaw += (xpos - wind->mouseX) / 8;
@@ -184,7 +185,7 @@ void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) 
 }
 
 void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
-  static GLWindow *wind = (GLWindow * )(glfwGetWindowUserPointer(window));
+  static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
   if (key == GLFW_KEY_T && action == GLFW_PRESS) {
     if ((wind->widgetThread)) {
@@ -238,7 +239,8 @@ void GLWindow::X11Screenshot() {
   fprintf(stderr, "%d,%d", width, height);
 
   XImage
-      *image = XGetImage(openDisplay, active, 0, 0, (unsigned int) width, (unsigned int) height, XAllPlanes(), ZPixmap);
+      *image =
+      XGetImage(openDisplay, active, 0, 0, (unsigned int) width, (unsigned int) height, XAllPlanes(), ZPixmap);
 
   unsigned long red_mask = image->red_mask;
   unsigned long green_mask = image->green_mask;
