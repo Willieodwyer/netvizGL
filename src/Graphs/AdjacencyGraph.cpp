@@ -16,6 +16,9 @@ void AdjacencyGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
     vertices[i]->drawPoints();
   }
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->drawText();
+  }
 }
 
 void AdjacencyGraph::update() {

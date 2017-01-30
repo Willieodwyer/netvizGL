@@ -2,6 +2,8 @@
 // Created by william on 30/01/17.
 //
 
+#include <sys/time.h>
+#include <zconf.h>
 #include "../../inc/Graphs/MatrixMarketGraph.h"
 #include "../../inc/Graphs/mmio.h"
 #include "../../src/Graphs/mmio.c"
@@ -10,17 +12,19 @@
 MatrixMarketGraph::MatrixMarketGraph(char *filePath) : Graph(filePath) {
 
 }
+
 // Taken from the example @ http://math.nist.gov/MatrixMarket/mmio-c.html
 void MatrixMarketGraph::read(char *filePath) {
   int ret_code;
   MM_typecode matcode;
   FILE *f;
-  int rows, cols, edges;
+  int rows, cols, edgs;
   int i, *I, *J;
-  double *val;
 
-  if ((f = fopen("/home/william/netvizGL/Graphs/MatrixMarket/fxm3_6.mtx", "r")) == NULL)
-    fprintf(stderr,"File not Opened");
+  if ((f = fopen(filePath, "r")) == NULL){
+    fprintf(stderr, "File not Opened");
+    return;
+  }
 
   if (mm_read_banner(f, &matcode) != 0) {
     printf("Could not process Matrix Market banner.\n");
@@ -29,51 +33,87 @@ void MatrixMarketGraph::read(char *filePath) {
 
   /*  This is how one can screen matrix types if their application */
   /*  only supports a subset of the Matrix Market data types.      */
-  if (!mm_is_coordinate(matcode)) {
-    printf("Sorry, this application only supports");
-    printf("Market Market type: [%s]\n", mm_typecode_to_str(matcode));
+  if (!mm_is_coordinate(matcode) || mm_is_integer(matcode)) {
+    printf("Sorry, this application only supports graphs that are:");
+    printf("Matrix Market type: [%s]\n", MM_COORDINATE_STR);
+    printf("and not: [%s]\n", MM_INT_STR);
     exit(1);
   }
 
   /* find out size of sparse matrix .... */
+  ret_code = mm_read_mtx_crd_size(f, &rows, &cols, &edgs);
 
-  if ((ret_code = mm_read_mtx_crd_size(f, &rows, &cols, &edges)) != 0)
+  if (ret_code != 0)
     exit(1);
 
-
   /* reseve memory for matrices */
+  I = (int *) malloc(edgs * sizeof(int));
+  J = (int *) malloc(edgs * sizeof(int));
 
-  I = (int *) malloc(edges * sizeof(int));
-  J = (int *) malloc(edges * sizeof(int));
-  val = (double *) malloc(edges * sizeof(double));
-
-
-  /* NOTE: when reading in doubles, ANSI C requires the use of the "l"  */
-  /*   specifier as in "%lg", "%lf", "%le", otherwise errors will occur */
-  /*  (ANSI C X3.159-1989, Sec. 4.9.6.2, p. 136 lines 13-15)            */
-
-  for (i = 0; i < edges; i++) {
-    fscanf(f, "%d %d %lg\n", &I[i], &J[i], &val[i]);
+  for (i = 0; i < edgs; i++) {
+    fscanf(f, "%d %d\n", &I[i], &J[i]);
     I[i]--;  /* adjust from 1-based to 0-based */
     J[i]--;
   }
 
-  if (f != stdin) fclose(f);
-
-  /************************/
-  /* now write out matrix */
-  /************************/
-
+  fclose(f);
   mm_write_banner(stderr, matcode);
-  mm_write_mtx_crd_size(stderr, rows, cols, edges);
-  for (i = 0; i < edges; i++)
-    fprintf(stderr, "%d %d %20.19g\n", I[i] + 1, J[i] + 1, val[i]);
+  mm_write_mtx_crd_size(stderr, rows, cols, edgs);
+  for (i = 0; i < edgs; i++)
+    fprintf(stderr, "%d %d\n", I[i] + 1, J[i] + 1);
+
+  numVertices = rows;
+
+  //Initialise Edges Matrix
+  edges = new int *[numVertices];
+  for (int i = 0; i < numVertices; ++i) {
+    edges[i] = new int[numVertices];
+    for (int j = 0; j < numVertices; ++j) {
+      edges[i][j] = 0;
+    }
+  }
+
+  //Initialise all the vertices and give them a random colour and position
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  srand(hash3(time.tv_sec, time.tv_usec, getpid()));
+  for (int j = 0; j < numVertices; ++j) {
+    vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  0));
+    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)));
+  }
+
+  //Check for same positions
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < numVertices; ++j) {
+      if (vertices[i]->posX == vertices[j]->posX && i != j
+          && vertices[i]->posY == vertices[j]->posY)
+        fprintf(stderr, "Warning: duplicate positions generated @ %d\n", i);
+    }
+  }
+
+  //Attach points to each other
+  for (int k = 0; k < edgs; ++k) {
+    vertices[I[k]]->attachPoint(vertices[J[k]]);
+    edges[I[k]][J[k]] = 1;
+    edges[J[k]][I[k]] = 1;
+  }
 }
 
 void MatrixMarketGraph::draw() {
-
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->drawPoints();
+  }
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->drawText();
+  }
 }
 
 void MatrixMarketGraph::update() {
-
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->update();
+  }
 }
