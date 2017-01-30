@@ -9,6 +9,7 @@
 #include "Line.h"
 #include <vector>
 #include <mutex>
+#include <FTGL/ftgl.h>
 
 using namespace std;
 class Vertex {
@@ -38,7 +39,7 @@ class Vertex {
 
   virtual ~Vertex();
 
-  void draw();
+  void drawPoints();
 
   void setColour(GLdouble r, GLdouble g, GLdouble b);
 
@@ -51,6 +52,15 @@ class Vertex {
   std::mutex mtx;
   bool isPointerOver(double x, double y);
   double getDepth();
+
+  FTPixmapFont *font;
+  void *getScreenPosition(GLdouble *pos);
+  GLdouble *pos;
+
+  void drawText();
+  char * text;
+
+  void setText(char *t);
 };
 
 #endif //NETVIZGL_SPHERE_H

@@ -14,6 +14,7 @@
 #include <GLFW/glfw3.h>
 #include <pthread.h>
 #include <thread>
+#include <FTGL/ftgl.h>
 
 class GLWindow {
 
@@ -42,7 +43,7 @@ class GLWindow {
   bool mouseLEFT;
   bool mouseRIGHT;
 
-  void display();
+  void render();
 
   void init();
 
@@ -77,6 +78,9 @@ class GLWindow {
   void quit();
   void X11Screenshot();
   Command *colourNode;
+
+  FTPixmapFont *font;
+  Command *textNode;
 };
 
 #endif //NETVIZGL_WINDOW_H

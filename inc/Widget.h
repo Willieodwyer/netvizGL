@@ -20,29 +20,31 @@ class Widget {
   GtkWidget *deleteNodeButton;
   GtkWidget *deleteEdgeButton;
   GtkColorChooser *colourNodeButton;
+  GtkWidget *colourNodeLabel;
   GtkWidget *colourEdgeButton;
   GtkWidget *filterButton;
   GtkWidget *runButton;
   GtkWidget *button_box;
-  GtkWidget *colourNodeLabel;
-
-
+  GtkWidget *textNodeLabel;
+  GtkWidget *textNodeEntry;
   GtkWidget *window;
+
   static void activate(GtkApplication *app, gpointer user_data);
+
  public:
 
   Widget();
-
   virtual ~Widget();
-
   static Widget *Instance();
   static void toggleView();
   static void openFile();
   static void quitNetviz();
   static void updateColour();
+  static void textChanged();
   double redColour;
   double blueColour;
   double greenColour;
+  char *textNodeText;
 };
 
 #endif //NETVIZGL_BUTTONS_H

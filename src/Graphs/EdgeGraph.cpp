@@ -14,7 +14,10 @@ EdgeGraph::EdgeGraph(char *filePath)
 
 void EdgeGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-    vertices[i]->draw();
+    vertices[i]->drawPoints();
+  }
+  for (int i = 0; i < numVertices; ++i) {
+    vertices[i]->drawText();
   }
 }
 
@@ -32,9 +35,9 @@ void EdgeGraph::read(char *filePath) {
 
   inFile.open(filePath);
   if (inFile.is_open()) {
-    fprintf(stderr,"Opened: %s \n", filePath);
+    fprintf(stdout, "\nOpened: %s \n", filePath);
   } else {
-    fprintf(stderr, "Failed to open %s \n", filePath);
+    fprintf(stderr, "\nFailed to open %s \n", filePath);
     exit(0);
   }
 
@@ -91,6 +94,7 @@ void EdgeGraph::read(char *filePath) {
   }
 }
 
-bool EdgeGraph::validate(char * filePath){
+////TODO this
+bool EdgeGraph::validate(char *filePath) {
 
 }

@@ -4,7 +4,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <cstdlib>
 #include <iterator>
 #include <iostream>
 #include "../../inc/Graphs/Graph.h"

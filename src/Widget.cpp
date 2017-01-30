@@ -52,6 +52,14 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   Widget::Instance()->colourNodeLabel = gtk_label_new("Colour Node");
   Widget::Instance()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
 
+  // Text Node
+  Widget::Instance()->textNodeLabel = gtk_label_new("Add text to node");
+  Widget::Instance()->textNodeEntry = gtk_entry_new();
+  gtk_entry_set_text((GtkEntry *) Widget::Instance()->textNodeEntry, "Enter node text here");
+  gtk_entry_set_max_length ((GtkEntry *) Widget::Instance()->textNodeEntry,64);
+  g_signal_connect (Widget::Instance()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Instance());
+  Widget::Instance()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Instance()->textNodeEntry);
+
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->openFileButton);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->algorithmButton);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->exitButton);
@@ -60,8 +68,13 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   //TODO
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteNodeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteEdgeButton);
+
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), (GtkWidget *) Widget::Instance()->colourNodeButton);
+
+  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeLabel);
+  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeEntry);
+
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourEdgeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->filterButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->runButton);
@@ -124,5 +137,9 @@ void Widget::toggleView() {
 
 void Widget::quitNetviz() {
   GLWindow::Instance()->quit();
+}
+
+void Widget::textChanged() {
+  Widget::Instance()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Instance()->textNodeEntry);
 }
 
