@@ -4,6 +4,7 @@
 #include "../inc/Command/LoadGraphCommand.h"
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
+#include "../inc/Graphs/MatrixMarketGraph.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -199,7 +200,8 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    wind->GLScreenshot();
+    MatrixMarketGraph test("Asdas");
+    test.read("asdsa");
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
