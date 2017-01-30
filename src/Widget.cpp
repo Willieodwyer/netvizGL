@@ -102,7 +102,7 @@ void Widget::openFile() {
   if (res == GTK_RESPONSE_ACCEPT) {
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Instance()->dialog);
     GLWindow::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
-    fprintf(stderr, "%s", gtk_file_chooser_get_filename(chooser));
+    //fprintf(stderr, "%s", gtk_file_chooser_get_filename(chooser));
   }
 
   if (res == GTK_RESPONSE_CANCEL) {

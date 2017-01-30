@@ -54,7 +54,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
 //Threads
 void GLWindow::algorithmFunction() {
-  while (!GLWindow::Instance()->endThread) {
+  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph) {
     GLWindow::Instance()->algorithm->apply();
   }
 }
@@ -141,7 +141,7 @@ void GLWindow::init() {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
-  glClearColor(0.0, 1.0, 1.0, 1.0);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
 
 }
 

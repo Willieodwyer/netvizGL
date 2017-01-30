@@ -13,6 +13,7 @@ class MatrixMarketGraph : public Graph{
   MatrixMarketGraph(char *filePath);
   void draw() override;
   void update() override;
+  ~MatrixMarketGraph() override;
   void read(char *filePath) override;
  private:
 

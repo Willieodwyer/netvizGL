@@ -10,7 +10,7 @@
 
 
 MatrixMarketGraph::MatrixMarketGraph(char *filePath) : Graph(filePath) {
-
+  read(filePath);
 }
 
 // Taken from the example @ http://math.nist.gov/MatrixMarket/mmio-c.html
@@ -26,14 +26,17 @@ void MatrixMarketGraph::read(char *filePath) {
     return;
   }
 
+
+
   if (mm_read_banner(f, &matcode) != 0) {
-    printf("Could not process Matrix Market banner.\n");
+    printf("\nCould not process Matrix Market banner.\n");
     exit(1);
   }
 
   /*  This is how one can screen matrix types if their application */
   /*  only supports a subset of the Matrix Market data types.      */
-  if (!mm_is_coordinate(matcode) || mm_is_integer(matcode)) {
+//  if (!mm_is_coordinate(matcode) || mm_is_integer(matcode)) {
+  if (!mm_is_coordinate(matcode)) {
     printf("Sorry, this application only supports graphs that are:");
     printf("Matrix Market type: [%s]\n", MM_COORDINATE_STR);
     printf("and not: [%s]\n", MM_INT_STR);
@@ -57,10 +60,12 @@ void MatrixMarketGraph::read(char *filePath) {
   }
 
   fclose(f);
-  mm_write_banner(stderr, matcode);
-  mm_write_mtx_crd_size(stderr, rows, cols, edgs);
-  for (i = 0; i < edgs; i++)
-    fprintf(stderr, "%d %d\n", I[i] + 1, J[i] + 1);
+
+  fprintf(stdout,"\n%s\n",filePath);
+  mm_write_banner(stdout, matcode);
+  mm_write_mtx_crd_size(stdout, rows, cols, edgs);
+//  for (i = 0; i < edgs; i++)
+//    fprintf(stderr, "%d %d\n", I[i] + 1, J[i] + 1);
 
   numVertices = rows;
 
@@ -116,4 +121,7 @@ void MatrixMarketGraph::update() {
   for (int i = 0; i < numVertices; ++i) {
     vertices[i]->update();
   }
+}
+MatrixMarketGraph::~MatrixMarketGraph() {
+  fprintf(stderr,"Deleting MatrixGraph\n");
 }

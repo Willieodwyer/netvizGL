@@ -29,14 +29,14 @@ void SimpleForceDirected::apply() {
     for (int j = 0; j < graph->numVertices; ++j) {
       if (graph->edges[i][j]) {
         u = graph->vertices[j];
-        v->forceX += 2 * (u->posX - v->posX);
-        v->forceY += 2 * (u->posY - v->posY);
+        v->forceX += 10 * (u->posX - v->posX);
+        v->forceY += 10 * (u->posY - v->posY);
         //fprintf(stderr, "PULL[%d][%d]\n", i,j);
       }
     }
 
-    v->velocityX = (v->velocityX + v->forceX) * 0.001;
-    v->velocityY = (v->velocityY + v->forceY) * 0.001;
+    v->velocityX = (v->velocityX + v->forceX) * 0.01;
+    v->velocityY = (v->velocityY + v->forceY) * 0.01;
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {

@@ -32,3 +32,9 @@ unsigned int Graph::hash3(unsigned int h1, unsigned int h2, unsigned int h3) {
   return ((h1 * 2654435789U) + h2) * 2654435789U + h3;
 }
 
+Graph::~Graph() {
+  fprintf(stderr,"Deleting Graph\n");
+  vertices.clear();
+  delete edges;
+}
+

@@ -12,11 +12,9 @@ LoadGraphCommand::LoadGraphCommand(GLWindow *window)
 }
 
 void LoadGraphCommand::execute() {
-  if(window->graph){
-    delete(window->graph);
-  }
+  Graph *temp = window->graph;
 
-  window->graph = new EdgeGraph((window->graphFilePath));
+  window->graph = new MatrixMarketGraph((window->graphFilePath));
   if (window->algorithmThread) {
     window->endThread = true;
     window->algorithmThread->join();
@@ -27,5 +25,7 @@ void LoadGraphCommand::execute() {
   window->endThread = false;
   window->algorithmThread = new thread(GLWindow::algorithmFunction);
 
-
+  if(temp){
+    delete(temp);
+  }
 }
