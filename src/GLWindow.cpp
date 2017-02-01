@@ -4,11 +4,11 @@
 #include "../inc/Command/LoadGraphCommand.h"
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
-#include "../inc/Graphs/MatrixMarketGraph.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <gl2ps.h>
 
 //
 // Created by werl on 21/09/16.
@@ -65,36 +65,29 @@ void GLWindow::widgetFunction(Widget *x) {
 //
 
 void GLWindow::render() {
-  while (!glfwWindowShouldClose(window)) {
-    glfwGetWindowSize(window, &windowWidth, &windowHeight);
-    glViewport(0, 0, windowWidth, windowHeight);
+  glfwGetWindowSize(window, &windowWidth, &windowHeight);
+  glViewport(0, 0, windowWidth, windowHeight);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glLoadIdentity();
-    gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
+  glLoadIdentity();
+  gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
 
-    glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
+  glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
 
-    glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
-    glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
+  glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
+  glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if (Graph::numGraphs != 0 && graph != NULL) {
-      graph->update();
-      graph->draw();
-    }
-
-    glLineWidth(2.0);
-
-    if (screenShot) {
-      GLScreenshot();
-      screenShot = false;
-    }
-
-    glfwSwapBuffers(window);
-
-    glfwPollEvents();
+  if (Graph::numGraphs != 0 && graph != NULL) {
+    graph->update();
+    graph->draw();
   }
+
+  glLineWidth(2.0);
+
+  glfwSwapBuffers(window);
+
+  glfwPollEvents();
 }
 
 void GLWindow::init() {
@@ -200,8 +193,23 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    MatrixMarketGraph test("Asdas");
-    test.read("asdsa");
+    FILE *fp = fopen("MyFile", "wb");
+    GLint buffsize = 0, state = GL2PS_OVERFLOW;
+    GLint viewport[4];
+
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    while (state == GL2PS_OVERFLOW) {
+      buffsize += 1024 * 1024;
+      gl2psBeginPage("SVGScreemshot", "netviz", NULL,
+                     GL2PS_PDF, GL2PS_NO_SORT, GL2PS_USE_CURRENT_VIEWPORT,
+                     GL_RGBA, 0, NULL, 0, 0, 0, buffsize,
+                     fp, "MyFile");
+      wind->render();
+      state = gl2psEndPage();
+    }
+
+    fclose(fp);
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
