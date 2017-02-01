@@ -194,8 +194,13 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    SvgPrinter svg((char *) "test", 1280, 720);
-    svg.printVertex(new Vertex(0,0,0));
+    svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
+    svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
+    svg::SvgPrinter svg(doc,dimensions);
+    svg.printGraph(wind->graph,wind->translateZ);
+
+    delete dimensions;
+    delete doc;
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {

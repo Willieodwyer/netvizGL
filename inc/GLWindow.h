@@ -29,14 +29,15 @@ class GLWindow {
 
   int windowWidth;
   int windowHeight;
-  double pitch;
 
+  double pitch;
   double yaw;
   double bank;
-  double translateX;
 
+  double translateX;
   double translateY;
   double translateZ;
+
   double mouseX;
   double mouseY;
 
