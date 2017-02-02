@@ -161,7 +161,6 @@ Vertex::~Vertex() {
 }
 
 void Vertex::setColour(GLdouble R, GLdouble G, GLdouble B) {
-
   colourR = R;
   colourG = G;
   colourB = B;
@@ -186,6 +185,7 @@ GLdouble *Vertex::getColour() {
 }
 
 void Vertex::attachPoint(Vertex *p) {
+  degree++;
   attachedPoints.push_back(p);
   Line *l = new Line(posX * 0.1, posY * 0.1, posZ * 0.1,
                      p->posX * 0.1, p->posY * 0.1, p->posZ * 0.1);

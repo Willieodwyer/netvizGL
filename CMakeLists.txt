@@ -40,7 +40,10 @@ set(ADDITIONAL_LIBS
         -lm
         -pthread
         -ldl
-        -lz -lpngwriter -lfreetype -lpng
+        -lz
+        -lpngwriter
+        -lfreetype
+        -lpng
         -lftgl
         )
 
@@ -89,7 +92,7 @@ add_executable(${PROJ_NAME}
         src/Command/LoadGraphCommand.cpp inc/Command/LoadGraphCommand.h
         src/Command/ColourNodeCommand.cpp inc/Command/ColourNodeCommand.h
         src/Command/TextNodeCommand.cpp inc/Command/TextNodeCommand.h
-        src/Graphs/mmio.c inc/Graphs/mmio.h src/Graphs/MatrixMarketGraph.cpp inc/Graphs/MatrixMarketGraph.h src/Algorithms/MultiLevel.cpp inc/Algorithms/MultiLevel.h)
+        src/Graphs/mmio.c inc/Graphs/mmio.h src/Graphs/MatrixMarketGraph.cpp inc/Graphs/MatrixMarketGraph.h inc/SvgPrinter.h)
 
 
 # Libraries to be linked
