@@ -32,7 +32,7 @@ class MultiLevel : public Algorithm {
   double energy0 = 10E100;
   double energy1 = 0;
   double k = 0;
-  double popu = 0;
+  double popu = 0;  //number of visited nodeas at the time
   bool **sh2;
   double c = 0.5;
   double progress = 0;
@@ -43,7 +43,7 @@ class MultiLevel : public Algorithm {
 
   int *degree_met;
   double force = 0;
-  double tol = 0;
+  double tol = 0; //tolerance, threshold = disp * root(nodes)
   double deg_met = 0;
   long main_run_time = 0;
   vector<int*> seen_links;
