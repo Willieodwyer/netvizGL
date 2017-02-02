@@ -92,6 +92,7 @@ void EdgeGraph::read(char *filePath) {
     edges[edgeList[k][0]][edgeList[k][1]] = 1;
     edges[edgeList[k][1]][edgeList[k][0]] = 1;
   }
+  numEdges = edgeList.size();
 }
 
 ////TODO this

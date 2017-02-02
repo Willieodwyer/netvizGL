@@ -14,14 +14,12 @@ using namespace std;
 
 class Graph {
  public:
-
-  static int numGraphs;
-
   Graph(char *filePath);
   virtual ~Graph();
 
   vector<Vertex *> vertices;
-  int numVertices;
+  unsigned long numVertices;
+  unsigned long numEdges;
   int **edges;
 
   virtual void draw() = 0;
