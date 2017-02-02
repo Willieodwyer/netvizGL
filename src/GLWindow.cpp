@@ -79,7 +79,7 @@ void GLWindow::render() {
     glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
     glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if (Graph::numGraphs != 0 && graph != NULL) {
+    if (graph != NULL) {
       graph->update();
       graph->draw();
     }

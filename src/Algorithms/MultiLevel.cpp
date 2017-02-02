@@ -13,10 +13,10 @@ void MultiLevel::apply() {
       lin = 0; // First link or random link
   double vv = graph->numVertices;
 
-  double max_x0 = -1000; //Borders
-  double min_x0 = 1000;
-  double max_y0 = -1000;
-  double min_y0 = 1000;
+//  double max_x0 = -1000; //Borders
+//  double min_x0 = 1000;
+//  double max_y0 = -1000;
+//  double min_y0 = 1000;
 
   double dir = (double) M_PI / vv;
   int lev = 0;
@@ -57,17 +57,17 @@ void MultiLevel::apply() {
   //k=0.5/popu;
   k=di/popu;
 
-  for (int i = 0; i < 2; i++) {
-    if (graph->vertices[ini[i]]->posX > max_x0)
-      max_x0 = graph->vertices[ini[i]]->posX;
-    if (graph->vertices[ini[i]]->posX < min_x0)
-      min_x0 = graph->vertices[ini[i]]->posX;
-
-    if (graph->vertices[ini[i]]->posY > max_y0)
-      max_y0 = graph->vertices[ini[i]]->posY;
-    if (graph->vertices[ini[i]]->posY < min_y0)
-      min_y0 = graph->vertices[ini[i]]->posY;
-  }
+//  for (int i = 0; i < 2; i++) {
+//    if (graph->vertices[ini[i]]->posX > max_x0)
+//      max_x0 = graph->vertices[ini[i]]->posX;
+//    if (graph->vertices[ini[i]]->posX < min_x0)
+//      min_x0 = graph->vertices[ini[i]]->posX;
+//
+//    if (graph->vertices[ini[i]]->posY > max_y0)
+//      max_y0 = graph->vertices[ini[i]]->posY;
+//    if (graph->vertices[ini[i]]->posY < min_y0)
+//      min_y0 = graph->vertices[ini[i]]->posY;
+//  }
 
   hypotenuse = (abs(max_x0 - min_x0) + abs(max_y0 - min_y0));
 
