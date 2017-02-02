@@ -3,251 +3,158 @@
 //
 
 #include "../../inc/Algorithms/MultiLevel.h"
+
 MultiLevel::MultiLevel(Graph *g) : Algorithm(g) {
-  vertices = new int[graph->numVertices];
-}
+  lists = new int *[graph->numVertices];
+  for (int i = 0; i < graph->numVertices; ++i) {
+    lists[i] = new int[graph->numVertices];
+    for (int j = 0; j < graph->numVertices; ++j) {
+      lists[i][j] = 0;
+    }
+  }
+  degree_met = new int[graph->numVertices];
 
-void MultiLevel::apply() {
-  popu = 0;
-  int //lin = (int) (Math.random()*variables.links);
-      lin = 0; // First link or random link
-  double vv = graph->numVertices;
-
-//  double max_x0 = -1000; //Borders
-//  double min_x0 = 1000;
-//  double max_y0 = -1000;
-//  double min_y0 = 1000;
-
-  double dir = (double) M_PI / vv;
-  int lev = 0;
-
+  completedVertices = 0;
+  linkIndex = 0; // First linkIndex or random linkIndex
   level = 1;
-  double disp = 10.0 / vv;
-  tol = sqrt(graph->numVertices);
-  tol = 0.1;
+  numVerticesF = (double) graph->numVertices;
+  display = 10.0 / numVerticesF;
+  tolerance = 0.1;
+  base = 0, connected = 0;
+  ini = new int[2];
 
-  bool check = false;
+  iterations = 0;
+  di = 0.5;
+  ti = 0.1;
+  ti_lev = ti;
+  ti_rate = 0.9;
+  k_rate = 0.99;
+  rnd = round(sqrt(numVerticesF));
 
-  //*************************************
+  fin = false;
 
-  int a1 = 0, a2 = 0;
-  int *ini = new int[2];
+  force_x = new double[graph->numVertices];
+  force_y = new double[graph->numVertices];
 
-  a1 = lists[0][lin];
-  a2 = lists[1][lin];
+  base = graph->edgeList[linkIndex][0];
+  connected = graph->edgeList[linkIndex][1];
 
-  ini[0] = a1;
-  ini[1] = a2;
+  ini[0] = base;
+  ini[1] = connected;
 
   seen_links.push_back(ini);
 
-  graph->vertices[a1]->posX = cos((double) 0) * 0.025;
-  graph->vertices[a1]->posY = sin((double) 0) * 0.025;
+  completedVertices++;
+  visitedVertices.push_back(graph->vertices[base]); //visited nodes
+  graph->vertices[base]->posX = 0;
+  graph->vertices[base]->posY = 0;
+  degree_met[base]--;
 
-  popu++;
-  vertices[a1] = 1; //visited nodes
-  degree_met[a1]--;
+  completedVertices++;
+  visitedVertices.push_back(graph->vertices[connected]); //visited nodes
+  graph->vertices[connected]->posX = cos((double) 1.0) * 0.025;
+  graph->vertices[connected]->posY = sin((double) 1.0) * 0.025;
+  degree_met[connected]--;
 
-  graph->vertices[a1]->posX = 0;
-  graph->vertices[a1]->posY = 0;
+  k = 0.5 / completedVertices;
+}
 
-  graph->vertices[a2]->posX = cos((double) 1.0) * 0.025;
-  graph->vertices[a2]->posY = sin((double) 1.0) * 0.025;
-  popu++;
-  vertices[a2] = 1;
-  degree_met[a2]--;
-
-  k = 0.5 / popu;
-  //k=di/popu;
-
-//  for (int i = 0; i < 2; i++) {
-//    if (graph->vertices[ini[i]]->posX > max_x0)
-//      max_x0 = graph->vertices[ini[i]]->posX;
-//    if (graph->vertices[ini[i]]->posX < min_x0)
-//      min_x0 = graph->vertices[ini[i]]->posX;
-//
-//    if (graph->vertices[ini[i]]->posY > max_y0)
-//      max_y0 = graph->vertices[ini[i]]->posY;
-//    if (graph->vertices[ini[i]]->posY < min_y0)
-//      min_y0 = graph->vertices[ini[i]]->posY;
-//  }
-
-  //hypotenuse = (abs(max_x0 - min_x0) + abs(max_y0 - min_y0));
-
-//  System.out.println("Starts algorithm parallel: ... ");
-  int iterations = 0;
-
-//  System.out.println(variables.v + " Vertices and  " + variables.links + " links  exist!");
-  double di = 0.5;
-  double ti = 0.1;
-
-  double ti_lev = ti;
-  double ti_rate = 0.9;
-
-  double k_rate = 0.99;
-  double rnd = round(sqrt(vv));
-
-  double last = 0;
-  while (!check) {
-
-    k = di / ((popu));
+void MultiLevel::apply() {
+  if (!fin) {
+    k = di / ((completedVertices));
     ti = ti * ti_rate;
 
-    force_x = new double[graph->numVertices];
-    force_y = new double[graph->numVertices];
-    iterations++;
-
     energy1 = 0;
-    forc(iterations, (int) graph->numEdges, 0);
+    calculateForces((int) graph->numEdges, linkIndex);
 
-
-    //bool maxmin = true;
-    for (int i = 0; i < graph->numVertices; i++) {
-      if (vertices[i] != 0) {
+    // Add up the forces
+    for (int i = 0; i < visitedVertices.size(); i++) {
+      if (visitedVertices[i]->level != 0) {
         graph->vertices[i]->posX =
             graph->vertices[i]->posX + (force_x[i] * ti);
         graph->vertices[i]->posY =
             graph->vertices[i]->posY + (force_y[i] * ti);
-
-//        if (maxmin) {
-//          max_x0 = graph->vertices[i]->posX;
-//          min_x0 = graph->vertices[i]->posX;
-//          max_y0 = graph->vertices[i]->posY;
-//          min_y0 = graph->vertices[i]->posY;
-//          maxmin = false;
-//        }
-//
-//        if (graph->vertices[i]->posX > max_x0)
-//          max_x0 = graph->vertices[i]->posX;
-//        if (graph->vertices[i]->posX < min_x0)
-//          min_x0 = graph->vertices[i]->posX;
-//        if (graph->vertices[i]->posY > max_y0)
-//          max_y0 = graph->vertices[i]->posY;
-//        if (graph->vertices[i]->posY < min_y0)
-//          min_y0 = graph->vertices[i]->posY;
       }
     }
-    //hypotenuse = Math.sqrt(Math.pow(max_x0-min_x0, 2)+Math.pow(max_y0-min_y0, 2));
-    //hypotenuse = (abs(max_x0 - min_x0) + abs(max_y0 - min_y0));
 
-    if ((abs(energy1 - energy0) < tol * disp && popu == vv) /*last>=roun*/ ) {
-      if (!check) {
-        check = true;
-      }
+    if ((abs(energy1 - energy0) < tolerance * display && completedVertices == numVerticesF)) {
+      fin = true;
       int_pr = 0;
     }
 
-    if (abs(energy1 - energy0) < tol * disp  /*(iterations % rnd)==0*/) {
+    if (abs(energy1 - energy0) < tolerance * display  /*(iterations % rnd)==0*/) {
       di = di * k_rate; // mesh
 
-      for (int i = 0; i < graph->numVertices; i++) {
-        if (vertices[i] == level) { //level of the nodes
+      for (int i = 0; i < visitedVertices.size(); i++) {
+        if (visitedVertices[i]->level == level) { //level of the nodes
           double s = 0;
-          //double chunk = (Math.PI*2.0)/(double)variables.node_degree[i];
           double chunk = (M_PI * 2.0) / (double) degree_met[i];
-          for (int j = 0; j < graph->numEdges; j++) {
-            a1 = lists[0][j];
-            a2 = lists[1][j];
 
-            /*a1 = lists.get(j)[0];
-            a2 = lists.get(j)[1];*/
+          for (int j = 0; j < graph->edgeList.size(); j++) {
+            base = graph->edgeList[linkIndex][0];
+            connected = graph->edgeList[linkIndex][1];
+            if ((base == i && visitedVertices[connected]->level == 0)) {
 
-            /*a1=matx[0][j];
-            a2=matx[1][j];*/
+              visitedVertices[connected]->level = level + 1;
 
-
-            //chunk = Math.random()*Math.PI*2;
-            //disp=Math.random()*(40.0/(double)variables.v);
-            if ((a1 == i && vertices[a2] == 0)) {
-
-              vertices[a2] = level + 1;
-
-              graph->vertices[a2]->posX = graph->vertices[i]->posX + (cos(chunk * s) * disp);
-              graph->vertices[a2]->posX = graph->vertices[i]->posY + (sin(chunk * s) * disp);
+              graph->vertices[connected]->posX = graph->vertices[i]->posX + (cos(chunk * s) * display);
+              graph->vertices[connected]->posX = graph->vertices[i]->posY + (sin(chunk * s) * display);
               s += 1;
-              popu++;
-              degree_met[a2]--;
-            } else if (a2 == i && vertices[a1] == 0) {
+              fprintf(stderr,"Err\n");
+              completedVertices++;
+              linkIndex++;
+              degree_met[connected]--;
+            } else if (connected == i && visitedVertices[base] == 0) {
 
-              vertices[a1] = level + 1;
+              visitedVertices[base]->level = level + 1;
 
-              graph->vertices[a1]->posX = graph->vertices[i]->posX + (cos(chunk * s) * disp);
-              graph->vertices[a1]->posY = graph->vertices[i]->posY + (sin(chunk * s) * disp);
+              graph->vertices[base]->posX = graph->vertices[i]->posX + (cos(chunk * s) * display);
+              graph->vertices[base]->posY = graph->vertices[i]->posY + (sin(chunk * s) * display);
               s += 1;
-              popu++;
-              degree_met[a1]--;
+              completedVertices++;
+              degree_met[base]--;
             }
           }
-        } // if vertice -> level
-      }  // for loop
+        }
+      }
+
       level++;
-      //k=di/Math.sqrt(popu);
-      //System.out.println(popu+" "+k+" "+ti+" "+hypotenuse);
       ti = ti_lev;
-      //ti_lev = ti_lev - (20.0/vv);
-      lev++;
-      //tol=tol*1.02;
       int_pr = 0;
     }
     int_pr++;
     energy0 = energy1;
-    //tol = tol*0.9;
-    if (popu == vv)
-      last++;
-    if (check)
-      break;
+
+    if (completedVertices == numVerticesF)
+      fin = true;
+
+    iterations++;
   }
 }
 
-void MultiLevel::forc(int t, int e, int s) {
-
+void MultiLevel::calculateForces(int numV, int s) {
   ch1 = sqrt((double) graph->numVertices); //Makes sure it's not too long in either axis
   ch2 = ch1 * 5;
 
-  /*ch1=2;
-  ch2=ch1*5;*/
+  for (int j = s; j < numV; j++) {
+    int v1 = graph->edgeList[j][0]; // List of the EDge list that you have
+    int v2 = graph->edgeList[j][1];
 
-  /*if(hypotenuse>1.0)
-  {
-      ch1=ch1*((hypotenuse)*(1/hypotenuse));
-      ch2=ch2*((hypotenuse)*(1/hypotenuse));
-  }*/
-//  if (hypotenuse < 0.1) {
-//    ch1 = ch1 * (0.1);
-//    ch2 = ch2 * (0.1);
-//  }
-
-  for (int j = s; j < e; j++) {
-
-    int v1 = lists[0][j]; // List of the edges that you have
-    int v2 = lists[1][j]; // EDge list
-
-    /*int v1 = lists.get(j)[0];
-    int v2 = lists.get(j)[1];*/
-
-//  int  v1 = matx[0][j];
-//  int  v2 = matx[1][j];
-
-    if (vertices[v1] != 0 && vertices[v2] != 0) {
+    if (visitedVertices[v1] && visitedVertices[v2]) {
       double rep = 0;
       double att = 0;
       force = 0;
       com++;
-      double dis =
-          abs(graph->vertices[v1]->posX - graph->vertices[v2]->posX)
-              + abs(graph->vertices[v1]->posY - graph->vertices[v2]->posY);
-      if (dis < 0.00000000002)
-        dis = 0.00000000002;
+      double dis = abs(graph->vertices[v1]->posX - graph->vertices[v2]->posX)
+          + abs(graph->vertices[v1]->posY - graph->vertices[v2]->posY);
+
+      if (dis < 0.00000000002) dis = 0.00000000002;
+
       double cos = ((graph->vertices[v2]->posX - graph->vertices[v1]->posX) / dis);
       double sin = ((graph->vertices[v2]->posX - graph->vertices[v1]->posY) / dis);
 
       rep = ((k * k) / -dis);  //Takes care of the distances making sure they're not small
       att = dis * dis / k;
-
-      /*if(popu==variables.v)
-          System.out.println(dis+"  "+rep+" "+att);*/
-
-
 
       force = rep + att;
 
@@ -266,48 +173,7 @@ void MultiLevel::forc(int t, int e, int s) {
 
       force_x[v2] -= x_t;
       force_y[v2] -= y_t;
-
-      /*force_x[v1]+=cos*force;
-      force_y[v1]+=sin*force;
-
-
-      force_x[v2]-=cos*force;
-      force_y[v2]-=sin*force;*/
-
-
-      //*********replusion for nighbures
     }
   }
-
-  /*	for(int i=0;i<variables.v;i++)
-      {
-          //for(int j=i+1;j<variables.v;j++)
-          for(int b=0;b<progress;b++)
-          {
-              int j= (int) Math.random()*variables.v;
-              if(vertices[i]!=0 && vertices[j]!=0 && !mat[i][j] && i!=j)
-              {
-
-                  double dis=Math.abs(variables.pos[0][i]-variables.pos[0][j])+Math.abs(variables.pos[1][i]-variables.pos[1][j]);
-                  double cos=((variables.pos[0][j]-variables.pos[0][i])/dis);
-                  double sin=((variables.pos[1][j]-variables.pos[1][i])/dis);
-
-                  double force = (k*k)/(-dis);
-
-                  if(Math.abs(force)>hypotenuse/1)
-                      force=-(double) hypotenuse/1;
-
-                  force_x[i]+=cos*force;
-                  force_y[i]+=sin*force;
-
-                  force_x[j]-=cos*force;
-                  force_y[j]-=sin*force;
-
-
-                  energy1 += force*2;
-              }
-          }
-      }*/
-
-
 }
+

@@ -108,7 +108,7 @@ int mm_read_banner(FILE *f, MM_typecode *matcode) {
   for (p = data_type; *p != '\0'; *p = tolower(*p), p++);
   for (p = storage_scheme; *p != '\0'; *p = tolower(*p), p++);
 
-  /* check for banner */
+  /* fin for banner */
   if (strncmp(banner, MatrixMarketBanner, strlen(MatrixMarketBanner)) != 0)
     return MM_NO_HEADER;
 
@@ -398,13 +398,13 @@ char *mm_typecode_to_str(MM_typecode matcode) {
   char *mm_strdup(const char *);
   int error = 0;
 
-  /* check for MTX type */
+  /* fin for MTX type */
   if (mm_is_matrix(matcode))
     types[0] = (char *) MM_MTX_STR;
   else
     error = 1;
 
-  /* check for CRD or ARR matrix */
+  /* fin for CRD or ARR matrix */
   if (mm_is_sparse(matcode))
     types[1] = (char *) MM_SPARSE_STR;
   else if (mm_is_dense(matcode))
@@ -412,7 +412,7 @@ char *mm_typecode_to_str(MM_typecode matcode) {
   else
     return NULL;
 
-  /* check for element data type */
+  /* fin for element data type */
   if (mm_is_real(matcode))
     types[2] = (char *) MM_REAL_STR;
   else if (mm_is_complex(matcode))
@@ -425,7 +425,7 @@ char *mm_typecode_to_str(MM_typecode matcode) {
     return NULL;
 
 
-  /* check for symmetry type */
+  /* fin for symmetry type */
   if (mm_is_general(matcode))
     types[3] = (char *) MM_GENERAL_STR;
   else if (mm_is_symmetric(matcode))

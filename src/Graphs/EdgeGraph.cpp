@@ -28,8 +28,6 @@ void EdgeGraph::update() {
 }
 
 void EdgeGraph::read(char *filePath) {
-  vector<int *> edgeList;
-
   string inString;
   ifstream inFile;
 
@@ -50,26 +48,26 @@ void EdgeGraph::read(char *filePath) {
 
   for (int i = 0; i < edgeList.size(); ++i) {
     if (edgeList[i][0] > numVertices) {
-      numVertices = edgeList[i][0];
+      numVertices = (unsigned long) edgeList[i][0];
     }
     if (edgeList[i][1] > numVertices) {
-      numVertices = edgeList[i][1];
+      numVertices = (unsigned long) edgeList[i][1];
     }
   }
 
   numVertices++;
 
-  edges = new int *[numVertices];
+  adjacencyMatrix = new int *[numVertices];
   for (int i = 0; i < numVertices; ++i) {
-    edges[i] = new int[numVertices];
+    adjacencyMatrix[i] = new int[numVertices];
     for (int j = 0; j < numVertices; ++j) {
-      edges[i][j] = 0;
+      adjacencyMatrix[i][j] = 0;
     }
   }
 
   struct timeval time;
   gettimeofday(&time, NULL);
-  srand(hash3(time.tv_sec, time.tv_usec, getpid()));
+  srand(hash3((unsigned int) time.tv_sec, (unsigned int) time.tv_usec, (unsigned int) getpid()));
   for (int j = 0; j < numVertices; ++j) {
     vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
                                   ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
@@ -89,10 +87,14 @@ void EdgeGraph::read(char *filePath) {
 
   for (int k = 0; k < edgeList.size(); ++k) {
     vertices[edgeList[k][0]]->attachPoint(vertices[edgeList[k][1]]);
-    edges[edgeList[k][0]][edgeList[k][1]] = 1;
-    edges[edgeList[k][1]][edgeList[k][0]] = 1;
+    adjacencyMatrix[edgeList[k][0]][edgeList[k][1]] = 1;
+    adjacencyMatrix[edgeList[k][1]][edgeList[k][0]] = 1;
   }
   numEdges = edgeList.size();
+
+  for (int i = 0; i < edgeList.size(); ++i) {
+    fprintf(stderr,"%d,%d\n",edgeList[i][0],edgeList[i][1]);
+  }
 }
 
 ////TODO this

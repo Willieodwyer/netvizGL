@@ -54,7 +54,8 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
 //Threads
 void GLWindow::algorithmFunction() {
-  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph) {
+  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph
+      && !glfwWindowShouldClose(GLWindow::Instance()->window)) {
     GLWindow::Instance()->algorithm->apply();
   }
 }
@@ -78,12 +79,12 @@ void GLWindow::render() {
   glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
   glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if (graph != NULL) {
-      graph->update();
-      graph->draw();
-    }
+  if (graph != NULL) {
+    graph->update();
+    graph->draw();
+  }
 
-    glLineWidth(2.0);
+  glLineWidth(2.0);
 
   glLineWidth(2.0);
 
@@ -195,18 +196,13 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-<<<<<<< HEAD
-    MatrixMarketGraph test((char *) "Asdas");
-    test.read((char *) "asdsa");
-=======
     svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
     svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
-    svg::SvgPrinter svg(doc,dimensions);
-    svg.printGraph(wind->graph,wind->translateZ);
+    svg::SvgPrinter svg(doc, dimensions);
+    svg.printGraph(wind->graph, wind->translateZ);
 
     delete dimensions;
     delete doc;
->>>>>>> 436bba6afd813a9e4c383829f96dfa85fc131efe
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {

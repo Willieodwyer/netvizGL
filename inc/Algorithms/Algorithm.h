@@ -4,8 +4,8 @@
 
 #ifndef NETVIZGL_ALGORITHM_H
 #define NETVIZGL_ALGORITHM_H
-
 #include "../Graphs/Graph.h"
+
 class Algorithm {
  public:
   Algorithm(Graph *g) {

@@ -10,6 +10,7 @@
 
 #ifndef NETVIZGL_GRAPH_H
 #define NETVIZGL_GRAPH_H
+
 using namespace std;
 
 class Graph {
@@ -20,7 +21,8 @@ class Graph {
   vector<Vertex *> vertices;
   unsigned long numVertices;
   unsigned long numEdges;
-  int **edges;
+  int **adjacencyMatrix;
+  vector<int *> edgeList;
 
   virtual void draw() = 0;
   virtual void update() = 0;

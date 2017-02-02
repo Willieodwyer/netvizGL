@@ -8,6 +8,7 @@
 #include "Command.h"
 #include "../GLWindow.h"
 
+
 class LoadGraphCommand : public Command {
  private:
   GLWindow *window;

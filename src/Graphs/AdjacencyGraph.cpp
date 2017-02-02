@@ -7,6 +7,7 @@
 #include <zconf.h>
 #include <fstream>
 #include "../../inc/Graphs/AdjacencyGraph.h"
+
 AdjacencyGraph::AdjacencyGraph(char *filePath)
     : Graph(filePath) {
   read(filePath);
@@ -28,8 +29,6 @@ void AdjacencyGraph::update() {
 }
 
 void AdjacencyGraph::read(char *filePath) {
-  vector<int *> edgeList;
-
   string inString;
   ifstream inFile;
 
@@ -52,11 +51,11 @@ void AdjacencyGraph::read(char *filePath) {
 
   fprintf(stdout, "Vertices - %d\n", numVertices);
 
-  edges = new int *[numVertices];
+  adjacencyMatrix = new int *[numVertices];
   for (int i = 0; i < numVertices; ++i) {
-    edges[i] = new int[numVertices];
+    adjacencyMatrix[i] = new int[numVertices];
     for (int j = 0; j < numVertices; ++j) {
-      edges[i][j] = edgeList[i][j];
+      adjacencyMatrix[i][j] = edgeList[i][j];
     }
   }
 
@@ -82,9 +81,22 @@ void AdjacencyGraph::read(char *filePath) {
 
   for (int i = 0; i < numVertices; ++i) {
     for (int j = 0; j < numVertices; ++j) {
-      if (edges[i][j] == 1)
+      if (adjacencyMatrix[i][j] == 1)
         vertices[i]->attachPoint(vertices[j]);
     }
   }
 
+  int *temp = new int[2];
+  edgeList.clear();
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < i; ++j) {
+      if (adjacencyMatrix[i][j] == 1){
+        temp[0] = j;
+        temp[1] = i;
+        edgeList.push_back(temp);
+        temp = new int[2];
+      }
+    }
+  }
+  numEdges = edgeList.size();
 }
