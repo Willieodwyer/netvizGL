@@ -4,7 +4,7 @@
 #include "../inc/Command/LoadGraphCommand.h"
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
-#include "../inc/Graphs/MatrixMarketGraph.h"
+#include "../inc/SvgPrinter.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -65,36 +65,29 @@ void GLWindow::widgetFunction(Widget *x) {
 //
 
 void GLWindow::render() {
-  while (!glfwWindowShouldClose(window)) {
-    glfwGetWindowSize(window, &windowWidth, &windowHeight);
-    glViewport(0, 0, windowWidth, windowHeight);
+  glfwGetWindowSize(window, &windowWidth, &windowHeight);
+  glViewport(0, 0, windowWidth, windowHeight);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glLoadIdentity();
-    gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
+  glLoadIdentity();
+  gluPerspective(45, (double) windowWidth / (double) windowHeight, .1, 100);
 
-    glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
+  glTranslatef((GLfloat) translateX, (GLfloat) translateY, (GLfloat) -translateZ);
 
-    glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
-    glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
+  glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
+  glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-    if (Graph::numGraphs != 0 && graph != NULL) {
-      graph->update();
-      graph->draw();
-    }
-
-    glLineWidth(2.0);
-
-    if (screenShot) {
-      GLScreenshot();
-      screenShot = false;
-    }
-
-    glfwSwapBuffers(window);
-
-    glfwPollEvents();
+  if (Graph::numGraphs != 0 && graph != NULL) {
+    graph->update();
+    graph->draw();
   }
+
+  glLineWidth(2.0);
+
+  glfwSwapBuffers(window);
+
+  glfwPollEvents();
 }
 
 void GLWindow::init() {
@@ -200,8 +193,13 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    MatrixMarketGraph test("Asdas");
-    test.read("asdsa");
+    svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
+    svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
+    svg::SvgPrinter svg(doc,dimensions);
+    svg.printGraph(wind->graph,wind->translateZ);
+
+    delete dimensions;
+    delete doc;
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -271,12 +269,6 @@ int GLWindow::GLScreenshot() {
 
   fprintf(stderr, "%d,%d", width, height);
 
-//  fullscreen = true;
-//
-//  init();
-//
-//  system("scrot");
-
   const int pix = 3 * windowWidth * windowHeight;
   GLfloat *pixels = new GLfloat[pix];
 
@@ -305,11 +297,6 @@ int GLWindow::GLScreenshot() {
   PNG.close();
 
   delete[] pixels;
-
-
-//  for(int i = 0; i < pix; i ++){
-//    std::cout << pixels[i];Z
-//  }
 }
 
 void GLWindow::quit() {

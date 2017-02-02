@@ -7,7 +7,6 @@
 //}
 
 int main(int argc, char **argv) {
-  //Widget *buttonWidget;
 
 
   GLWindow *window = GLWindow::Instance();
@@ -15,7 +14,8 @@ int main(int argc, char **argv) {
   //std::thread widgetThread(widgetFunction, buttonWidget);
 
   if (NULL != window->window) {
-    window->render();
+    while (!glfwWindowShouldClose(window->window))
+      window->render();
     glDisableClientState(GL_COLOR_ARRAY);
   }
 
