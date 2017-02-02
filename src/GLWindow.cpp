@@ -9,7 +9,6 @@
 #include <pngwriter.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <gl2ps.h>
 
 //
 // Created by werl on 21/09/16.
