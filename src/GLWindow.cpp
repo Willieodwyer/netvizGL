@@ -200,8 +200,8 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    MatrixMarketGraph test("Asdas");
-    test.read("asdsa");
+    MatrixMarketGraph test((char *) "Asdas");
+    test.read((char *) "asdsa");
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {

@@ -17,9 +17,9 @@ class MultiLevel : public Algorithm {
   vector<int> degree;
   int **lists1;
   int **lists2;
-  int vertices[];
-  double force_x[];
-  double force_y[];
+  int *vertices; //visited nodes // If equal to zero -> unvisited
+  double *force_x;
+  double *force_y;
   bool ev = true;
   int level = 1;
 
@@ -51,6 +51,7 @@ class MultiLevel : public Algorithm {
 
  public:
   void apply() override;
+  void forc(int t, int e, int s);
 };
 
 #endif //NETVIZGL_MULTILEVEL_H
