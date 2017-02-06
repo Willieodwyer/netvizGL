@@ -3,8 +3,8 @@
 //
 
 #include "../../inc/Algorithms/SimpleForceDirected.h"
-void SimpleForceDirected::apply() {
 
+void SimpleForceDirected::apply() {
   Vertex *v;
   Vertex *u;
 
@@ -27,10 +27,10 @@ void SimpleForceDirected::apply() {
     }
 
     for (int j = 0; j < graph->numVertices; ++j) {
-      if (graph->edges[i][j]) {
+      if (graph->adjacencyMatrix[i][j]) {
         u = graph->vertices[j];
-        v->forceX += 10 * (u->posX - v->posX);
-        v->forceY += 10 * (u->posY - v->posY);
+        v->forceX += 4 * (u->posX - v->posX);
+        v->forceY += 4 * (u->posY - v->posY);
         //fprintf(stderr, "PULL[%d][%d]\n", i,j);
       }
     }

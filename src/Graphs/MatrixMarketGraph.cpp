@@ -8,7 +8,6 @@
 #include "../../inc/Graphs/mmio.h"
 #include "../../src/Graphs/mmio.c"
 
-
 MatrixMarketGraph::MatrixMarketGraph(char *filePath) : Graph(filePath) {
   read(filePath);
 }
@@ -67,21 +66,21 @@ void MatrixMarketGraph::read(char *filePath) {
 //  for (i = 0; i < edgs; i++)
 //    fprintf(stderr, "%d %d\n", I[i] + 1, J[i] + 1);
 
-  numVertices = rows;
+  numVertices = (unsigned long) rows;
 
   //Initialise Edges Matrix
-  edges = new int *[numVertices];
+  adjacencyMatrix = new int *[numVertices];
   for (int i = 0; i < numVertices; ++i) {
-    edges[i] = new int[numVertices];
+    adjacencyMatrix[i] = new int[numVertices];
     for (int j = 0; j < numVertices; ++j) {
-      edges[i][j] = 0;
+      adjacencyMatrix[i][j] = 0;
     }
   }
 
-  //Initialise all the vertices and give them a random colour and position
+  //Initialise all the visitedVertices and give them a random colour and position
   struct timeval time;
   gettimeofday(&time, NULL);
-  srand(hash3(time.tv_sec, time.tv_usec, getpid()));
+  srand(hash3((unsigned int) time.tv_sec, (unsigned int) time.tv_usec, (unsigned int) getpid()));
   for (int j = 0; j < numVertices; ++j) {
     vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
                                   ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
@@ -103,8 +102,26 @@ void MatrixMarketGraph::read(char *filePath) {
   //Attach points to each other
   for (int k = 0; k < edgs; ++k) {
     vertices[I[k]]->attachPoint(vertices[J[k]]);
-    edges[I[k]][J[k]] = 1;
-    edges[J[k]][I[k]] = 1;
+    adjacencyMatrix[I[k]][J[k]] = 1;
+    adjacencyMatrix[J[k]][I[k]] = 1;
+  }
+
+  int *temp = new int[2];
+  edgeList.clear();
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < i; ++j) {
+      if (adjacencyMatrix[i][j] == 1){
+        temp[0] = j;
+        temp[1] = i;
+        edgeList.push_back(temp);
+        temp = new int[2];
+      }
+    }
+  }
+  numEdges = edgeList.size();
+
+  for (int i = 0; i < edgeList.size(); ++i) {
+    fprintf(stderr,"%d,%d\n",edgeList[i][0],edgeList[i][1]);
   }
 }
 

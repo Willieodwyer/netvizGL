@@ -4,11 +4,11 @@
 
 #ifndef NETVIZGL_LINE_H
 #define NETVIZGL_LINE_H
-
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 class Line {
  public:
+
   GLdouble posX1, posY1, posZ1;
   GLdouble posX2, posY2, posZ2;
 

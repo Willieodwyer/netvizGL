@@ -7,10 +7,10 @@
 
 #include <GL/glew.h>
 #include "Vertex.h"
-#include "Graphs/Graph.h"
-#include "Algorithms/SimpleForceDirected.h"
 #include "Widget.h"
 #include "Command/Command.h"
+#include "Graphs/Graph.h"
+#include "Algorithms/Algorithm.h"
 #include <GLFW/glfw3.h>
 #include <pthread.h>
 #include <thread>
@@ -29,14 +29,15 @@ class GLWindow {
 
   int windowWidth;
   int windowHeight;
-  double pitch;
 
+  double pitch;
   double yaw;
   double bank;
-  double translateX;
 
+  double translateX;
   double translateY;
   double translateZ;
+
   double mouseX;
   double mouseY;
 
