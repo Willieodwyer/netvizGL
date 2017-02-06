@@ -90,6 +90,19 @@ void EdgeGraph::read(char *filePath) {
     adjacencyMatrix[edgeList[k][0]][edgeList[k][1]] = 1;
     adjacencyMatrix[edgeList[k][1]][edgeList[k][0]] = 1;
   }
+
+  int *temp = new int[2];
+  edgeList.clear();
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < i; ++j) {
+      if (adjacencyMatrix[i][j] == 1){
+        temp[0] = j;
+        temp[1] = i;
+        edgeList.push_back(temp);
+        temp = new int[2];
+      }
+    }
+  }
   numEdges = edgeList.size();
 
   for (int i = 0; i < edgeList.size(); ++i) {
