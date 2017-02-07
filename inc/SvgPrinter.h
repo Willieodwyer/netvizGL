@@ -30,6 +30,7 @@ class SvgPrinter {
   inline void printLine(Vertex *v);
   inline void printText(Vertex *v);
   static bool depthFunc(Vertex *u, Vertex *v);
+
 };
 
 void SvgPrinter::printGraph(Graph *g, double translateZ) {

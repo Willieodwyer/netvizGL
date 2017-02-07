@@ -153,7 +153,7 @@ void MultiLevel::calcApplyForces() {
     energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
 
 //    usleep(10000);
- }
+  }
 }
 
 void MultiLevel::initialPlacement() {
