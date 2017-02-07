@@ -8,10 +8,7 @@
 #include <iostream>
 #include "../../inc/Graphs/Graph.h"
 
-int Graph::numGraphs = 0;
-
 Graph::Graph(char *filePath) {
-  numGraphs++;
   numVertices = 0;
 }
 
@@ -35,6 +32,6 @@ unsigned int Graph::hash3(unsigned int h1, unsigned int h2, unsigned int h3) {
 Graph::~Graph() {
   fprintf(stderr,"Deleting Graph\n");
   vertices.clear();
-  delete edges;
+  delete adjacencyMatrix;
 }
 

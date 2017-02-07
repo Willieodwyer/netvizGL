@@ -4,6 +4,7 @@
 #ifndef NETVIZGL_SVGPRINTER_H
 #define NETVIZGL_SVGPRINTER_H
 
+#include <algorithm>
 #include "Vertex.h"
 #include "SimpleSvg.h"
 #include "Graphs/Graph.h"
@@ -25,33 +26,40 @@ class SvgPrinter {
     *doc << border;
   }
   void printGraph(Graph *g, double translateZ);
-  inline void printVertex(Vertex *v, double translateZ);
+  inline void printVertex(Vertex *v);
   inline void printLine(Vertex *v);
   inline void printText(Vertex *v);
+  static bool depthFunc(Vertex *u, Vertex *v);
+
 };
 
 void SvgPrinter::printGraph(Graph *g, double translateZ) {
   if (g) {
+    vector<Vertex *> orderedVertices;
+    for (int j = 0; j < g->numVertices; ++j) {
+      orderedVertices.push_back(g->vertices[j]);
+    }
+
     for (int i = 0; i < g->numVertices; ++i) {
-      printLine(g->vertices[i]);
+      printLine(orderedVertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
-      printVertex(g->vertices[i], translateZ);
+      printVertex(orderedVertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
-      printText(g->vertices[i]);
+      printText(orderedVertices[i]);
     }
     doc->save();
   }
 }
 
-inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
+inline void SvgPrinter::printVertex(Vertex *v) {
   GLdouble *pos = new GLdouble[3];
   v->getScreenPosition(pos);
 
   if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
       && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
-    *doc << Circle(Point(pos[0], pos[1]), 180 * (1 - pos[2]),
+    *doc << Circle(Point(pos[0], pos[1]), 90 * (2 * (1 - pos[2])),
                    Fill(Color((int) (v->colourR * 256), (int) (v->colourG * 256), (int) (v->colourB * 256))),
                    Stroke(0, Color(200, 250, 150)));
   }
@@ -87,11 +95,14 @@ void SvgPrinter::printText(Vertex *v) {
     delete (pos);
   }
 }
-}
+bool SvgPrinter::depthFunc(Vertex *u, Vertex *v) {
+  GLdouble vpos[3];
+  v->getScreenPosition(vpos);
+  GLdouble upos[3];
+  v->getScreenPosition(upos);
 
-//    *doc << (svg::Line(Point(600, 300), Point(600, 200), Stroke(2, Color::Black)));
-//    *doc << Circle(Point(600, 300), 10, Fill(Color(100, 200, 120)), Stroke(0, Color(200, 250, 150)));
-//    *doc << Text(Point(600, 300), "Some Data", Color::Black, svg::Font(9, "Arial"));
-//  doc->save();
+  return upos[2] > vpos[2];
+}
+}
 
 #endif //NETVIZGL_SVGPRINTER_H

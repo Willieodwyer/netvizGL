@@ -7,6 +7,8 @@
 #include "../../inc/Graphs/EdgeGraph.h"
 #include "../../inc/Graphs/MatrixMarketGraph.h"
 #include "../../inc/Graphs/AdjacencyGraph.h"
+#include "../../inc/Algorithms/SimpleForceDirected.h"
+#include "../../inc/Algorithms/MultiLevel.h"
 
 LoadGraphCommand::LoadGraphCommand(GLWindow *window)
     : window(window) {}
@@ -26,6 +28,7 @@ void LoadGraphCommand::execute() {
 
   } else if (strcmp("%%MatrixMarket", sLine.substr(0, 14).c_str()) == 0) /*%%MatrixMarket 14 chars*/{
     window->graph = new MatrixMarketGraph((window->graphFilePath));
+
     fprintf(stderr, "Loading MatrixMarketGraph:%s\n", window->graphFilePath);
 
   } else if (sLine.length() > 3 && (strcmp("0", sLine.substr(0, 1).c_str()) == 0)

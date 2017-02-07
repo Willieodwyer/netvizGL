@@ -10,25 +10,25 @@
 
 #ifndef NETVIZGL_GRAPH_H
 #define NETVIZGL_GRAPH_H
+
 using namespace std;
 
 class Graph {
  public:
-
-  static int numGraphs;
-
   Graph(char *filePath);
   virtual ~Graph();
 
   vector<Vertex *> vertices;
-  int numVertices;
-  int **edges;
+  unsigned long numVertices;
+  unsigned long numEdges;
+  int **adjacencyMatrix;
+  vector<int *> edgeList;
 
   virtual void draw() = 0;
   virtual void update() = 0;
 
   int *split(string x);
-  unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
+  static unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
  private:
   virtual void read(char *filePath) = 0;
 };

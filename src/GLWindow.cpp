@@ -5,7 +5,6 @@
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
 #include "../inc/SvgPrinter.h"
-#include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -54,7 +53,8 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
 //Threads
 void GLWindow::algorithmFunction() {
-  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph) {
+  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph
+      && !glfwWindowShouldClose(GLWindow::Instance()->window)) {
     GLWindow::Instance()->algorithm->apply();
   }
 }
@@ -78,10 +78,12 @@ void GLWindow::render() {
   glRotatef((GLfloat) pitch, 1, 0, 0);   //pitch
   glRotatef((GLfloat) yaw, 0, 1, 0);     //yaw
 
-  if (Graph::numGraphs != 0 && graph != NULL) {
+  if (graph != NULL) {
     graph->update();
     graph->draw();
   }
+
+  glLineWidth(2.0);
 
   glLineWidth(2.0);
 
@@ -195,8 +197,8 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
     svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
     svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
-    svg::SvgPrinter svg(doc,dimensions);
-    svg.printGraph(wind->graph,wind->translateZ);
+    svg::SvgPrinter svg(doc, dimensions);
+    svg.printGraph(wind->graph, wind->translateZ);
 
     delete dimensions;
     delete doc;

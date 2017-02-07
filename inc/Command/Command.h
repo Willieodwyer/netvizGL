@@ -4,7 +4,6 @@
 
 #ifndef NETVIZGL_COMMAND_H
 #define NETVIZGL_COMMAND_H
-
 class Command {
  public:
   virtual void execute() = 0;

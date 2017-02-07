@@ -29,9 +29,11 @@ class Vertex {
   GLdouble colourG;
   GLdouble colourB;
 
-  unsigned int degree;
+  int degree;
+  int level;
+
   volatile GLdouble posX, posY, posZ;
-  volatile GLdouble forceX, forceY, forceZ;
+  volatile GLdouble force, forceX, forceY, forceZ;
   volatile GLdouble velocityX, velocityY, velocityZ;
 
   GLuint *indices;
