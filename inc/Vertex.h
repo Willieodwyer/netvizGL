@@ -33,6 +33,7 @@ class Vertex {
   int level;
 
   volatile GLdouble posX, posY, posZ;
+  volatile GLdouble force;
   volatile GLdouble forceX, forceY, forceZ;
   volatile GLdouble velocityX, velocityY, velocityZ;
 
@@ -57,7 +58,7 @@ class Vertex {
   GLdouble *pos;
   char *text;
 
-  void setText(char *t);
+  void setText(const char *t);
 };
 
 #endif //NETVIZGL_SPHERE_H

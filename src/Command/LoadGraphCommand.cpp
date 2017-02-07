@@ -47,7 +47,7 @@ void LoadGraphCommand::execute() {
     delete window->algorithmThread;
   }
 
-  window->algorithm = new SimpleForceDirected(GLWindow::Instance()->graph);
+  window->algorithm = new MultiLevel(GLWindow::Instance()->graph);
   window->endThread = false;
   window->algorithmThread = new thread(GLWindow::algorithmFunction);
 

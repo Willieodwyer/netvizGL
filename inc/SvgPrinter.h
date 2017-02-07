@@ -84,10 +84,11 @@ void SvgPrinter::printText(Vertex *v) {
         && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
       *doc << Text(Point(pos[0], pos[1]), v->text, Color::Black, svg::Font(100 * (1 - pos[2]), "Arial"));
     }
+    doc->save();
     delete (pos);
   }
 }
-}
+
 
 //    *doc << (svg::Line(Point(600, 300), Point(600, 200), Stroke(2, Color::Black)));
 //    *doc << Circle(Point(600, 300), 10, Fill(Color(100, 200, 120)), Stroke(0, Color(200, 250, 150)));
