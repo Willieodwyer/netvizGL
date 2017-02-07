@@ -24,6 +24,14 @@ MultiLevel::MultiLevel(Graph *g) : Algorithm(g) {
   cooling = 0.99;
   temperature = 0.1;
   alpha = 0.5;
+
+  max_x = 0;
+  max_y = 0;
+  min_x = -0;
+  min_y = -0;
+
+  scaleOnce = false;
+  done = false;
 }
 
 void MultiLevel::apply() {
@@ -34,14 +42,24 @@ void MultiLevel::apply() {
 
     k = alpha / ((population));
 
-    while (energy > k) {
+    while (energy0 > k) {
       calcApplyForces();
       temperature = temperature * cooling;
       alpha = alpha * cooling;
     }
 
-    energy = 10E100;
+    energy0 = 10E100;
     temperature = .1;
+
+    if (edgeIndex == graph->numEdges) {
+      scaleOnce = true;
+      fin = true;
+    }
+
+    if (fin)
+      fprintf(stderr, "Finished\n");
+
+    fprintf(stderr, "LEVEL - %d\n", level);
 
 //    for (int i = 0; i < graph->numVertices; i++) {
 //      if (graph->vertices[i]->level == level) { // If the level of the visited vertex is equal to this level
@@ -67,8 +85,13 @@ void MultiLevel::apply() {
 //          }
 //        }
 //      }
-
-    iterations++;
+  }
+  if (scaleOnce && !done) {
+    for (int i = 0; i < graph->numVertices; ++i) {
+      graph->vertices[i]->posX = graph->vertices[i]->posX * (numVerticesF + 5);
+      graph->vertices[i]->posY = graph->vertices[i]->posY * (numVerticesF + 5);
+      done = true;
+    }
   }
 }
 
@@ -76,7 +99,7 @@ void MultiLevel::calcApplyForces() {
   rFactor = sqrt(numVerticesF);
   aFactor = rFactor * 5;
 
-  fprintf(stderr, "CALC FORCES\n");
+  //fprintf(stderr, "CALC FORCES\n");
 
   if (diagonal < 0.1) {
     rFactor = rFactor * (0.1);
@@ -103,11 +126,6 @@ void MultiLevel::calcApplyForces() {
     graph->vertices[v]->force = rep + att;
     graph->vertices[u]->force = rep + att;
 
-    fprintf(stderr, "bFORCE v %lf\n", graph->vertices[v]->force);
-    fprintf(stderr, "bFORCE u %lf\n", graph->vertices[u]->force);
-    fprintf(stderr, "diagonal %lf\n", diagonal);
-    fprintf(stderr, "rFactor %lf\n", rFactor);
-
     //V
     if (graph->vertices[v]->force > 0
         && graph->vertices[v]->force > diagonal / rFactor)
@@ -126,19 +144,16 @@ void MultiLevel::calcApplyForces() {
         && abs(graph->vertices[u]->force) > diagonal / aFactor)
       graph->vertices[u]->force = -diagonal / aFactor;
 
-    fprintf(stderr, "aFORCE v %lf\n", graph->vertices[v]->force);
-    fprintf(stderr, "aFORCE u %lf\n", graph->vertices[u]->force);
-
     graph->vertices[v]->posX += graph->vertices[v]->force * cos * temperature;
     graph->vertices[v]->posY += graph->vertices[v]->force * sin * temperature;
 
     graph->vertices[u]->posX -= graph->vertices[u]->force * cos * temperature;
     graph->vertices[u]->posY -= graph->vertices[u]->force * sin * temperature;
 
-    energy = graph->vertices[v]->force + graph->vertices[u]->force;
+    energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
 
-    //usleep(100000);
-  }
+//    usleep(10000);
+ }
 }
 
 void MultiLevel::initialPlacement() {
@@ -162,7 +177,7 @@ void MultiLevel::initialPlacement() {
 }
 
 void MultiLevel::placement() {
-
+//  fprintf(stderr, "PLACEMENT Edge = %d\n",edgeIndex);
   //sleep(1);
   double radius = 10 / numVerticesF;
   int v = graph->edgeList[edgeIndex][0];
@@ -170,6 +185,8 @@ void MultiLevel::placement() {
 
   int a = graph->edgeList[edgeIndex][1];
   graph->vertices[a]->level = level;
+
+  graph->vertices[v]->posZ = 0;
   graph->vertices[a]->posZ = 0;
 
   visitedVertices[v] = 1;
@@ -204,7 +221,7 @@ void MultiLevel::placement() {
   diagonal = abs(max_x - min_x) + abs(max_y - min_y);
 
   if (edgeIndex + 1 < (graph->numEdges)) {
-    fprintf(stderr, "%d - %d,%d\n", edgeIndex, v, a);
+    //fprintf(stderr, "%d - %d,%d\n", edgeIndex, v, a);
     if (graph->edgeList[edgeIndex + 1][0] == v) {
       edgeIndex++;
       placement();
@@ -212,7 +229,8 @@ void MultiLevel::placement() {
       level++;
       edgeIndex++;
     }
-  }
+  } else
+    edgeIndex++;
 }
 
 

@@ -12,7 +12,8 @@ class MultiLevel : public Algorithm {
   MultiLevel(Graph *g);
   int *visitedVertices; //visited nodes // If equal to zero -> unvisited
   int level = 1;
-  double energy = 10E100;
+  double energy0 = 10E100;
+  double energy1 = 0;
  public:
   void apply() override;
   void calcApplyForces();
@@ -38,6 +39,8 @@ class MultiLevel : public Algorithm {
   double rFactor;
   double aFactor;
   double alpha;
+  bool scaleOnce;
+  bool done;
 };
 
 #endif //NETVIZGL_MULTILEVEL_H
