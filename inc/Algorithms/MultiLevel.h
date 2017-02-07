@@ -10,23 +10,9 @@
 class MultiLevel : public Algorithm {
  public:
   MultiLevel(Graph *g);
-
-  int **lists;
-  vector<Vertex *> visitedVertices; //visited nodes // If equal to zero -> unvisited
-
-  double *force_x;
-  double *force_y;
-
+  int *visitedVertices; //visited nodes // If equal to zero -> unvisited
   int level = 1;
-
-  double energy0 = 10E100;
-  double energy1 = 0;
-
-  double completedVertices = 0;
-
-  double force = 0;
-
-  vector<int *> seenLinks;
+  double energy = 10E100;
  public:
   void apply() override;
   void calcApplyForces();
@@ -35,16 +21,23 @@ class MultiLevel : public Algorithm {
   //Initial Values
   int edgeIndex;
   double numVerticesF;
-  int baseEdge;
-  int connectedEdge;
   int iterations;
   bool fin;
 
-  void placement(int p, int j);
+  void placement();
   int population;
-  int k;
+  double k;
   double cooling;
   double temperature;
+
+  double max_x;
+  double min_x;
+  double max_y;
+  double min_y;
+  double diagonal;
+  double rFactor;
+  double aFactor;
+  double alpha;
 };
 
 #endif //NETVIZGL_MULTILEVEL_H

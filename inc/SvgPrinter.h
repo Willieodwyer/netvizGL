@@ -62,9 +62,9 @@ void SvgPrinter::printGraph(Graph *g, double translateZ) {
     for (int i = 0; i < g->numVertices; ++i) {
       printLine(g->vertices[i]);
     }
-    for (int i = 0; i < g->numVertices; ++i) {
-      printVertex(g->vertices[i], translateZ);
-    }
+//    for (int i = 0; i < g->numVertices; ++i) {
+//      printVertex(g->vertices[i], translateZ);
+//    }
     doc->save();
   }
 }

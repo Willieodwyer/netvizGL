@@ -78,17 +78,16 @@ void EdgeGraph::read(char *filePath) {
   int *temp = new int[2];
   edgeList.clear();
   for (int i = 0; i < numVertices; ++i) {
-    for (int j = 0; j < i; ++j) {
+    for (int j = i; j < numVertices; ++j) {
       if (adjacencyMatrix[i][j] == 1) {
-        temp[0] = j;
-        temp[1] = i;
+        temp[0] = i;
+        temp[1] = j;
         edgeList.push_back(temp);
         temp = new int[2];
       }
     }
   }
   numEdges = edgeList.size();
-
   for (int i = 0; i < edgeList.size(); ++i) {
     fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
   }
