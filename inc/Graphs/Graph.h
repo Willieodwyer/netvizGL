@@ -27,8 +27,8 @@ class Graph {
   virtual void draw() = 0;
   virtual void update() = 0;
 
-  int *split(string x);
-  unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
+  virtual int *split(string x);
+  static unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
  private:
   virtual void read(char *filePath) = 0;
 };

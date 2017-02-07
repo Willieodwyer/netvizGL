@@ -77,26 +77,9 @@ void MatrixMarketGraph::read(char *filePath) {
     }
   }
 
-  //Initialise all the visitedVertices and give them a random colour and position
-  struct timeval time;
-  gettimeofday(&time, NULL);
-  srand(hash3((unsigned int) time.tv_sec, (unsigned int) time.tv_usec, (unsigned int) getpid()));
   for (int j = 0; j < numVertices; ++j) {
-    vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
-                                  ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
-                                  0));
-    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                           ((double) rand() / (RAND_MAX)),
-                           ((double) rand() / (RAND_MAX)));
-  }
-
-  //Check for same positions
-  for (int i = 0; i < numVertices; ++i) {
-    for (int j = 0; j < numVertices; ++j) {
-      if (vertices[i]->posX == vertices[j]->posX && i != j
-          && vertices[i]->posY == vertices[j]->posY)
-        fprintf(stderr, "Warning: duplicate positions generated @ %d\n", i);
-    }
+    vertices.push_back(new Vertex(0, 0, 0));
+    vertices[j]->setColour(0,0,0);
   }
 
   //Attach points to each other

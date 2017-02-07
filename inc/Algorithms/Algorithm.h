@@ -12,6 +12,8 @@ class Algorithm {
     graph = g;
   }
   virtual void apply() = 0;
+  virtual void initialPlacement() = 0;
+
 
   Graph *graph;
 };
