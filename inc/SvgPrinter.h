@@ -55,7 +55,6 @@ inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
                    Fill(Color((int) (v->colourR * 256), (int) (v->colourG * 256), (int) (v->colourB * 256))),
                    Stroke(0, Color(200, 250, 150)));
   }
-  fprintf(stderr,"%lf\n",1 - pos[2]);
   delete (pos);
 }
 
@@ -83,7 +82,7 @@ void SvgPrinter::printText(Vertex *v) {
     v->getScreenPosition(pos);
     if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
         && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
-      *doc << Text(Point(pos[0], pos[1]), v->text, Color::Black, svg::Font(10, "Arial"));
+      *doc << Text(Point(pos[0], pos[1]), v->text, Color::Black, svg::Font(100 * (1 - pos[2]), "Arial"));
     }
     delete (pos);
   }
