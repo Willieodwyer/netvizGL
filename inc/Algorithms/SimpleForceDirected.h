@@ -10,7 +10,6 @@ class SimpleForceDirected : public Algorithm {
  public:
   SimpleForceDirected(Graph *g);
   void apply();
-  void initialPlacement() override;
 };
 
 #endif //NETVIZGL_SIMPLEFORCEDIRECTED_H

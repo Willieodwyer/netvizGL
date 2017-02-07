@@ -277,6 +277,6 @@ double Vertex::getDepth() {
   return center[2];
 }
 
-void Vertex::setText(const char * t){
+void Vertex::setText(char * t){
   strcpy(text,t);
 }

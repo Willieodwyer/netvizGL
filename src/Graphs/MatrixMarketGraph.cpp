@@ -2,6 +2,7 @@
 // Created by william on 30/01/17.
 //
 
+#include <sys/time.h>
 #include <zconf.h>
 #include "../../inc/Graphs/MatrixMarketGraph.h"
 #include "../../inc/Graphs/mmio.h"
@@ -19,10 +20,12 @@ void MatrixMarketGraph::read(char *filePath) {
   int rows, cols, edgs;
   int i, *I, *J;
 
-  if ((f = fopen(filePath, "r")) == NULL) {
+  if ((f = fopen(filePath, "r")) == NULL){
     fprintf(stderr, "File not Opened");
     return;
   }
+
+
 
   if (mm_read_banner(f, &matcode) != 0) {
     printf("\nCould not process Matrix Market banner.\n");
@@ -57,7 +60,7 @@ void MatrixMarketGraph::read(char *filePath) {
 
   fclose(f);
 
-  fprintf(stdout, "\n%s\n", filePath);
+  fprintf(stdout,"\n%s\n",filePath);
   mm_write_banner(stdout, matcode);
   mm_write_mtx_crd_size(stdout, rows, cols, edgs);
 //  for (i = 0; i < edgs; i++)
@@ -74,9 +77,26 @@ void MatrixMarketGraph::read(char *filePath) {
     }
   }
 
+  //Initialise all the visitedVertices and give them a random colour and position
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  srand(hash3((unsigned int) time.tv_sec, (unsigned int) time.tv_usec, (unsigned int) getpid()));
   for (int j = 0; j < numVertices; ++j) {
-    vertices.push_back(new Vertex(0, 0, 0));
-    vertices[j]->setColour(0, 0, 0);
+    vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  0));
+    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)));
+  }
+
+  //Check for same positions
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < numVertices; ++j) {
+      if (vertices[i]->posX == vertices[j]->posX && i != j
+          && vertices[i]->posY == vertices[j]->posY)
+        fprintf(stderr, "Warning: duplicate positions generated @ %d\n", i);
+    }
   }
 
   //Attach points to each other
@@ -89,10 +109,10 @@ void MatrixMarketGraph::read(char *filePath) {
   int *temp = new int[2];
   edgeList.clear();
   for (int i = 0; i < numVertices; ++i) {
-    for (int j = i; j < numVertices; ++j) {
-      if (adjacencyMatrix[i][j] == 1) {
-        temp[0] = i;
-        temp[1] = j;
+    for (int j = 0; j < i; ++j) {
+      if (adjacencyMatrix[i][j] == 1){
+        temp[0] = j;
+        temp[1] = i;
         edgeList.push_back(temp);
         temp = new int[2];
       }
@@ -101,18 +121,16 @@ void MatrixMarketGraph::read(char *filePath) {
   numEdges = edgeList.size();
 
   for (int i = 0; i < edgeList.size(); ++i) {
-    fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
+    fprintf(stderr,"%d,%d\n",edgeList[i][0],edgeList[i][1]);
   }
 }
 
 void MatrixMarketGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-    if (vertices[i])
-      vertices[i]->drawPoints();
+    vertices[i]->drawPoints();
   }
   for (int i = 0; i < numVertices; ++i) {
-    if (vertices[i])
-      vertices[i]->drawText();
+    vertices[i]->drawText();
   }
 }
 
@@ -122,5 +140,5 @@ void MatrixMarketGraph::update() {
   }
 }
 MatrixMarketGraph::~MatrixMarketGraph() {
-  fprintf(stderr, "Deleting MatrixGraph\n");
+  fprintf(stderr,"Deleting MatrixGraph\n");
 }

@@ -59,9 +59,24 @@ void AdjacencyGraph::read(char *filePath) {
     }
   }
 
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  srand(hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < numVertices; ++j) {
-    vertices.push_back(new Vertex(0, 0, 0));
-    vertices[j]->setColour(0,0,0);
+    vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
+                                  0));
+    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)),
+                           ((double) rand() / (RAND_MAX)));
+  }
+
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = 0; j < numVertices; ++j) {
+      if (vertices[i]->posX == vertices[j]->posX && i != j
+          && vertices[i]->posY == vertices[j]->posY)
+        fprintf(stderr, "Warning: duplicate positions generated @ %d\n", i);
+    }
   }
 
   for (int i = 0; i < numVertices; ++i) {
@@ -88,8 +103,4 @@ void AdjacencyGraph::read(char *filePath) {
   for (int i = 0; i < edgeList.size(); ++i) {
     fprintf(stderr,"%d,%d\n",edgeList[i][0],edgeList[i][1]);
   }
-}
-AdjacencyGraph::~AdjacencyGraph() {
-  fprintf(stderr,"Deleting AdjacencyGraph\n");
-
 }
