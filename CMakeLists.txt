@@ -45,7 +45,6 @@ set(ADDITIONAL_LIBS
         -lfreetype
         -lpng
         -lftgl
-        -lgl2ps
         )
 
 # Include directories for this project
