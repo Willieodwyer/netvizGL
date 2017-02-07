@@ -5,7 +5,6 @@
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
 #include "../inc/SvgPrinter.h"
-#include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
