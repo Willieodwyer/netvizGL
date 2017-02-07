@@ -4,7 +4,6 @@
 #ifndef NETVIZGL_SVGPRINTER_H
 #define NETVIZGL_SVGPRINTER_H
 
-#include <algorithm>
 #include "Vertex.h"
 #include "SimpleSvg.h"
 #include "Graphs/Graph.h"
@@ -29,25 +28,18 @@ class SvgPrinter {
   inline void printVertex(Vertex *v);
   inline void printLine(Vertex *v);
   inline void printText(Vertex *v);
-  static bool depthFunc(Vertex *u, Vertex *v);
-
 };
 
 void SvgPrinter::printGraph(Graph *g, double translateZ) {
   if (g) {
-    vector<Vertex *> orderedVertices;
-    for (int j = 0; j < g->numVertices; ++j) {
-      orderedVertices.push_back(g->vertices[j]);
-    }
-
     for (int i = 0; i < g->numVertices; ++i) {
-      printLine(orderedVertices[i]);
+      printLine(g->vertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
-      printVertex(orderedVertices[i]);
+      printVertex(g->vertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
-      printText(orderedVertices[i]);
+      printText(g->vertices[i]);
     }
     doc->save();
   }
@@ -95,14 +87,11 @@ void SvgPrinter::printText(Vertex *v) {
     delete (pos);
   }
 }
-bool SvgPrinter::depthFunc(Vertex *u, Vertex *v) {
-  GLdouble vpos[3];
-  v->getScreenPosition(vpos);
-  GLdouble upos[3];
-  v->getScreenPosition(upos);
+}
 
-  return upos[2] > vpos[2];
-}
-}
+//    *doc << (svg::Line(Point(600, 300), Point(600, 200), Stroke(2, Color::Black)));
+//    *doc << Circle(Point(600, 300), 10, Fill(Color(100, 200, 120)), Stroke(0, Color(200, 250, 150)));
+//    *doc << Text(Point(600, 300), "Some Data", Color::Black, svg::Font(9, "Arial"));
+//  doc->save();
 
 #endif //NETVIZGL_SVGPRINTER_H
