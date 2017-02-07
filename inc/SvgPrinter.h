@@ -16,27 +16,46 @@ class SvgPrinter {
   Document *doc;
   Dimensions *dimensions;
  public:
+  static constexpr GLdouble tolerance = 200;
+
   SvgPrinter(Document *doc, Dimensions *dimensions) : doc(doc), dimensions(dimensions) {
     Polygon border(Stroke(1, Color::Silver));
     border << Point(0, 0) << Point(dimensions->width, 0)
            << Point(dimensions->width, dimensions->height) << Point(0, dimensions->height);
     *doc << border;
   }
-
   void printGraph(Graph *g, double translateZ);
   inline void printVertex(Vertex *v, double translateZ);
   inline void printLine(Vertex *v);
+  inline void printText(Vertex *v);
 };
+
+void SvgPrinter::printGraph(Graph *g, double translateZ) {
+  if (g) {
+    for (int i = 0; i < g->numVertices; ++i) {
+      printLine(g->vertices[i]);
+    }
+    for (int i = 0; i < g->numVertices; ++i) {
+      printVertex(g->vertices[i], translateZ);
+    }
+    for (int i = 0; i < g->numVertices; ++i) {
+      printText(g->vertices[i]);
+    }
+    doc->save();
+  }
+}git add
 
 inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
   GLdouble *pos = new GLdouble[3];
   v->getScreenPosition(pos);
 
-  if (pos[0] >= -100 && pos[0] - 100 <= dimensions->width && pos[1] >= -100 && pos[1] -100 <= dimensions->height) {
-    *doc << Circle(Point(pos[0], pos[1]), 20 / translateZ,
+  if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
+      && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
+    *doc << Circle(Point(pos[0], pos[1]), 180 * (1 - pos[2]),
                    Fill(Color((int) (v->colourR * 256), (int) (v->colourG * 256), (int) (v->colourB * 256))),
                    Stroke(0, Color(200, 250, 150)));
   }
+  fprintf(stderr,"%lf\n",1 - pos[2]);
   delete (pos);
 }
 
@@ -46,7 +65,8 @@ inline void SvgPrinter::printLine(Vertex *v) {
 
   v->getScreenPosition(pos);
 
-  if (pos[0] >= -100 && pos[0] - 100 <= dimensions->width && pos[1] >= -100 && pos[1] -100 <= dimensions->height) {
+  if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
+      && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
     for (int i = 0; i < v->attachedPoints.size(); ++i) {
       v->attachedPoints[i]->getScreenPosition(attachedPos);
       *doc << (svg::Line(Point(pos[0], pos[1]), Point(attachedPos[0], attachedPos[1]), Stroke(1, Color::Black)));
@@ -57,15 +77,15 @@ inline void SvgPrinter::printLine(Vertex *v) {
   delete (attachedPos);
 }
 
-void SvgPrinter::printGraph(Graph *g, double translateZ) {
-  if (g) {
-    for (int i = 0; i < g->numVertices; ++i) {
-      printLine(g->vertices[i]);
+void SvgPrinter::printText(Vertex *v) {
+  if (v->text) {
+    GLdouble *pos = new GLdouble[3];
+    v->getScreenPosition(pos);
+    if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
+        && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
+      *doc << Text(Point(pos[0], pos[1]), v->text, Color::Black, svg::Font(10, "Arial"));
     }
-    for (int i = 0; i < g->numVertices; ++i) {
-      printVertex(g->vertices[i], translateZ);
-    }
-    doc->save();
+    delete (pos);
   }
 }
 }
