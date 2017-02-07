@@ -43,7 +43,7 @@ void SvgPrinter::printGraph(Graph *g, double translateZ) {
     }
     doc->save();
   }
-}git add
+}
 
 inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
   GLdouble *pos = new GLdouble[3];
