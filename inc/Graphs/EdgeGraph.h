@@ -12,9 +12,6 @@ class EdgeGraph : public Graph {
   virtual void draw();
   virtual void update();
  private:
- public:
-  virtual ~EdgeGraph();
- private:
   virtual void read(char *filePath);
   bool validate(char *filePath);
 };
