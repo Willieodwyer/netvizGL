@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 public class MultiLevel {
 	
-	public static int [][] matx;
+	public static int [][] matx; 
 	public static int [][] lists;
 	public static ArrayList<int []> ll = new ArrayList<int []>();
 	public static ArrayList<Integer> degree = new ArrayList<Integer>();
@@ -152,7 +152,7 @@ public class MultiLevel {
 		System.out.println("lin: "+lin);
 		vertices= new int [variables.v];
 		
-		double vv=variables.v;
+		double vv=variables.v; //Num vertices
 		double max_x0=-1000;
 		double min_x0=1000;
 		double max_y0=-1000;
@@ -169,7 +169,7 @@ public class MultiLevel {
 		
 		//*************************************
 		
-		int a1=0, a2=0;
+		int a1=0, a2=0; //first pair of nodes for init
 		int ini [] = new int [2];
 						
 		a1= lists[0][lin];
@@ -302,7 +302,7 @@ public class MultiLevel {
 				//ti = ti*0.9; // mesh
 				//ti = ti*0.99; // sipenski
 				//ti= ti*0.999; // small
-				//-----------energy checking
+				//-----------energy0 checking
 				//**********************
 				
 				

@@ -5,33 +5,36 @@
 #include <algorithm>
 #include "../../inc/Command/TextNodeCommand.h"
 
-void TextNodeCommand::execute() {
-  vector<Vertex *> pointerOver;
-  vector<double> depthValues;
+void TextNodeCommand::execute()
+{
+    vector<Vertex *> pointerOver;
+    vector<double> depthValues;
 
-  for (int i = 0; i < window->graph->numVertices; ++i) {
-    Widget::updateColour();
-    if (window->graph->vertices[i]->isPointerOver(window->mouseX, window->mouseY)) {
-      pointerOver.push_back(window->graph->vertices[i]);
+    for (int i = 0; i < window->graph->numVertices; ++i) {
+        Widget::updateColour();
+        if (window->graph->vertices[i]->isPointerOver(window->mouseX, window->mouseY)) {
+            pointerOver.push_back(window->graph->vertices[i]);
+        }
     }
-  }
 
-  if (pointerOver.size() == 0) {
-    return;
-  }
-
-  for (int i = 0; i < pointerOver.size(); i++) {
-    depthValues.push_back(pointerOver[i]->getDepth());
-  }
-
-  double closest = *std::min_element(depthValues.begin(), depthValues.end());
-
-  for (int i = 0; i < pointerOver.size(); i++) {
-    if (closest == depthValues[i]) {
-      pointerOver[i]->setText(Widget::Instance()->textNodeText);
+    if (pointerOver.size() == 0) {
+        return;
     }
-  }
+
+    for (int i = 0; i < pointerOver.size(); i++) {
+        depthValues.push_back(pointerOver[i]->getDepth());
+    }
+
+    double closest = *std::min_element(depthValues.begin(), depthValues.end());
+
+    for (int i = 0; i < pointerOver.size(); i++) {
+        if (closest == depthValues[i]) {
+            pointerOver[i]->setText(Widget::Instance()->textNodeText);
+        }
+    }
 }
-TextNodeCommand::TextNodeCommand(GLWindow *pWindow) : window(pWindow){
+TextNodeCommand::TextNodeCommand(GLWindow *pWindow)
+    : window(pWindow)
+{
 
 }

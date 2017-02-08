@@ -4,15 +4,14 @@
 
 #ifndef NETVIZGL_SIMPLEFORCEDIRECTED_H
 #define NETVIZGL_SIMPLEFORCEDIRECTED_H
-
-#include "../Vertex.h"
-#include "../Graphs/Graph.h"
 #include "Algorithm.h"
 
-class SimpleForceDirected : public Algorithm {
- public:
-  SimpleForceDirected(Graph *g);
-  void apply();
+class SimpleForceDirected: public Algorithm
+{
+public:
+    SimpleForceDirected(Graph *g);
+    void apply();
+    void initialPlacement() override;
 };
 
 #endif //NETVIZGL_SIMPLEFORCEDIRECTED_H

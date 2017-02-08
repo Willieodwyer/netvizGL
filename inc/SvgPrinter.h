@@ -8,9 +8,9 @@
 #include "SimpleSvg.h"
 #include "Graphs/Graph.h"
 
-namespace svg {
-
-class SvgPrinter {
+namespace svg
+{
+  class SvgPrinter {
  private:
   char *name;
   Document *doc;
@@ -58,22 +58,21 @@ inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
   delete (pos);
 }
 
-inline void SvgPrinter::printLine(Vertex *v) {
-  GLdouble *pos = new GLdouble[3];
-  GLdouble *attachedPos = new GLdouble[3];
+inline void SvgPrinter::printLine(Vertex *v)
+{
+    GLdouble *pos = new GLdouble[3];
+    GLdouble *attachedPos = new GLdouble[3];
 
-  v->getScreenPosition(pos);
-
+    v->getScreenPosition(pos);
   if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
       && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
     for (int i = 0; i < v->attachedPoints.size(); ++i) {
       v->attachedPoints[i]->getScreenPosition(attachedPos);
       *doc << (svg::Line(Point(pos[0], pos[1]), Point(attachedPos[0], attachedPos[1]), Stroke(1, Color::Black)));
     }
-  }
 
-  delete (pos);
-  delete (attachedPos);
+    delete (pos);
+    delete (attachedPos);
 }
 
 void SvgPrinter::printText(Vertex *v) {
