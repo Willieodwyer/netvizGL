@@ -16,72 +16,73 @@
 #include <thread>
 #include <FTGL/ftgl.h>
 
-class GLWindow {
+class GLWindow
+{
 
- public:
-  GLWindow(const int WIDTH, const int HEIGHT);
+public:
+    GLWindow(const int WIDTH, const int HEIGHT);
 
-  static GLWindow *windowInstance;
+    static GLWindow *windowInstance;
 
-  static GLWindow *Instance();
+    static GLWindow *Instance();
 
-  GLFWwindow *window;
+    GLFWwindow *window;
 
-  int windowWidth;
-  int windowHeight;
+    int windowWidth;
+    int windowHeight;
 
-  double pitch;
-  double yaw;
-  double bank;
+    double pitch;
+    double yaw;
+    double bank;
 
-  double translateX;
-  double translateY;
-  double translateZ;
+    double translateX;
+    double translateY;
+    double translateZ;
 
-  double mouseX;
-  double mouseY;
+    double mouseX;
+    double mouseY;
 
-  bool mouseLEFT;
-  bool mouseRIGHT;
+    bool mouseLEFT;
+    bool mouseRIGHT;
 
-  void render();
+    void render();
 
-  void init();
+    void init();
 
-  static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
+    static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
 
-  static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
+    static void mousePressedEvent(GLFWwindow *window, int button, int action, int mods);
 
-  static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
+    static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
 
-  static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
+    static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
 
-  std::thread *algorithmThread;
-  std::thread *widgetThread;
-  bool endThread = false;
+    std::thread *algorithmThread;
+    std::thread *widgetThread;
+    bool endThread = false;
 
-  Graph *graph;
-  Algorithm *algorithm;
+    Graph *graph;
+    Algorithm *algorithm;
 
-  Command *loadGraph;
-  char *graphFilePath;
+    Command *loadGraph;
+    char *graphFilePath;
 
-  static void algorithmFunction();
+    static void algorithmFunction();
 
-  int GLScreenshot();
+    int GLScreenshot();
 
-  bool screenShot;
+    bool screenShot;
 
-  Widget *buttonWidget;
+    Widget *buttonWidget;
 
-  static void widgetFunction(Widget *x);
+    static void widgetFunction(Widget *x);
 
-  void quit();
-  void X11Screenshot();
-  Command *colourNode;
+    void quit();
+    void X11Screenshot();
+    Command *colourNode;
 
-  FTPixmapFont *font;
-  Command *textNode;
+    FTPixmapFont *font;
+    Command *textNode;
 };
 
 #endif //NETVIZGL_WINDOW_H

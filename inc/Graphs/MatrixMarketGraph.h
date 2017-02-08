@@ -8,14 +8,15 @@
 #include "Graph.h"
 
 
-class MatrixMarketGraph : public Graph{
- public:
-  MatrixMarketGraph(char *filePath);
-  void draw() override;
-  void update() override;
-  ~MatrixMarketGraph() override;
-  void read(char *filePath) override;
- private:
+class MatrixMarketGraph: public Graph
+{
+public:
+    MatrixMarketGraph(char *filePath);
+    void draw() override;
+    void update() override;
+    ~MatrixMarketGraph() override;
+    void read(char *filePath) override;
+private:
 
 };
 

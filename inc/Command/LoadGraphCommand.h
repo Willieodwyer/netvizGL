@@ -9,14 +9,15 @@
 #include "../GLWindow.h"
 
 
-class LoadGraphCommand : public Command {
- private:
-  GLWindow *window;
- public:
-  LoadGraphCommand(GLWindow *window);
+class LoadGraphCommand: public Command
+{
+private:
+    GLWindow *window;
+public:
+    LoadGraphCommand(GLWindow *window);
 
- public:
-  void execute() override ;
+public:
+    void execute() override;
 };
 
 #endif //NETVIZGL_LOADGRAPHCOMMAND_H

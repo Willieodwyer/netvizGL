@@ -6,16 +6,17 @@
 #define NETVIZGL_ALGORITHM_H
 #include "../Graphs/Graph.h"
 
-class Algorithm {
- public:
-  Algorithm(Graph *g) {
-    graph = g;
-  }
-  virtual void apply() = 0;
-  virtual void initialPlacement() = 0;
+class Algorithm
+{
+public:
+    Algorithm(Graph *g)
+    {
+        graph = g;
+    }
+    virtual void apply() = 0;
+    virtual void initialPlacement() = 0;
 
-
-  Graph *graph;
+    Graph *graph;
 };
 
 #endif //NETVIZGL_ALGORITHM_H

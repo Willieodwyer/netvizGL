@@ -6,17 +6,18 @@
 #define NETVIZGL_EDGEGRAPH_H
 
 #include "Graph.h"
-class EdgeGraph : public Graph {
- public:
-  EdgeGraph(char *filePath);
-  virtual void draw();
-  virtual void update();
- private:
- public:
-  virtual ~EdgeGraph();
- private:
-  virtual void read(char *filePath);
-  bool validate(char *filePath);
+class EdgeGraph: public Graph
+{
+public:
+    EdgeGraph(char *filePath);
+    virtual void draw();
+    virtual void update();
+private:
+public:
+    virtual ~EdgeGraph();
+private:
+    virtual void read(char *filePath);
+    bool validate(char *filePath);
 };
 
 #endif //NETVIZGL_EDGEGRAPH_H

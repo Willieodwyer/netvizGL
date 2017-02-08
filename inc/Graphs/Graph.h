@@ -13,24 +13,25 @@
 
 using namespace std;
 
-class Graph {
- public:
-  Graph(char *filePath);
-  virtual ~Graph();
+class Graph
+{
+public:
+    Graph(char *filePath);
+    virtual ~Graph();
 
-  vector<Vertex *> vertices;
-  unsigned long numVertices;
-  unsigned long numEdges;
-  int **adjacencyMatrix;
-  vector<int *> edgeList;
+    vector<Vertex *> vertices;
+    unsigned long numVertices;
+    unsigned long numEdges;
+    int **adjacencyMatrix;
+    vector<int *> edgeList;
 
-  virtual void draw() = 0;
-  virtual void update() = 0;
+    virtual void draw() = 0;
+    virtual void update() = 0;
 
-  virtual int *split(string x);
-  static unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
- private:
-  virtual void read(char *filePath) = 0;
+    virtual int *split(string x);
+    static unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3);
+private:
+    virtual void read(char *filePath) = 0;
 };
 
 #endif //NETVIZGL_GRAPHREADER_H
