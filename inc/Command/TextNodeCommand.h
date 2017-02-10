@@ -8,13 +8,12 @@
 #include "../GLWindow.h"
 #include "Command.h"
 
-class TextNodeCommand: public Command
-{
-private:
-    GLWindow *window;
-public:
-    TextNodeCommand(GLWindow *pWindow);
-    void execute() override;
+class TextNodeCommand : public Command {
+ private:
+  GLWindow *window;
+ public:
+  TextNodeCommand(GLWindow *pWindow);
+  void execute() override;
 };
 
 #endif //NETVIZGL_TEXTNODECOMMAND_H

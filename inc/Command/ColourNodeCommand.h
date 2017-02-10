@@ -8,13 +8,12 @@
 #include "../GLWindow.h"
 #include "Command.h"
 
-class ColourNodeCommand: public Command
-{
-private:
-    GLWindow *window;
-public:
-    ColourNodeCommand(GLWindow *pWindow);
-    void execute() override;
+class ColourNodeCommand : public Command {
+ private:
+  GLWindow *window;
+ public:
+  ColourNodeCommand(GLWindow *pWindow);
+  void execute() override;
 };
 
 #endif //NETVIZGL_COLOURNODECOMMAND_H

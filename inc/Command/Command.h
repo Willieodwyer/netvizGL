@@ -4,10 +4,9 @@
 
 #ifndef NETVIZGL_COMMAND_H
 #define NETVIZGL_COMMAND_H
-class Command
-{
-public:
-    virtual void execute() = 0;
+class Command {
+ public:
+  virtual void execute() = 0;
 };
 
 #endif //NETVIZGL_COMMAND_H
