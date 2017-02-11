@@ -8,8 +8,8 @@
 #include "../../inc/GLWindow.h"
 
 FruchtermanReingold::FruchtermanReingold(Graph *g) : Algorithm(g) {
-  W = 32;
-  L = 18;
+  W = 128;
+  L = 72;
   area = W * L;
   k = sqrt(area / (double) graph->numVertices);
   t = graph->numVertices;
@@ -40,39 +40,40 @@ void FruchtermanReingold::apply() {
       v->forceX += xDist / dist * repulsion;
       v->forceY += yDist / dist * repulsion;
     }
+  }
 
-    for (int j = 0; j < graph->numVertices; ++j) {
-      if (graph->adjacencyMatrix[i][j]) {
-        u = graph->vertices[j];
-        double xDist = (v->posX - u->posX);
-        double yDist = (v->posY - u->posY);
-        double dist = sqrt((xDist * xDist) + (yDist * yDist));
+  for (int i = 0; i < graph->numEdges; ++i) {
+    v = graph->vertices[graph->edgeList[i][0]];
+    u = graph->vertices[graph->edgeList[i][1]];
 
-        if (dist < 0.00000000002) dist = 0.00000000002;
+    double xDist = (v->posX - u->posX);
+    double yDist = (v->posY - u->posY);
+    double dist = sqrt((xDist * xDist) + (yDist * yDist));
 
-        double attraction = dist * dist / k;
+    if (dist < 0.00000000002) dist = 0.00000000002;
 
-        v->forceX -= xDist / dist * attraction;
-        v->forceY -= yDist / dist * attraction;
+    double attraction = dist * dist / k;
 
-        u->forceX += xDist / dist * attraction;
-        u->forceY += yDist / dist * attraction;
-      }
-    }
+    v->forceX -= xDist / dist * attraction;
+    v->forceY -= yDist / dist * attraction;
 
-//    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
-//    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
+    u->forceX += xDist / dist * attraction;
+    u->forceY += yDist / dist * attraction;
 
-    v->velocityX = (v->velocityX + v->forceX) * 0.003;
-    v->velocityY = (v->velocityY + v->forceY) * 0.003;
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {
     v = graph->vertices[i];
-    v->posX += v->velocityX;
-    v->posX = min(256.0, max(-256.0, v->posX));
-    v->posY += v->velocityY;
-    v->posY = min(144.0, max(-144.0, v->posY));
+    v->posX += v->forceX * 0.0015;
+    v->posY += v->forceY * 0.0015;
+////    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
+////    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
+//
+//    v->posX += (v->forceX / (abs(v->forceX))) * min(t, max(-t, (v->forceX)));
+//    v->posY += (v->forceY / (abs(v->forceY))) * min(t, max(-t, (v->forceY)));
+
+//    v->posX = min(4*W, max(-4*W, v->posX));
+//    v->posY = min(4*L, max(-4*L, v->posY));
   }
   t *= .9;
 
@@ -83,8 +84,8 @@ void FruchtermanReingold::initialPlacement() {
   gettimeofday(&time, NULL);
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < graph->numVertices; ++j) {
-    graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * (2 * W) - W;
-    graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * (2 * L) - L;
+    graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * (W) - W / 2;
+    graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * (L) - L / 2;
     graph->vertices[j]->posZ = 0;
     graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
                                   ((double) rand() / (RAND_MAX)),
