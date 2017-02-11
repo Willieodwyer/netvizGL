@@ -41,6 +41,9 @@ class MultiLevel : public Algorithm {
   double alpha;
   bool scaleOnce;
   bool done;
+  int t;
+  double tolerance;
+  double displacement;
 };
 
 #endif //NETVIZGL_MULTILEVEL_H

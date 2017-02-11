@@ -32,10 +32,10 @@ class Vertex {
   int degree;
   int level;
 
-  volatile GLdouble posX, posY, posZ;
-  volatile GLdouble force;
-  volatile GLdouble forceX, forceY, forceZ;
-  volatile GLdouble velocityX, velocityY, velocityZ;
+  GLdouble posX, posY, posZ;
+  GLdouble force;
+  GLdouble forceX, forceY, forceZ;
+  GLdouble velocityX, velocityY, velocityZ;
 
   GLuint *indices;
   GLint indIndex;

@@ -9,6 +9,7 @@
 #include "../../inc/Graphs/AdjacencyGraph.h"
 #include "../../inc/Algorithms/SimpleForceDirected.h"
 #include "../../inc/Algorithms/MultiLevel.h"
+#include "../../inc/Algorithms/FruchtermanReingold.h"
 
 LoadGraphCommand::LoadGraphCommand(GLWindow *window)
     : window(window) {}
@@ -47,7 +48,7 @@ void LoadGraphCommand::execute() {
     delete window->algorithmThread;
   }
 
-  window->algorithm = new MultiLevel(GLWindow::Instance()->graph);
+  window->algorithm = new FruchtermanReingold(GLWindow::Instance()->graph);
   window->endThread = false;
   window->algorithmThread = new thread(GLWindow::algorithmFunction);
 
