@@ -67,9 +67,13 @@ void FruchtermanReingold::apply() {
   for (int i = 0; i < graph->numVertices; ++i) {
     v = graph->vertices[i];
     v->posX += v->velocityX;
+    v->posX = min(256.0, max(-256.0, v->posX));
     v->posY += v->velocityY;
+    v->posY = min(144.0, max(-144.0, v->posY));
   }
-  t *= .99;
+    t *= .99;
+
+
 }
 
 void FruchtermanReingold::initialPlacement() {
