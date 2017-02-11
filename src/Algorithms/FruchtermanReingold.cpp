@@ -60,8 +60,11 @@ void FruchtermanReingold::apply() {
       }
     }
 
-    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
-    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
+//    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
+//    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
+
+    v->velocityX = (v->velocityX + v->forceX) * 0.003;
+    v->velocityY = (v->velocityY + v->forceY) * 0.003;
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {
@@ -71,8 +74,7 @@ void FruchtermanReingold::apply() {
     v->posY += v->velocityY;
     v->posY = min(144.0, max(-144.0, v->posY));
   }
-    t *= .99;
-
+  t *= .9;
 
 }
 
