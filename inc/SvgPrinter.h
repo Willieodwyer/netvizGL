@@ -46,15 +46,20 @@ void SvgPrinter::printGraph(Graph *g, double translateZ) {
 
 inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
   GLdouble *pos = new GLdouble[3];
+  GLdouble *colours = new GLdouble[3];
+
   v->getScreenPosition(pos);
+  v->getColour(colours);
 
   if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
       && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
+
     *doc << Circle(Point(pos[0], pos[1]), 180 * (1 - pos[2]),
-                   Fill(Color((int) (v->colourR * 256), (int) (v->colourG * 256), (int) (v->colourB * 256))),
+                   Fill(Color((int) (colours[0] * 256), (int) (colours[1] * 256), (int) (colours[2] * 256))),
                    Stroke(0, Color(200, 250, 150)));
   }
   delete (pos);
+  delete (colours);
 }
 
 inline void SvgPrinter::printLine(Vertex *v) {

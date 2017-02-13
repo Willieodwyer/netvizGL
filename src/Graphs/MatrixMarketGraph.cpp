@@ -33,9 +33,9 @@ void MatrixMarketGraph::read(char *filePath) {
   /*  This is how one can screen matrix types if their application */
   /*  only supports a subset of the Matrix Market data types.      */
 //  if (!mm_is_coordinate(matcode) || mm_is_integer(matcode)) {
-  if (!mm_is_coordinate(matcode)) {
+  if (!mm_is_coordinate(matcode) || !mm_is_pattern(matcode) || !mm_is_symmetric(matcode)) {
     printf("Sorry, this application only supports graphs that are:");
-    printf("Matrix Market type: [%s]\n", MM_COORDINATE_STR);
+    printf("Matrix Market type: [%s][%s][%s]\n", MM_COORDINATE_STR, MM_PATTERN_STR, MM_SYMM_STR);
     printf("and not: [%s]\n", MM_INT_STR);
     exit(1);
   }
@@ -85,6 +85,16 @@ void MatrixMarketGraph::read(char *filePath) {
     vertices[I[k]]->attachPoint(vertices[J[k]]);
     adjacencyMatrix[I[k]][J[k]] = 1;
     adjacencyMatrix[J[k]][I[k]] = 1;
+  }
+
+  for (int i = 0; i < numVertices; ++i) {
+    for (int j = i; j < numVertices; ++j) {
+      if (j == i) continue;
+      if (adjacencyMatrix[i][j] == 1) {
+        vertices[i]->degree++;
+        vertices[j]->degree++;
+      }
+    }
   }
 
   int *temp = new int[2];

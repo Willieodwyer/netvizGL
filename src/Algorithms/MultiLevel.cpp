@@ -158,6 +158,7 @@ void MultiLevel::initialPlacement() {
   graph->vertices[0]->posX = 0;
   graph->vertices[0]->posY = 0;
   graph->vertices[0]->posZ = 0;
+  delete(digit);
 }
 
 void MultiLevel::placement() {
