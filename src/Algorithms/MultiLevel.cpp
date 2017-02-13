@@ -29,7 +29,7 @@ MultiLevel::MultiLevel(Graph *g)
   scaleOnce = false;
   done = false;
   t = 0;
-  tolerance = 0.1;
+  tolerance = .1;
   displacement = 100 / numVerticesF;
 
 //  Initiate an adjacent pair of vertices.
@@ -42,7 +42,7 @@ MultiLevel::MultiLevel(Graph *g)
   temperature = 0.1;
   alpha = 0.5;
 
-  k = sqrt(128 * 72 / (double) graph->numVertices);
+  //k = sqrt(128 * 72 / (double) graph->numVertices);
 
 }
 
@@ -52,19 +52,19 @@ void MultiLevel::apply() {
       placement();
     }
 
-//    k = alpha / ((population));
+    k = alpha / ((population));
 
 
-//    while (abs(energy1 - energy0) < tolerance * displacement) {
-    while (energy0 > k) {
+    while (abs(energy1 - energy0) < tolerance * displacement) {
+ //   while (energy0 > k) {
       energy1 = 0;
       calcApplyForces();
       temperature = temperature * cooling;
       alpha = alpha * cooling;
     }
 
-//    energy0 = energy1;
-    energy0 = 10E100;
+    energy0 = energy1;
+  //  energy0 = 10E100;
     temperature = .1;
 
     if (edgeIndex == graph->numEdges) {
@@ -79,8 +79,8 @@ void MultiLevel::apply() {
   }
   if (scaleOnce && !done) {
     for (int i = 0; i < graph->numVertices; ++i) {
-      graph->vertices[i]->posX = (graph->vertices[i]->posX * (10)) - 25;
-      graph->vertices[i]->posY = (graph->vertices[i]->posY * (10)) - 25;
+      graph->vertices[i]->posX = (graph->vertices[i]->posX * (100)) - 25;
+      graph->vertices[i]->posY = (graph->vertices[i]->posY * (100)) - 25;
       done = true;
     }
   }
@@ -105,7 +105,7 @@ void MultiLevel::calcApplyForces() {
 
 
     if (visitedVertices[v] && visitedVertices[u]) {
-      std::cerr << "calc forces v:" << v << " u:" << u << std::endl;
+      // << "calc forces v:" << v << " u:" << u << endl;
 
       double rep = 0;
       double att = 0;
@@ -149,13 +149,13 @@ void MultiLevel::calcApplyForces() {
       graph->vertices[u]->posX += graph->vertices[u]->force * -cos * temperature;
       graph->vertices[u]->posY += graph->vertices[u]->force * -sin * temperature;
 
-//      energy1 += graph->vertices[v]->force;
-//      energy1 += graph->vertices[u]->force;
-      energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
+      energy1 += graph->vertices[v]->force;
+      energy1 += graph->vertices[u]->force;
+//      energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
 
     }
   }
-  cerr << endl;
+  // << endl;
 
   //usleep(1000000);
 
@@ -225,7 +225,7 @@ void MultiLevel::placement() {
       visitedVertices[a] = 1;
     }
 
-    std::cerr << "placement v:" << v << " u:" << a << std::endl;
+    // << "placement v:" << v << " u:" << a << endl;
 
     graph->vertices[a]->posX = graph->vertices[v]->posX +
         cos((2 * M_PI * edgeIndex) / connectedNodes.size()) * radius;
@@ -261,7 +261,7 @@ void MultiLevel::placement() {
   }
 
   level++;
-  cerr << endl;
+  // << endl;
 }
 
 void MultiLevel::updateDiagonal() {
