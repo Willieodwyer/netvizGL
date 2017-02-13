@@ -44,6 +44,10 @@ class MultiLevel : public Algorithm {
   int t;
   double tolerance;
   double displacement;
+  void updateDiagonal();
+  void updateCooling();
+  void updateK();
+  void updateTemperature();
 };
 
 #endif //NETVIZGL_MULTILEVEL_H

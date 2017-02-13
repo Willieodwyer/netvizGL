@@ -5,8 +5,7 @@
 #include "../inc/Command/ColourNodeCommand.h"
 #include "../inc/Command/TextNodeCommand.h"
 #include "../inc/SvgPrinter.h"
-#include "../inc/Centrality/Centrality.h"
-#include "../inc/Centrality/DegreeCentrality.h"
+#include "../inc/Centrality/DistanceCentrality.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -198,10 +197,9 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->X11Screenshot();
 
   if (key == GLFW_KEY_C && action == GLFW_PRESS) {
-    DegreeCentrality c;
+    DistanceCentrality c;
     c.calcApply(wind->graph);
   }
-
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
     svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
