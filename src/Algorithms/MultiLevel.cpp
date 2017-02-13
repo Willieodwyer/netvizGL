@@ -42,7 +42,7 @@ MultiLevel::MultiLevel(Graph *g)
   temperature = 0.1;
   alpha = 0.5;
 
-  k = sqrt(128*72 / (double) graph->numVertices);
+  k = sqrt(128 * 72 / (double) graph->numVertices);
 
 }
 
@@ -55,16 +55,16 @@ void MultiLevel::apply() {
 //    k = alpha / ((population));
 
 
-    while (abs(energy1 - energy0) < tolerance * displacement) {
-//    while (energy0 > k) {
+//    while (abs(energy1 - energy0) < tolerance * displacement) {
+    while (energy0 > k) {
       energy1 = 0;
       calcApplyForces();
       temperature = temperature * cooling;
       alpha = alpha * cooling;
     }
 
-    energy0 = energy1;
-//    energy0 = 10E100;
+//    energy0 = energy1;
+    energy0 = 10E100;
     temperature = .1;
 
     if (edgeIndex == graph->numEdges) {
@@ -101,84 +101,66 @@ void MultiLevel::calcApplyForces() {
 
   for (int i = 0; i < graph->numEdges; i++) {
     int v = graph->edgeList[i][0]; // List of the EDge list that you have
-    int u;
+    int u = graph->edgeList[i][1]; // List of the EDge list that you have
 
-    vector<int> connectedNodes;
 
-    for (int l = 0; l < graph->numEdges; ++l) {
-      if(graph->edgeList[l][0] == v)
-        connectedNodes.push_back(graph->edgeList[l][1]);
+    if (visitedVertices[v] && visitedVertices[u]) {
+      std::cerr << "calc forces v:" << v << " u:" << u << std::endl;
+
+      double rep = 0;
+      double att = 0;
+
+      double xDist = (graph->vertices[v]->posX - graph->vertices[u]->posX);
+      double yDist = (graph->vertices[v]->posY - graph->vertices[u]->posY);
+      double d = sqrt((xDist * xDist) + (yDist * yDist));
+
+      if (d < 0.00000000002) d = 0.00000000002;
+
+      double cos = ((graph->vertices[u]->posX - graph->vertices[v]->posX) / d);
+      double sin = ((graph->vertices[u]->posY - graph->vertices[v]->posY) / d);
+
+      att = (k * k) / -d;  //Takes care of the distances making sure they're not small
+      rep = (d * d) / k;
+
+      graph->vertices[v]->force = rep + att;
+      graph->vertices[u]->force = rep + att;
+
+      //V
+      if (graph->vertices[v]->force > 0
+          && graph->vertices[v]->force > diagonal / rFactor)
+        graph->vertices[v]->force = diagonal / rFactor;
+
+      else if (graph->vertices[v]->force < 0
+          && abs(graph->vertices[v]->force) > diagonal / aFactor)
+        graph->vertices[v]->force = -diagonal / aFactor;
+
+      //U
+      if (graph->vertices[u]->force > 0
+          && graph->vertices[u]->force > diagonal / rFactor)
+        graph->vertices[u]->force = diagonal / rFactor;
+
+      else if (graph->vertices[u]->force < 0
+          && abs(graph->vertices[u]->force) > diagonal / aFactor)
+        graph->vertices[u]->force = -diagonal / aFactor;
+
+      graph->vertices[v]->posX += graph->vertices[v]->force * cos * temperature;
+      graph->vertices[v]->posY += graph->vertices[v]->force * sin * temperature;
+
+      graph->vertices[u]->posX += graph->vertices[u]->force * -cos * temperature;
+      graph->vertices[u]->posY += graph->vertices[u]->force * -sin * temperature;
+
+//      energy1 += graph->vertices[v]->force;
+//      energy1 += graph->vertices[u]->force;
+      energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
+
     }
-
-    for (int l = 0; l < graph->numEdges; ++l) {
-      if(graph->edgeList[l][1] == v)
-        connectedNodes.push_back(graph->edgeList[l][0]);
-    }
-
-
-    //cerr << "Node num: " << v << endl;
-    //cerr << "Con.Nodes:" << connectedNodes.size() << endl;
-
-    for (int j = 0; j < connectedNodes.size(); ++j) {
-      u = connectedNodes[j];
-      if (visitedVertices[v] && visitedVertices[u]) {
-
-        //cerr << "calc forces v:" << v << " u:" << u << std::endl;
-
-        double rep = 0;
-        double att = 0;
-
-        double xDist = (graph->vertices[v]->posX - graph->vertices[u]->posX);
-        double yDist = (graph->vertices[v]->posY - graph->vertices[u]->posY);
-        double d = sqrt((xDist * xDist) + (yDist * yDist));
-
-        if (d < 0.00000000002) d = 0.00000000002;
-
-        double cos = ((graph->vertices[u]->posX - graph->vertices[v]->posX) / d);
-        double sin = ((graph->vertices[u]->posY - graph->vertices[v]->posY) / d);
-
-        att = (k * k) / -d;  //Takes care of the distances making sure they're not small
-        rep = (d * d) / k;
-
-        graph->vertices[v]->force = rep + att;
-        graph->vertices[u]->force = rep + att;
-
-        //V
-        if (graph->vertices[v]->force > 0
-            && graph->vertices[v]->force > diagonal / rFactor)
-          graph->vertices[v]->force = diagonal / rFactor;
-
-        else if (graph->vertices[v]->force < 0
-            && abs(graph->vertices[v]->force) > diagonal / aFactor)
-          graph->vertices[v]->force = -diagonal / aFactor;
-
-        //U
-        if (graph->vertices[u]->force > 0
-            && graph->vertices[u]->force > diagonal / rFactor)
-          graph->vertices[u]->force = diagonal / rFactor;
-
-        else if (graph->vertices[u]->force < 0
-            && abs(graph->vertices[u]->force) > diagonal / aFactor)
-          graph->vertices[u]->force = -diagonal / aFactor;
-
-        graph->vertices[v]->posX += graph->vertices[v]->force * cos * temperature;
-        graph->vertices[v]->posY += graph->vertices[v]->force * sin * temperature;
-
-        graph->vertices[u]->posX += graph->vertices[u]->force * -cos * temperature;
-        graph->vertices[u]->posY += graph->vertices[u]->force * -sin * temperature;
-
-        energy1 += graph->vertices[v]->force;
-        energy1 += graph->vertices[u]->force;
-//      energy0 = graph->vertices[v]->force + graph->vertices[u]->force;
-
-      }
-    }
-    //cerr << endl;
-
-    //usleep(1000000);
-
   }
+  cerr << endl;
+
+  //usleep(1000000);
+
 }
+
 
 void MultiLevel::initialPlacement() {
   char *digit = new char[64];
@@ -187,8 +169,8 @@ void MultiLevel::initialPlacement() {
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < graph->numVertices; ++j) {
     sprintf(digit, "%d", j);
-    graph->vertices[j]->posX = -1;
-    graph->vertices[j]->posY = -1;
+    graph->vertices[j]->posX = 1;
+    graph->vertices[j]->posY = 1;
     graph->vertices[j]->posZ = -100;
     graph->vertices[j]->setText(digit);
     graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
@@ -216,12 +198,12 @@ void MultiLevel::placement() {
 
   vector<int> connectedNodes;
   for (int l = 0; l < graph->numEdges; ++l) {
-    if(graph->edgeList[l][0] == v)
+    if (graph->edgeList[l][0] == v)
       connectedNodes.push_back(graph->edgeList[l][1]);
   }
 
   for (int l = 0; l < graph->numEdges; ++l) {
-    if(graph->edgeList[l][1] == v)
+    if (graph->edgeList[l][1] == v)
       connectedNodes.push_back(graph->edgeList[l][0]);
   }
 
@@ -243,7 +225,7 @@ void MultiLevel::placement() {
       visitedVertices[a] = 1;
     }
 
-    //cerr << "placement v:" << v << " u:" << a << std::endl;
+    std::cerr << "placement v:" << v << " u:" << a << std::endl;
 
     graph->vertices[a]->posX = graph->vertices[v]->posX +
         cos((2 * M_PI * edgeIndex) / connectedNodes.size()) * radius;
@@ -279,7 +261,7 @@ void MultiLevel::placement() {
   }
 
   level++;
-  //cerr << endl;
+  cerr << endl;
 }
 
 void MultiLevel::updateDiagonal() {
