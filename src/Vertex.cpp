@@ -56,7 +56,7 @@ Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
     }
 
   text = new char[64];
-  strcpy(text,"");
+  strcpy(text, "");
 }
 
 void Vertex::update() {
@@ -143,7 +143,7 @@ void Vertex::drawPoints() {
 }
 
 void Vertex::drawText() {
-  if(strlen(text) < 1)
+  if (strlen(text) < 1)
     return;
 
   glPixelTransferf(GL_RED_BIAS, -1.0f);
@@ -277,6 +277,6 @@ double Vertex::getDepth() {
   return center[2];
 }
 
-void Vertex::setText(char * t){
-  strcpy(text,t);
+void Vertex::setText(const char *t) {
+  strcpy(text, t);
 }

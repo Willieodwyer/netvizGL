@@ -494,7 +494,7 @@ public class MultiLevel {
 				//ti = ti*0.9; // mesh
 				//ti = ti*0.99; // sipenski
 				//ti= ti*0.999; // small
-				//-----------energy checking
+				//-----------energy0 checking
 				//**********************
 				
 				

@@ -59,24 +59,9 @@ void AdjacencyGraph::read(char *filePath) {
     }
   }
 
-  struct timeval time;
-  gettimeofday(&time, NULL);
-  srand(hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < numVertices; ++j) {
-    vertices.push_back(new Vertex(((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
-                                  ((double) rand() / RAND_MAX) * numVertices - numVertices / 2,
-                                  0));
-    vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                           ((double) rand() / (RAND_MAX)),
-                           ((double) rand() / (RAND_MAX)));
-  }
-
-  for (int i = 0; i < numVertices; ++i) {
-    for (int j = 0; j < numVertices; ++j) {
-      if (vertices[i]->posX == vertices[j]->posX && i != j
-          && vertices[i]->posY == vertices[j]->posY)
-        fprintf(stderr, "Warning: duplicate positions generated @ %d\n", i);
-    }
+    vertices.push_back(new Vertex(0, 0, 0));
+    vertices[j]->setColour(0, 0, 0);
   }
 
   for (int i = 0; i < numVertices; ++i) {
@@ -90,7 +75,7 @@ void AdjacencyGraph::read(char *filePath) {
   edgeList.clear();
   for (int i = 0; i < numVertices; ++i) {
     for (int j = 0; j < i; ++j) {
-      if (adjacencyMatrix[i][j] == 1){
+      if (adjacencyMatrix[i][j] == 1) {
         temp[0] = j;
         temp[1] = i;
         edgeList.push_back(temp);
@@ -101,6 +86,10 @@ void AdjacencyGraph::read(char *filePath) {
   numEdges = edgeList.size();
 
   for (int i = 0; i < edgeList.size(); ++i) {
-    fprintf(stderr,"%d,%d\n",edgeList[i][0],edgeList[i][1]);
+    fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
   }
+}
+AdjacencyGraph::~AdjacencyGraph() {
+  fprintf(stderr, "Deleting AdjacencyGraph\n");
+
 }

@@ -13,6 +13,9 @@ class AdjacencyGraph : public Graph {
   virtual void draw();
   virtual void update();
  private:
+ public:
+  virtual ~AdjacencyGraph();
+ private:
   virtual void read(char *filePath);
 };
 

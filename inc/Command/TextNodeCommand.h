@@ -8,7 +8,7 @@
 #include "../GLWindow.h"
 #include "Command.h"
 
-class TextNodeCommand : public Command{
+class TextNodeCommand : public Command {
  private:
   GLWindow *window;
  public:

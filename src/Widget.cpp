@@ -56,7 +56,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   Widget::Instance()->textNodeLabel = gtk_label_new("Add text to node");
   Widget::Instance()->textNodeEntry = gtk_entry_new();
   gtk_entry_set_text((GtkEntry *) Widget::Instance()->textNodeEntry, "Enter node text here");
-  gtk_entry_set_max_length ((GtkEntry *) Widget::Instance()->textNodeEntry,64);
+  gtk_entry_set_max_length((GtkEntry *) Widget::Instance()->textNodeEntry, 64);
   g_signal_connect (Widget::Instance()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Instance());
   Widget::Instance()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Instance()->textNodeEntry);
 
@@ -70,7 +70,8 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteEdgeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourNodeLabel);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), (GtkWidget *) Widget::Instance()->colourNodeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box),
+                    (GtkWidget *) Widget::Instance()->colourNodeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeEntry);

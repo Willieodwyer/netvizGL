@@ -7,8 +7,7 @@
 
 #include "Graph.h"
 
-
-class MatrixMarketGraph : public Graph{
+class MatrixMarketGraph : public Graph {
  public:
   MatrixMarketGraph(char *filePath);
   void draw() override;

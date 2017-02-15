@@ -25,9 +25,7 @@ find_library(GLFW_LIBRARIES glfw3 ${LIBRARY_SEARCH_PATH})
 set(ADDITIONAL_LIBS
         -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
         -fopenmp
-        -lglut
         -lGLEW
-        -lglfw
         -lglfw3
         -lGL
         -lX11
@@ -95,7 +93,7 @@ add_executable(${PROJ_NAME}
         src/Command/ColourNodeCommand.cpp inc/Command/ColourNodeCommand.h
         src/Command/TextNodeCommand.cpp inc/Command/TextNodeCommand.h
         src/Graphs/mmio.c inc/Graphs/mmio.h
-        inc/SvgPrinter.h)
+        inc/SvgPrinter.h src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h)
 
 
 # Libraries to be linked

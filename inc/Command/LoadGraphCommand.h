@@ -8,7 +8,6 @@
 #include "Command.h"
 #include "../GLWindow.h"
 
-
 class LoadGraphCommand : public Command {
  private:
   GLWindow *window;
@@ -16,7 +15,7 @@ class LoadGraphCommand : public Command {
   LoadGraphCommand(GLWindow *window);
 
  public:
-  void execute() override ;
+  void execute() override;
 };
 
 #endif //NETVIZGL_LOADGRAPHCOMMAND_H

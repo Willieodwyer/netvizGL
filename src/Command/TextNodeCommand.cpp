@@ -32,6 +32,7 @@ void TextNodeCommand::execute() {
     }
   }
 }
-TextNodeCommand::TextNodeCommand(GLWindow *pWindow) : window(pWindow){
+TextNodeCommand::TextNodeCommand(GLWindow *pWindow)
+    : window(pWindow) {
 
 }
