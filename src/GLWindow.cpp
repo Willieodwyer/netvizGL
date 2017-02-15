@@ -61,7 +61,7 @@ void GLWindow::algorithmFunction() {
 }
 
 void GLWindow::widgetFunction(Widget *x) {
-  x = Widget::Instance();
+  x = Widget::Ins();
 }
 //
 

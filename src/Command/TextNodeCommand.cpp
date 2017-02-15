@@ -10,7 +10,6 @@ void TextNodeCommand::execute() {
   vector<double> depthValues;
 
   for (int i = 0; i < window->graph->numVertices; ++i) {
-    Widget::updateColour();
     if (window->graph->vertices[i]->isPointerOver(window->mouseX, window->mouseY)) {
       pointerOver.push_back(window->graph->vertices[i]);
     }
@@ -28,7 +27,7 @@ void TextNodeCommand::execute() {
 
   for (int i = 0; i < pointerOver.size(); i++) {
     if (closest == depthValues[i]) {
-      pointerOver[i]->setText(Widget::Instance()->textNodeText);
+      pointerOver[i]->setText(Widget::Ins()->textNodeText);
     }
   }
 }

@@ -93,7 +93,7 @@ add_executable(${PROJ_NAME}
         src/Command/ColourNodeCommand.cpp inc/Command/ColourNodeCommand.h
         src/Command/TextNodeCommand.cpp inc/Command/TextNodeCommand.h
         src/Graphs/mmio.c inc/Graphs/mmio.h
-        inc/SvgPrinter.h src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h)
+        inc/SvgPrinter.h src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h src/Command/RefreshGraphCommand.cpp inc/Command/RefreshGraphCommand.h)
 
 
 # Libraries to be linked

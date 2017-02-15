@@ -3,7 +3,7 @@
 #include "inc/GLWindow.h"
 
 //static void widgetFunction(Widget *x){
-//  x = Widget::Instance();
+//  x = Widget::Ins();
 //}
 
 int main(int argc, char **argv) {
