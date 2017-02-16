@@ -22,12 +22,15 @@ class Widget {
   GtkWidget *refreshButton,*entry;
 
   GtkWidget *separator1,*separator2,*separator3;
-  GtkWidget *deleteNodeButton;
 
+  GtkWidget *deleteNodeButton;
   GtkWidget *deleteEdgeButton;
-  GtkColorChooser *colourNodeButton;
 
   GtkWidget *colourNodeLabel;
+  GtkWidget *distanceCentralityButton;
+  GtkWidget *degreeCentralityButton;
+  GtkColorChooser *colourNodeButton;
+
   GtkWidget *colourEdgeButton;
 
   GtkWidget *filterButton;
@@ -55,6 +58,8 @@ class Widget {
   double blueColour;
   double greenColour;
   char *textNodeText;
+  static void degreeC();
+  static void distanceC();
 };
 
 #endif //NETVIZGL_BUTTONS_H

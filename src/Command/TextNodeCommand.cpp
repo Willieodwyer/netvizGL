@@ -9,9 +9,11 @@ void TextNodeCommand::execute() {
   vector<Vertex *> pointerOver;
   vector<double> depthValues;
 
-  for (int i = 0; i < window->graph->numVertices; ++i) {
-    if (window->graph->vertices[i]->isPointerOver(window->mouseX, window->mouseY)) {
-      pointerOver.push_back(window->graph->vertices[i]);
+  if(window->graph) {
+    for (int i = 0; i < window->graph->numVertices; ++i) {
+      if (window->graph->vertices[i]->isPointerOver(window->mouseX, window->mouseY)) {
+        pointerOver.push_back(window->graph->vertices[i]);
+      }
     }
   }
 

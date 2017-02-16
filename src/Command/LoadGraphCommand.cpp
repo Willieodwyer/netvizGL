@@ -68,8 +68,8 @@ void LoadGraphCommand::execute() {
   gettimeofday(&time, NULL);
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < GLWindow::Instance()->graph->numVertices; ++j) {
-    sprintf(digit, "%d", j);Four
-    GLWindow::Instance()->graph->vertices[j]->setText(digit);
+    sprintf(digit, "%d", j);
+    //GLWindow::Instance()->graph->vertices[j]->setText(digit);
     GLWindow::Instance()->graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
                                   ((double) rand() / (RAND_MAX)),
                                   ((double) rand() / (RAND_MAX)));
