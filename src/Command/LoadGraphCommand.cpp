@@ -63,6 +63,19 @@ void LoadGraphCommand::execute() {
   window->endThread = false;
   window->algorithmThread = new thread(GLWindow::algorithmFunction);
 
+  char *digit = new char[64];
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
+  for (int j = 0; j < GLWindow::Instance()->graph->numVertices; ++j) {
+    sprintf(digit, "%d", j);Four
+    GLWindow::Instance()->graph->vertices[j]->setText(digit);
+    GLWindow::Instance()->graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
+                                  ((double) rand() / (RAND_MAX)),
+                                  ((double) rand() / (RAND_MAX)));
+  }
+  delete (digit);
+
   if (temp) {
     delete (temp);
   }

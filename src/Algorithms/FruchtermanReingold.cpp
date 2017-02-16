@@ -87,9 +87,6 @@ void FruchtermanReingold::initialPlacement() {
     graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * (W) - W / 2;
     graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * (L) - L / 2;
     graph->vertices[j]->posZ = 0;
-    graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)));
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {

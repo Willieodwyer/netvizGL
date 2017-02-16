@@ -173,9 +173,6 @@ void MultiLevel::initialPlacement() {
     graph->vertices[j]->posY = 1;
     graph->vertices[j]->posZ = -100;
     graph->vertices[j]->setText(digit);
-    graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)));
   }
   graph->vertices[0]->posX = 0;
   graph->vertices[0]->posY = 0;

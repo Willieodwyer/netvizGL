@@ -97,7 +97,7 @@ add_executable(${PROJ_NAME}
         src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h 
         src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h 
         inc/Centrality/Centrality.h 
-        src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h)
+        src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h
         src/Command/RefreshGraphCommand.cpp inc/Command/RefreshGraphCommand.h)
 
 

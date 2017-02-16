@@ -111,27 +111,27 @@ void Vertex::update() {
 void Vertex::drawPoints() {
   mtx.lock();
 
-//  glEnableClientState(GL_COLOR_ARRAY);
-//  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glEnableClientState(GL_VERTEX_ARRAY);
+
+  glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
+
+//  glEnable(GL_POLYGON_OFFSET_FILL);
+//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 //
-//  glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
-//
-////  glEnable(GL_POLYGON_OFFSET_FILL);
-////  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-////
-////  glColorPointer(3, GL_DOUBLE, 0, NULL);
-////  glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
-//
-//  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-//
-//  glPolygonOffset(-2.5f, -2.5f);
-//  glColorPointer(3, GL_DOUBLE, 0, colours);
+//  glColorPointer(3, GL_DOUBLE, 0, NULL);
 //  glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
-//
-//  glDisableClientState(GL_VERTEX_ARRAY);
-//  glDisableClientState(GL_COLOR_ARRAY);
-//
-//  glPolygonOffset(0, 0);
+
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+  glPolygonOffset(-2.5f, -2.5f);
+  glColorPointer(3, GL_DOUBLE, 0, colours);
+  glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
+
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+
+  glPolygonOffset(0, 0);
 
   if (lines.size() > 0) {
     for (int i = 0; i < lines.size(); ++i) {
