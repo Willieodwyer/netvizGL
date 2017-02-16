@@ -4,10 +4,11 @@
 
 #include "../inc/Widget.h"
 #include "../inc/GLWindow.h"
+#include "../inc/Command/RefreshGraphCommand.h"
 
 Widget *Widget::instance = NULL;
 
-Widget *Widget::Instance() {
+Widget *Widget::Ins() {
   if (!instance)   // Only allow one instance of class to be generated.
     instance = new Widget();
   return instance;
@@ -16,7 +17,7 @@ Widget *Widget::Instance() {
 Widget::Widget() {
   visible = true;
   app = gtk_application_new("org.gtk.Netviz", G_APPLICATION_FLAGS_NONE);
-  g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(activate), this);
   g_application_run(G_APPLICATION(app), 0, 0);
   g_object_unref(app);
 }
@@ -25,62 +26,88 @@ Widget::~Widget() {
 }
 
 void Widget::activate(GtkApplication *app, gpointer user_data) {
-  Widget::Instance()->window = gtk_application_window_new(app);
-  gtk_window_set_title(GTK_WINDOW (Widget::Instance()->window), "Toolbox");
-  gtk_window_set_default_size(GTK_WINDOW (Widget::Instance()->window), 197, 200);
-  gtk_window_move(GTK_WINDOW (Widget::Instance()->window), 270, 152);
-  g_signal_connect ((Widget::Instance()->window), "delete-event", G_CALLBACK(toggleView), Widget::Instance());
+  Widget::Ins()->window = gtk_application_window_new(app);
+  gtk_window_set_title(GTK_WINDOW (Widget::Ins()->window), "Toolbox");
+  gtk_window_set_default_size(GTK_WINDOW (Widget::Ins()->window), 197, 200);
+  gtk_window_move(GTK_WINDOW (Widget::Ins()->window), 270, 152);
+  g_signal_connect ((Widget::Ins()->window), "delete-event", G_CALLBACK(toggleView), Widget::Ins());
 
-  Widget::Instance()->button_box = gtk_button_box_new(GTK_ORIENTATION_VERTICAL);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->window), Widget::Instance()->button_box);
+  Widget::Ins()->button_box = gtk_button_box_new(GTK_ORIENTATION_VERTICAL);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->window), Widget::Ins()->button_box);
 
   //File Dialog button
-  Widget::Instance()->openFileButton = gtk_button_new_with_label("Open File");
-  g_signal_connect (Widget::Instance()->openFileButton, "clicked", G_CALLBACK(openFile), Widget::Instance());
+  Widget::Ins()->openFileButton = gtk_button_new_with_label("Open File");
+  g_signal_connect (Widget::Ins()->openFileButton, "clicked", G_CALLBACK(openFile), Widget::Ins());
 
-  //Algorithm select button
-  Widget::Instance()->algorithmButton = gtk_combo_box_new();
+  //Export as
+  Widget::Ins()->exportAsButton = gtk_button_new_with_label("Export As");
+  g_signal_connect (Widget::Ins()->exportAsButton, "clicked", G_CALLBACK(openFile), Widget::Ins());
+
+  //Algorithm Radio Buttons
+  Widget::Ins()->box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_set_homogeneous(GTK_BOX (Widget::Ins()->box), TRUE);
+  Widget::Ins()->fruchterman = gtk_radio_button_new_with_label_from_widget(NULL,
+                                                                  "Fruchterman Reingold");
+  Widget::Ins()->simpleForce = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Widget::Ins()->fruchterman),
+                                                                    "Simple Force Directed");
+  Widget::Ins()->multiLevel = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Widget::Ins()->simpleForce),
+                                                                    "Multi Level");
+  // Pack them into a box, then show all the widgets
+  gtk_box_pack_start(GTK_BOX (Widget::Ins()->box), Widget::Ins()->fruchterman, TRUE, TRUE, 2);
+  gtk_box_pack_start(GTK_BOX (Widget::Ins()->box), Widget::Ins()->simpleForce, TRUE, TRUE, 2);
+  gtk_box_pack_start(GTK_BOX (Widget::Ins()->box), Widget::Ins()->multiLevel, TRUE, TRUE, 2);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->window), Widget::Ins()->box);
+
+  //Refresh Buttons
+  Widget::Ins()->refreshButton = gtk_button_new_with_label("Refresh Graph");
+  g_signal_connect (Widget::Ins()->refreshButton, "clicked", G_CALLBACK(refresh), Widget::Ins());
 
   // Exit button
-  Widget::Instance()->exitButton = gtk_button_new_with_label("Exit");
-  g_signal_connect (Widget::Instance()->exitButton, "clicked", G_CALLBACK(quitNetviz), Widget::Instance());
+  Widget::Ins()->exitButton = gtk_button_new_with_label("Exit");
+  g_signal_connect (Widget::Ins()->exitButton, "clicked", G_CALLBACK(quitNetviz), Widget::Ins());
 
   // Separator
-  Widget::Instance()->separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+  Widget::Ins()->separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+  Widget::Ins()->separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+  Widget::Ins()->separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
   // Colour Node
-  Widget::Instance()->colourNodeLabel = gtk_label_new("Colour Node");
-  Widget::Instance()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
+  Widget::Ins()->colourNodeLabel = gtk_label_new("Colour Node");
+  Widget::Ins()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
 
   // Text Node
-  Widget::Instance()->textNodeLabel = gtk_label_new("Add text to node");
-  Widget::Instance()->textNodeEntry = gtk_entry_new();
-  gtk_entry_set_text((GtkEntry *) Widget::Instance()->textNodeEntry, "Enter node text here");
-  gtk_entry_set_max_length((GtkEntry *) Widget::Instance()->textNodeEntry, 64);
-  g_signal_connect (Widget::Instance()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Instance());
-  Widget::Instance()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Instance()->textNodeEntry);
+  Widget::Ins()->textNodeLabel = gtk_label_new("Add text to node");
+  Widget::Ins()->textNodeEntry = gtk_entry_new();
+  gtk_entry_set_text((GtkEntry *) Widget::Ins()->textNodeEntry, "Enter node text here");
+  gtk_entry_set_max_length((GtkEntry *) Widget::Ins()->textNodeEntry, 64);
+  g_signal_connect (Widget::Ins()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Ins());
+  Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
 
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->openFileButton);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->algorithmButton);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->exitButton);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->separator);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->openFileButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exportAsButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator1);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->box);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->refreshButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator2);
 
   //TODO
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteNodeButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->deleteEdgeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->deleteNodeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->deleteEdgeButton);
 
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourNodeLabel);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box),
-                    (GtkWidget *) Widget::Instance()->colourNodeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourNodeLabel);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box),
+                    (GtkWidget *) Widget::Ins()->colourNodeButton);
 
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeLabel);
-  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->textNodeEntry);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
 
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->colourEdgeButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->filterButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Instance()->runButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->colourEdgeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->filterButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator3);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exitButton);
 
-  gtk_widget_show_all(Widget::Instance()->window);
+
+  gtk_widget_show_all(Widget::Ins()->window);
 
 }
 
@@ -88,7 +115,7 @@ void Widget::openFile() {
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
   gint res;
 
-  Widget::Instance()->dialog =
+  Widget::Ins()->dialog =
       gtk_file_chooser_dialog_new("Open File",
                                   NULL,
                                   action,
@@ -98,20 +125,20 @@ void Widget::openFile() {
                                   GTK_RESPONSE_ACCEPT,
                                   NULL);
 
-  res = gtk_dialog_run(GTK_DIALOG (Widget::Instance()->dialog));
+  res = gtk_dialog_run(GTK_DIALOG (Widget::Ins()->dialog));
 
   if (res == GTK_RESPONSE_ACCEPT) {
-    GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Instance()->dialog);
+    GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Ins()->dialog);
     GLWindow::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
     //fprintf(stderr, "%s", gtk_file_chooser_get_filename(chooser));
   }
 
   if (res == GTK_RESPONSE_CANCEL) {
-    gtk_widget_destroy(Widget::Instance()->dialog);
+    gtk_widget_destroy(Widget::Ins()->dialog);
     return;
   }
 
-  gtk_widget_destroy(Widget::Instance()->dialog);
+  gtk_widget_destroy(Widget::Ins()->dialog);
 
   if (GLWindow::Instance()->graphFilePath)
     GLWindow::Instance()->loadGraph->execute();
@@ -119,20 +146,20 @@ void Widget::openFile() {
 
 void Widget::updateColour() {
   GdkRGBA *colour = new GdkRGBA;
-  gtk_color_chooser_get_rgba(Widget::Instance()->colourNodeButton, colour);
+  gtk_color_chooser_get_rgba(Widget::Ins()->colourNodeButton, colour);
 
-  Widget::Instance()->redColour = colour->red;
-  Widget::Instance()->blueColour = colour->blue;
-  Widget::Instance()->greenColour = colour->green;
+  Widget::Ins()->redColour = colour->red;
+  Widget::Ins()->blueColour = colour->blue;
+  Widget::Ins()->greenColour = colour->green;
 }
 
 void Widget::toggleView() {
-  if (Widget::Instance()->visible) {
-    Widget::Instance()->visible = false;
-    gtk_widget_hide(Widget::Instance()->window);
+  if (Widget::Ins()->visible) {
+    Widget::Ins()->visible = false;
+    gtk_widget_hide(Widget::Ins()->window);
   } else {
-    gtk_widget_show(Widget::Instance()->window);
-    Widget::Instance()->visible = true;
+    gtk_widget_show(Widget::Ins()->window);
+    Widget::Ins()->visible = true;
   }
 }
 
@@ -141,6 +168,22 @@ void Widget::quitNetviz() {
 }
 
 void Widget::textChanged() {
-  Widget::Instance()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Instance()->textNodeEntry);
+  Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
 }
+
+void Widget::refresh() {
+  RefreshGraphCommand c(GLWindow::Instance());
+  c.execute();
+}
+
+int Widget::getAlgorithm() {
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->fruchterman))==TRUE)
+    return FR;
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->simpleForce))==TRUE)
+    return SMPL;
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->multiLevel))==TRUE)
+    return MLT;
+}
+
+
 

@@ -11,36 +11,46 @@ class Widget {
   GtkApplication *app;
   static Widget *instance;
   bool visible;
+  GtkWidget *window;
+  GtkWidget *button_box;
 
   GtkWidget *openFileButton;
   GtkWidget *dialog;
-  GtkWidget *algorithmButton;
-  GtkWidget *exitButton;
-  GtkWidget *separator;
+  GtkWidget *exportAsButton;
+
+  GtkWidget *fruchterman, *simpleForce, *multiLevel, *box;
+  GtkWidget *refreshButton,*entry;
+
+  GtkWidget *separator1,*separator2,*separator3;
   GtkWidget *deleteNodeButton;
+
   GtkWidget *deleteEdgeButton;
   GtkColorChooser *colourNodeButton;
+
   GtkWidget *colourNodeLabel;
   GtkWidget *colourEdgeButton;
+
   GtkWidget *filterButton;
-  GtkWidget *runButton;
-  GtkWidget *button_box;
   GtkWidget *textNodeLabel;
+
   GtkWidget *textNodeEntry;
-  GtkWidget *window;
+
+  GtkWidget *exitButton;
 
   static void activate(GtkApplication *app, gpointer user_data);
 
  public:
-
   Widget();
   virtual ~Widget();
-  static Widget *Instance();
+  static Widget *Ins();
   static void toggleView();
   static void openFile();
   static void quitNetviz();
   static void updateColour();
   static void textChanged();
+  static void refresh();
+  enum AlgorithmSelection { FR, SMPL, MLT };
+  static int getAlgorithm();
   double redColour;
   double blueColour;
   double greenColour;

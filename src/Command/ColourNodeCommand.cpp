@@ -31,9 +31,9 @@ void ColourNodeCommand::execute() {
 
   for (int i = 0; i < pointerOver.size(); i++) {
     if (closest == depthValues[i]) {
-      pointerOver[i]->setColour(Widget::Instance()->redColour,
-                                Widget::Instance()->greenColour,
-                                Widget::Instance()->blueColour);
+      pointerOver[i]->setColour(Widget::Ins()->redColour,
+                                Widget::Ins()->greenColour,
+                                Widget::Ins()->blueColour);
     }
   }
 }

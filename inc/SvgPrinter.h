@@ -24,7 +24,7 @@ class SvgPrinter {
     *doc << border;
   }
   void printGraph(Graph *g, double translateZ);
-  inline void printVertex(Vertex *v, double translateZ);
+  inline void printVertex(Vertex *v);
   inline void printLine(Vertex *v);
   inline void printText(Vertex *v);
 };
@@ -35,7 +35,7 @@ void SvgPrinter::printGraph(Graph *g, double translateZ) {
       printLine(g->vertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
-      printVertex(g->vertices[i], translateZ);
+      printVertex(g->vertices[i]);
     }
     for (int i = 0; i < g->numVertices; ++i) {
       printText(g->vertices[i]);
@@ -44,7 +44,7 @@ void SvgPrinter::printGraph(Graph *g, double translateZ) {
   }
 }
 
-inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
+inline void SvgPrinter::printVertex(Vertex *v) {
   GLdouble *pos = new GLdouble[3];
   GLdouble *colours = new GLdouble[3];
 
@@ -53,7 +53,6 @@ inline void SvgPrinter::printVertex(Vertex *v, double translateZ) {
 
   if (pos[0] >= -tolerance && pos[0] - tolerance <= dimensions->width
       && pos[1] >= -tolerance && pos[1] - tolerance <= dimensions->height) {
-
     *doc << Circle(Point(pos[0], pos[1]), 180 * (1 - pos[2]),
                    Fill(Color((int) (colours[0] * 256), (int) (colours[1] * 256), (int) (colours[2] * 256))),
                    Stroke(0, Color(200, 250, 150)));

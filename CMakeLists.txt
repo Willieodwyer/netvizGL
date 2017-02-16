@@ -93,7 +93,12 @@ add_executable(${PROJ_NAME}
         src/Command/ColourNodeCommand.cpp inc/Command/ColourNodeCommand.h
         src/Command/TextNodeCommand.cpp inc/Command/TextNodeCommand.h
         src/Graphs/mmio.c inc/Graphs/mmio.h
-        inc/SvgPrinter.h src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h inc/Centrality/Centrality.h src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h)
+        inc/SvgPrinter.h 
+        src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h 
+        src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h 
+        inc/Centrality/Centrality.h 
+        src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h)
+        src/Command/RefreshGraphCommand.cpp inc/Command/RefreshGraphCommand.h)
 
 
 # Libraries to be linked
