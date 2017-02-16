@@ -13,23 +13,37 @@
 
 using namespace std;
 class Vertex {
- public:
-  Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz);
-  virtual ~Vertex();
-
-  static const unsigned int rings = 12, sectors = 12;
-  static constexpr double radius = .01;
-
-  vector<Vertex *> attachedPoints;
-  void attachPoint(Vertex *p);
-
-  vector<Line *> lines;
-
+ private:
   GLdouble colourR;
   GLdouble colourG;
   GLdouble colourB;
 
-  int degree;
+  GLuint *indices;
+  GLint indIndex;
+
+  GLdouble *vertices;
+  GLdouble *colours;
+
+  std::mutex mtx;
+
+  vector<Line *> lines;
+
+  FTPixmapFont *font;
+
+  GLdouble *pos;
+ public:
+  static const unsigned int rings = 12, sectors = 12;
+  static constexpr double radius = .01;
+
+  Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz);
+  virtual ~Vertex();
+
+  vector<Vertex *> attachedPoints;
+  void attachPoint(Vertex *p);
+
+
+
+  int degree = 0;
   int level;
 
   GLdouble posX, posY, posZ;
@@ -37,28 +51,22 @@ class Vertex {
   GLdouble forceX, forceY, forceZ;
   GLdouble velocityX, velocityY, velocityZ;
 
-  GLuint *indices;
-  GLint indIndex;
-  GLdouble *vertices;
-  GLdouble *colours;
-  std::mutex mtx;
+
 
   void setColour(GLdouble r, GLdouble g, GLdouble b);
-  GLdouble *getColour();
+  GLdouble *getColour(GLdouble *colours);
 
   void drawPoints();
   void update();
+
   bool isPointerOver(double x, double y);
   double getDepth();
   void *getScreenPosition(GLdouble *pos);
+
   void drawText();
 
-  FTPixmapFont *font;
-
-  GLdouble *pos;
-  char *text;
-
   void setText(const char *t);
+  char *text;
 };
 
 #endif //NETVIZGL_SPHERE_H

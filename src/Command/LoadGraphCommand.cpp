@@ -60,7 +60,6 @@ void LoadGraphCommand::execute() {
       break;
     default: break;
   }
-
   window->endThread = false;
   window->algorithmThread = new thread(GLWindow::algorithmFunction);
 
