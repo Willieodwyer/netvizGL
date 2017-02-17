@@ -44,9 +44,9 @@ class ColourNode : public Command {
 
     for (int i = 0; i < pointerOver.size(); i++) {
       if (closest == depthValues[i]) {
-        pointerOver[i]->setColour(window->buttonWidget->redColour,
-                                  window->buttonWidget->greenColour,
-                                  window->buttonWidget->blueColour);
+        pointerOver[i]->setColour(Widget::Ins()->redColour,
+                                  Widget::Ins()->greenColour,
+                                  Widget::Ins()->blueColour);
       }
     }
   };
