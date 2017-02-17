@@ -51,9 +51,15 @@ void AdjacencyGraph::read(char *filePath) {
 
   fprintf(stdout, "Vertices - %d\n", numVertices);
 
-  adjacencyMatrix = new int *[numVertices];
   for (int i = 0; i < numVertices; ++i) {
-    adjacencyMatrix[i] = new int[numVertices];
+    vector<int> row;
+    adjacencyMatrix.push_back(row);
+    for (int j = 0; j < numVertices; ++j) {
+      adjacencyMatrix[i].push_back(0);
+    }
+  }
+
+  for (int i = 0; i < numVertices; ++i) {
     for (int j = 0; j < numVertices; ++j) {
       adjacencyMatrix[i][j] = edgeList[i][j];
     }

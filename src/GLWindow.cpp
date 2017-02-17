@@ -207,6 +207,17 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->svgScreenshot((char *) "DefaultSVG");
   }
 
+  if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+    wind->graph->numVertices--;
+    wind->graph->numEdges--;
+    wind->graph->adjacencyMatrix.erase(wind->graph->adjacencyMatrix.begin());
+    wind->graph->adjacencyMatrix[0].erase(wind->graph->adjacencyMatrix[0].begin(),
+                                          wind->graph->adjacencyMatrix[0].end());
+    wind->graph->edgeList.erase(wind->graph->edgeList.begin());
+    wind->graph->vertices.erase(wind->graph->vertices.begin());;
+  }
+
+
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, GL_TRUE);
   }

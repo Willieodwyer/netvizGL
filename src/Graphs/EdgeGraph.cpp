@@ -55,11 +55,11 @@ void EdgeGraph::read(char *filePath) {
 
   numVertices++;
 
-  adjacencyMatrix = new int *[numVertices];
   for (int i = 0; i < numVertices; ++i) {
-    adjacencyMatrix[i] = new int[numVertices];
+    vector<int> row;
+    adjacencyMatrix.push_back(row);
     for (int j = 0; j < numVertices; ++j) {
-      adjacencyMatrix[i][j] = 0;
+      adjacencyMatrix[i].push_back(0);
     }
   }
 
