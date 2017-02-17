@@ -4,9 +4,10 @@
 
 #include "../inc/Widget.h"
 #include "../inc/GLWindow.h"
-#include "../inc/Command/RefreshGraphCommand.h"
+#include "../inc/Command/RefreshGraph.h"
 #include "../inc/Centrality/DistanceCentrality.h"
 #include "../inc/Centrality/DegreeCentrality.h"
+#include "../inc/Command/SaveGraph.h"
 
 Widget *Widget::instance = NULL;
 
@@ -43,7 +44,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 
   //Export as
   Widget::Ins()->exportAsButton = gtk_button_new_with_label("Export As");
-  g_signal_connect (Widget::Ins()->exportAsButton, "clicked", G_CALLBACK(openFile), Widget::Ins());
+  g_signal_connect (Widget::Ins()->exportAsButton, "clicked", G_CALLBACK(saveFile), Widget::Ins());
 
   //Algorithm Radio Buttons
   Widget::Ins()->box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
@@ -137,14 +138,6 @@ void Widget::degreeC(){
   c.calcApply(GLWindow::Instance()->graph);
 }
 
-//svg::Dimensions *dimensions = new svg::Dimensions(GLWindow::Instance()->windowWidth, GLWindow::Instance()->windowHeight);
-//svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
-//svg::SvgPrinter svg(doc, dimensions);
-//svg.printGraph(GLWindow::Instance()->graph, GLWindow::Instance()->translateZ);
-//
-//delete dimensions;
-//delete doc;
-
 void Widget::openFile() {
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
   gint res;
@@ -178,6 +171,42 @@ void Widget::openFile() {
     GLWindow::Instance()->loadGraph->execute();
 }
 
+void Widget::saveFile() {
+  GtkWidget *dialog;
+  GtkFileChooser *chooser;
+  GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
+  SaveAsFileType res;
+
+  dialog = gtk_file_chooser_dialog_new("Save File",
+                                       NULL,
+                                       action,
+                                       ("_Cancel"),
+                                       GTK_RESPONSE_CANCEL,
+                                       ("_Save as Adjacency Matrix"),
+                                       ADJACENCY,
+                                       ("_Save as Edge List"),
+                                       EDGELIST,
+                                       ("_Save as PNG"),
+                                       PNG,
+                                       ("_Save as SVG"),
+                                       SVG,
+                                       NULL);
+  chooser = GTK_FILE_CHOOSER (dialog);
+
+  gtk_file_chooser_set_do_overwrite_confirmation(chooser, TRUE);
+  gtk_file_chooser_set_current_name(chooser, "Untitled");
+
+  res = (SaveAsFileType) gtk_dialog_run(GTK_DIALOG (dialog));
+
+  char *filefile;
+  filefile = gtk_file_chooser_get_filename(chooser);
+
+  SaveGraph s(GLWindow::Instance(), res, filefile);
+  s.execute();
+
+  gtk_widget_destroy(dialog);
+}
+
 void Widget::updateColour() {
   GdkRGBA *colour = new GdkRGBA;
   gtk_color_chooser_get_rgba(Widget::Ins()->colourNodeButton, colour);
@@ -206,7 +235,7 @@ void Widget::textChanged() {
 }
 
 void Widget::refresh() {
-  RefreshGraphCommand c(GLWindow::Instance());
+  RefreshGraph c(GLWindow::Instance());
   c.execute();
 }
 

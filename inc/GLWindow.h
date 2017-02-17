@@ -77,11 +77,18 @@ class GLWindow {
   static void widgetFunction(Widget *x);
 
   void quit();
-  void X11Screenshot();
+  void X11Screenshot(char *file);
   Command *colourNode;
 
   FTPixmapFont *font;
   Command *textNode;
+
+  bool takeSvgScreen = false;
+  char *svgFileName;
+  void svgScreenshot(char *fileName);
+
+  void refresh();
+  Command *refreshGraph;
 };
 
 #endif //NETVIZGL_WINDOW_H

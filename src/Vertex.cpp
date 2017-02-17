@@ -189,7 +189,7 @@ void Vertex::attachPoint(Vertex *p) {
   lines.push_back(l);
 }
 
-bool Vertex::isPointerOver(double x, double y) {
+bool Vertex::isPointerOver(double x, double y, int width, int height) {
   GLdouble proj[16];
   GLdouble model[16];
   GLint view[4];
@@ -225,8 +225,8 @@ bool Vertex::isPointerOver(double x, double y) {
           ((center[1] - edge[1]) * (center[1] - edge[1])));
 
   double pointerDistance = sqrt(((center[0] - x) * (center[0] - x))
-                                    + ((center[1] - (GLWindow::Instance()->windowHeight - y))
-                                        * (center[1] - (GLWindow::Instance()->windowHeight - y))));
+                                    + ((center[1] - (height - y))
+                                        * (center[1] - (height - y))));
 
   return pointerDistance < maxMouseDistance;
 }

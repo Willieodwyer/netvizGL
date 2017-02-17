@@ -48,11 +48,13 @@ class Widget {
   static Widget *Ins();
   static void toggleView();
   static void openFile();
+  static void saveFile();
   static void quitNetviz();
   static void updateColour();
   static void textChanged();
   static void refresh();
   enum AlgorithmSelection { FR, SMPL, MLT };
+  enum SaveAsFileType { ADJACENCY, EDGELIST, PNG, SVG };
   static int getAlgorithm();
   double redColour;
   double blueColour;

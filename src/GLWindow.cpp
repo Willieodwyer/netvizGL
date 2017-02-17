@@ -1,9 +1,11 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "../inc/GLWindow.h"
-#include "../inc/Command/LoadGraphCommand.h"
-#include "../inc/Command/ColourNodeCommand.h"
-#include "../inc/Command/TextNodeCommand.h"
+#include "../inc/Command/LoadGraph.h"
+#include "../inc/Command/ColourNode.h"
+#include "../inc/Command/TextNode.h"
+#include "../inc/Command/RefreshGraph.h"
+#include "../inc/SimpleSvg.h"
 #include "../inc/SvgPrinter.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
@@ -44,9 +46,10 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
   widgetThread = new thread(widgetFunction, buttonWidget);
 
   //Graph command
-  loadGraph = new LoadGraphCommand(this);
-  colourNode = new ColourNodeCommand(this);
-  textNode = new TextNodeCommand(this);
+  loadGraph = new LoadGraph(this);
+  colourNode = new ColourNode(this);
+  textNode = new TextNode(this);
+  refreshGraph = new RefreshGraph(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
@@ -63,7 +66,7 @@ void GLWindow::algorithmFunction() {
 void GLWindow::widgetFunction(Widget *x) {
   x = Widget::Ins();
 }
-//
+//^ Threads
 
 void GLWindow::render() {
   glfwGetWindowSize(window, &windowWidth, &windowHeight);
@@ -91,6 +94,11 @@ void GLWindow::render() {
   glfwSwapBuffers(window);
 
   glfwPollEvents();
+
+  if(takeSvgScreen){
+    takeSvgScreen = false;
+    svgScreenshot(svgFileName);
+  }
 }
 
 void GLWindow::init() {
@@ -193,16 +201,10 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
   }
 
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
-    wind->X11Screenshot();
+    wind->X11Screenshot((char *) "DefaultPng");
 
-  if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-//    svg::Dimensions *dimensions = new svg::Dimensions(wind->windowWidth, wind->windowHeight);
-//    svg::Document *doc = new svg::Document("SVGTEST.svg", svg::Layout(*dimensions, svg::Layout::BottomLeft));
-//    svg::SvgPrinter svg(doc, dimensions);
-//    svg.printGraph(wind->graph, wind->translateZ);
-//
-//    delete dimensions;
-//    delete doc;
+  if (key == GLFW_KEY_F6 && action == GLFW_PRESS) {
+    wind->svgScreenshot((char *) "DefaultSVG");
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -225,7 +227,10 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
 
 }
 
-void GLWindow::X11Screenshot() {
+void GLWindow::X11Screenshot(char *file) {
+  glfwFocusWindow(window);
+  usleep(10000);
+
   Display *openDisplay = XOpenDisplay(NULL);
   Window root = DefaultRootWindow(openDisplay);
   XWindowAttributes gwa;
@@ -249,7 +254,7 @@ void GLWindow::X11Screenshot() {
   unsigned long green_mask = image->green_mask;
   unsigned long blue_mask = image->blue_mask;
 
-  pngwriter PNG(width, height, 0.0, "screenshot.png");
+  pngwriter PNG(width, height, 0.0, file);
   uint x, y;
   for (y = 0; y < height; y++) {
     for (x = 0; x < width; x++) {
@@ -306,4 +311,18 @@ void GLWindow::quit() {
   glfwSetWindowShouldClose(window, true);
 }
 
+void GLWindow::svgScreenshot(char *fileName) {
+  if (graph) {
+    svg::Dimensions *dimensions = new svg::Dimensions(windowWidth, windowHeight);
+    svg::Document *doc = new svg::Document(fileName, svg::Layout(*dimensions, svg::Layout::BottomLeft));
+    svg::SvgPrinter svg(doc, dimensions);
+    svg.printGraph(graph, translateZ);
 
+    delete dimensions;
+    delete doc;
+  }
+}
+
+void GLWindow::refresh() {
+  refreshGraph->execute();
+}

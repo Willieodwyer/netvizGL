@@ -59,7 +59,7 @@ class Vertex {
   void drawPoints();
   void update();
 
-  bool isPointerOver(double x, double y);
+  bool isPointerOver(double x, double y, int width, int height);
   double getDepth();
   void *getScreenPosition(GLdouble *pos);
 
