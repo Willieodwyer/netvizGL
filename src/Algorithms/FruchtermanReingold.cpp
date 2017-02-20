@@ -80,10 +80,14 @@ void FruchtermanReingold::apply() {
 }
 
 void FruchtermanReingold::initialPlacement() {
+  //char *digit = new char[64];
+
   struct timeval time;
   gettimeofday(&time, NULL);
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < graph->numVertices; ++j) {
+    //sprintf(digit, "%d", j);
+    //graph->vertices[j]->setText(digit);
     graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * (W) - W / 2;
     graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * (L) - L / 2;
     graph->vertices[j]->posZ = 0;

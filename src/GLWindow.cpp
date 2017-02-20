@@ -7,6 +7,7 @@
 #include "../inc/Command/RefreshGraph.h"
 #include "../inc/SimpleSvg.h"
 #include "../inc/SvgPrinter.h"
+#include "../inc/Command/UpdateGraph.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -47,6 +48,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
   //Graph command
   loadGraph = new LoadGraph(this);
+  updateGraph = new UpdateGraph(this,0);
   colourNode = new ColourNode(this);
   textNode = new TextNode(this);
   refreshGraph = new RefreshGraph(this);
@@ -95,7 +97,7 @@ void GLWindow::render() {
 
   glfwPollEvents();
 
-  if(takeSvgScreen){
+  if (takeSvgScreen) {
     takeSvgScreen = false;
     svgScreenshot(svgFileName);
   }
@@ -208,15 +210,51 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
   }
 
   if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    wind->graph->numVertices--;
-    wind->graph->numEdges--;
-    wind->graph->adjacencyMatrix.erase(wind->graph->adjacencyMatrix.begin());
-    wind->graph->adjacencyMatrix[0].erase(wind->graph->adjacencyMatrix[0].begin(),
-                                          wind->graph->adjacencyMatrix[0].end());
-    wind->graph->edgeList.erase(wind->graph->edgeList.begin());
-    wind->graph->vertices.erase(wind->graph->vertices.begin());;
-  }
+    int nodeToDelete = 3;
 
+    cerr << endl;
+
+    vector<int *> newEdgeList;
+    for (int j = 0; j < wind->graph->edgeList.size(); ++j) {
+      int *temp = new int[2];
+      temp[0] = wind->graph->edgeList[j][0];
+      temp[1] = wind->graph->edgeList[j][1];
+      newEdgeList.push_back(temp);
+    }
+
+    for (int i = 0; i < newEdgeList.size(); ++i) {
+      if (newEdgeList[i][0] == nodeToDelete ||
+          newEdgeList[i][1] == nodeToDelete) {
+        newEdgeList.erase(newEdgeList.begin() + i);
+        i--;
+      }
+    }
+
+    cerr << endl;
+    cerr << endl;
+
+    for (int i = 0; i < newEdgeList.size(); ++i) {
+      if (newEdgeList[i][0] > nodeToDelete)
+        newEdgeList[i][0]--;
+      if (newEdgeList[i][1] > nodeToDelete)
+        newEdgeList[i][1]--;
+    }
+
+    ofstream myfile;
+    myfile.open("./tempGraph");
+    for (int i = 0; i < newEdgeList.size(); ++i) {
+      myfile << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
+      cerr << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
+    }
+    myfile.close();
+
+    wind->graphFilePath = (char *) "./tempGraph";
+    UpdateGraph *temp = (UpdateGraph *) wind->updateGraph;
+    temp->deletedNode = nodeToDelete;
+    wind->updateGraph->execute();
+
+    cerr << endl;
+  }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, GL_TRUE);

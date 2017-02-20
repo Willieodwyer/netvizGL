@@ -89,6 +89,7 @@ class GLWindow {
 
   void refresh();
   Command *refreshGraph;
+  Command *updateGraph;
 };
 
 #endif //NETVIZGL_WINDOW_H
