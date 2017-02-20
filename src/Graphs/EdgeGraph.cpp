@@ -89,9 +89,9 @@ void EdgeGraph::read(char *filePath) {
     }
   }
   numEdges = edgeList.size();
-  for (int i = 0; i < edgeList.size(); ++i) {
-    fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
-  }
+//  for (int i = 0; i < edgeList.size(); ++i) {
+//    fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
+//  }
 }
 
 ////TODO this

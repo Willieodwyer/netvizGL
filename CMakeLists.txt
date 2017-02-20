@@ -98,7 +98,7 @@ add_executable(${PROJ_NAME}
         src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h
         inc/Centrality/Centrality.h
         src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h
-        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/UpdateGraph.h)
+        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteNode.h)
 
 
 # Libraries to be linked
