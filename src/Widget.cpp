@@ -90,7 +90,8 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   def->blue = 1;
   Widget::Ins()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new_with_rgba(def);
   gtk_color_button_set_title((GtkColorButton *) Widget::Ins()->colourNodeButton, "Nodes");
-  delete(def);
+  g_signal_connect (Widget::Ins()->colourNodeButton, "color-set", G_CALLBACK(colourChanged), Widget::Ins());
+  delete (def);
 
   // Text Node
   Widget::Ins()->textNodeLabel = gtk_label_new("Add text to node");
@@ -108,8 +109,8 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator2);
 
   //TODO
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->deleteNodeButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->deleteEdgeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->deleteNodeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->deleteEdgeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->degreeCentralityButton);
@@ -119,8 +120,8 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
 
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->colourEdgeButton);
-//  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->filterButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourEdgeButton);
+//  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->filterButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator3);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exitButton);
 
@@ -128,14 +129,14 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 
 }
 
-void Widget::distanceC(){
-    DistanceCentrality c;
-    c.calcApply(GLWindow::Instance()->graph);
+void Widget::distanceC() {
+  DistanceCentrality c;
+  c.calcApply(GLWindow::Ins()->graph);
 }
 
-void Widget::degreeC(){
+void Widget::degreeC() {
   DegreeCentrality c;
-  c.calcApply(GLWindow::Instance()->graph);
+  c.calcApply(GLWindow::Ins()->graph);
 }
 
 void Widget::openFile() {
@@ -156,7 +157,7 @@ void Widget::openFile() {
 
   if (res == GTK_RESPONSE_ACCEPT) {
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (Widget::Ins()->dialog);
-    GLWindow::Instance()->graphFilePath = gtk_file_chooser_get_filename(chooser);
+    GLWindow::Ins()->graphFilePath = gtk_file_chooser_get_filename(chooser);
     //fprintf(stderr, "%s", gtk_file_chooser_get_filename(chooser));
   }
 
@@ -167,8 +168,8 @@ void Widget::openFile() {
 
   gtk_widget_destroy(Widget::Ins()->dialog);
 
-  if (GLWindow::Instance()->graphFilePath)
-    GLWindow::Instance()->loadGraph->execute();
+  if (GLWindow::Ins()->graphFilePath)
+    GLWindow::Ins()->loadGraph->execute();
 }
 
 void Widget::saveFile() {
@@ -201,7 +202,7 @@ void Widget::saveFile() {
   char *filefile;
   filefile = gtk_file_chooser_get_filename(chooser);
 
-  SaveGraph s(GLWindow::Instance(), res, filefile);
+  SaveGraph s(GLWindow::Ins(), res, filefile);
   s.execute();
 
   gtk_widget_destroy(dialog);
@@ -216,6 +217,18 @@ void Widget::updateColour() {
   Widget::Ins()->greenColour = colour->green;
 }
 
+void Widget::updateNodeDetails() {
+  GdkRGBA *colour = new GdkRGBA;
+  colour->alpha = 1;
+  colour->red = Widget::Ins()->redColour;
+  colour->green = Widget::Ins()->greenColour;
+  colour->blue = Widget::Ins()->blueColour;
+
+  gtk_color_chooser_set_rgba(Widget::Ins()->colourNodeButton, colour);
+
+  gtk_entry_set_text((GtkEntry *) Widget::Ins()->textNodeEntry, Widget::Ins()->textNodeText);
+}
+
 void Widget::toggleView() {
   if (Widget::Ins()->visible) {
     Widget::Ins()->visible = false;
@@ -227,15 +240,29 @@ void Widget::toggleView() {
 }
 
 void Widget::quitNetviz() {
-  GLWindow::Instance()->quit();
+  GLWindow::Ins()->quit();
 }
 
 void Widget::textChanged() {
   Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
+  if (GLWindow::Ins()->selectedNode)
+    GLWindow::Ins()->selectedNode->setText(Widget::Ins()->textNodeText);
+}
+
+void Widget::colourChanged() {
+  GdkRGBA *colour = new GdkRGBA;
+  gtk_color_chooser_get_rgba(Widget::Ins()->colourNodeButton, colour);
+
+  Widget::Ins()->redColour = colour->red;
+  Widget::Ins()->blueColour = colour->blue;
+  Widget::Ins()->greenColour = colour->green;
+
+  if (GLWindow::Ins()->selectedNode)
+    GLWindow::Ins()->selectedNode->setColour(colour->red, colour->green, colour->blue);
 }
 
 void Widget::refresh() {
-  RefreshGraph c(GLWindow::Instance());
+  RefreshGraph c(GLWindow::Ins());
   c.execute();
 }
 

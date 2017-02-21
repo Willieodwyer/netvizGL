@@ -41,17 +41,14 @@ class Vertex {
   vector<Vertex *> attachedPoints;
   void attachPoint(Vertex *p);
 
-
-
   int degree = 0;
   int level;
+  int nodeNumber = 0;
 
   GLdouble posX, posY, posZ;
   GLdouble force;
   GLdouble forceX, forceY, forceZ;
   GLdouble velocityX, velocityY, velocityZ;
-
-
 
   void setColour(GLdouble r, GLdouble g, GLdouble b);
   GLdouble *getColour(GLdouble *colours);
@@ -59,6 +56,7 @@ class Vertex {
   void drawPoints();
   void update();
 
+  bool selected;
   bool isPointerOver(double x, double y, int width, int height);
   double getDepth();
   void *getScreenPosition(GLdouble *pos);

@@ -23,7 +23,7 @@ class GLWindow {
 
   static GLWindow *windowInstance;
 
-  static GLWindow *Instance();
+  static GLWindow *Ins();
 
   GLFWwindow *window;
 
@@ -42,6 +42,7 @@ class GLWindow {
   double mouseY;
 
   bool mouseLEFT;
+  bool mouseMIDDLE;
   bool mouseRIGHT;
 
   void render();
@@ -55,15 +56,15 @@ class GLWindow {
   static void mousePositionEvent(GLFWwindow *window, double xpos, double ypos);
 
   static void scrollEvent(GLFWwindow *window, double xoffset, double yoffset);
-
   std::thread *algorithmThread;
   std::thread *widgetThread;
+
   bool endThread = false;
-
   Graph *graph;
-  Algorithm *algorithm;
 
+  Algorithm *algorithm;
   Command *loadGraph;
+
   char *graphFilePath;
 
   static void algorithmFunction();
@@ -75,21 +76,22 @@ class GLWindow {
   Widget *buttonWidget;
 
   static void widgetFunction(Widget *x);
-
   void quit();
   void X11Screenshot(char *file);
+
   Command *colourNode;
-
   FTPixmapFont *font;
-  Command *textNode;
 
+  Command *textNode;
   bool takeSvgScreen = false;
   char *svgFileName;
-  void svgScreenshot(char *fileName);
 
+  void svgScreenshot(char *fileName);
   void refresh();
   Command *refreshGraph;
   Command *updateGraph;
+  Vertex *selectedNode;
+  int selectedNodeNumber = -1;
 };
 
 #endif //NETVIZGL_WINDOW_H

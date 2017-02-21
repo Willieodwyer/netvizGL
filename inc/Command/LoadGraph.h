@@ -77,7 +77,7 @@ class LoadGraph : public Command {
     srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
     for (int j = 0; j < window->graph->numVertices; ++j) {
       sprintf(digit, "%d", j);
-      //GLWindow::Instance()->graph->vertices[j]->setText(digit);
+      //GLWindow::Ins()->graph->vertices[j]->setText(digit);
       window->graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
                                                           ((double) rand() / (RAND_MAX)),
                                                           ((double) rand() / (RAND_MAX)));

@@ -51,6 +51,7 @@ class Widget {
   static void saveFile();
   static void quitNetviz();
   static void updateColour();
+  static void updateNodeDetails();
   static void textChanged();
   static void refresh();
   enum AlgorithmSelection { FR, SMPL, MLT };
@@ -62,6 +63,7 @@ class Widget {
   char *textNodeText;
   static void degreeC();
   static void distanceC();
+  static void colourChanged();
 };
 
 #endif //NETVIZGL_BUTTONS_H

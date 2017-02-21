@@ -48,13 +48,13 @@ class DeleteNode : public Command {
       }
 
       ofstream myfile;
-      myfile.open("./tempGraph");
+      myfile.open("./LastEditedGraph");
       for (int i = 0; i < newEdgeList.size(); ++i) {
         myfile << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
       }
       myfile.close();
 
-      window->graphFilePath = (char *) "./tempGraph";
+      window->graphFilePath = (char *) "./LastEditedGraph";
 
       std::ifstream infile;
       infile.open(window->graphFilePath);
@@ -63,7 +63,7 @@ class DeleteNode : public Command {
       infile.close();
 
       if (window->graph) {
-        window->graph->numVertices = 0;
+        window->graph->numVertices = 1;
       }
 
       Graph *temp = window->graph;
