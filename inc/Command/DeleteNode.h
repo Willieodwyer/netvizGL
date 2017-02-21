@@ -23,7 +23,7 @@ class DeleteNode : public Command {
 
  public:
   void execute() override {
-    if(deleteNode >= 0 && deleteNode <= window->graph->numVertices) {
+    if (window->graph && deleteNode >= 0 && deleteNode <= window->graph->numVertices) {
       vector<int *> newEdgeList;
       for (int j = 0; j < window->graph->edgeList.size(); ++j) {
         int *temp = new int[2];
@@ -33,8 +33,8 @@ class DeleteNode : public Command {
       }
 
       for (int i = 0; i < newEdgeList.size(); ++i) {
-        if (newEdgeList[i][0] == deleteNode ||
-            newEdgeList[i][1] == deleteNode) {
+        if ((newEdgeList[i][0] == deleteNode ||
+            newEdgeList[i][1] == deleteNode)) {
           newEdgeList.erase(newEdgeList.begin() + i);
           i--;
         }
@@ -51,7 +51,6 @@ class DeleteNode : public Command {
       myfile.open("./tempGraph");
       for (int i = 0; i < newEdgeList.size(); ++i) {
         myfile << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
-//        cerr << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
       }
       myfile.close();
 
@@ -66,30 +65,31 @@ class DeleteNode : public Command {
       if (window->graph) {
         window->graph->numVertices = 0;
       }
+
       Graph *temp = window->graph;
 
       if (sLine.length() <= 4) {
-        window->graph = new EdgeGraph((window->graphFilePath));
-        fprintf(stdout, "Loading EdgeList:%s\n", window->graphFilePath);
-
+        window->graph = new EdgeGraph((window->graphFilePath), newEdgeList);
+        //fprintf(stdout, "Loading EdgeList:%s\n", window->graphFilePath);
       }
+      window->algorithm->graph = window->graph;
 
-      if (window->algorithmThread) {
-        window->endThread = true;
-        window->algorithmThread->join();
-        delete window->algorithmThread;
-      }
-
-      switch (window->buttonWidget->getAlgorithm()) {
-        case Widget::FR :window->algorithm = new FruchtermanReingold(window->graph);
-          break;
-        case Widget::SMPL: window->algorithm = new SimpleForceDirected(window->graph);
-          break;
-        case Widget::MLT: window->algorithm = new MultiLevel(window->graph);
-          break;
-        default: break;
-      }
-      window->endThread = false;
+//      if (window->algorithmThread) {
+//        window->endThread = true;
+//        window->algorithmThread->join();
+//        delete window->algorithmThread;
+//      }
+//
+//      switch (window->buttonWidget->getAlgorithm()) {
+//        case Widget::FR :window->algorithm = new FruchtermanReingold(window->graph);
+//          break;
+//        case Widget::SMPL: window->algorithm = new SimpleForceDirected(window->graph);
+//          break;
+//        case Widget::MLT: window->algorithm = new MultiLevel(window->graph);
+//          break;
+//        default: break;
+//      }
+//      window->endThread = false;
 
       GLdouble *colours = new GLdouble[3];
 
@@ -111,21 +111,11 @@ class DeleteNode : public Command {
         window->graph->vertices[k]->setColour(colours[0], colours[1], colours[2]);
       }
 
-      window->algorithmThread = new thread(GLWindow::algorithmFunction);
+//      window->algorithmThread = new thread(GLWindow::algorithmFunction);
 
-//    char *digit = new char[64];
-//    struct timeval time;
-//    gettimeofday(&time, NULL);
-//    srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
-//    for (int j = 0; j < window->graph->numVertices; ++j) {
-//      sprintf(digit, "%d", j);
-//      //GLWindow::Instance()->graph->vertices[j]->setText(digit);
-//    }
-//    delete (digit);
-
-      if (temp) {
-        delete (temp);
-      }
+//      if (temp) {
+//        delete (temp);
+//      }
     }
   }
 };
