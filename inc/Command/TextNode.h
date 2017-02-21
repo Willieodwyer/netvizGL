@@ -43,7 +43,7 @@ class TextNode : public Command {
 
     for (int i = 0; i < pointerOver.size(); i++) {
       if (closest == depthValues[i]) {
-        pointerOver[i]->setText(window->buttonWidget->textNodeText);
+        pointerOver[i]->setText(Widget::Ins()->textNodeText);
       }
     }
   }
