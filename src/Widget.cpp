@@ -4,7 +4,10 @@
 
 #include "../inc/Widget.h"
 #include "../inc/GLWindow.h"
-#include "../inc/Command/RefreshGraphCommand.h"
+#include "../inc/Command/RefreshGraph.h"
+#include "../inc/Centrality/DistanceCentrality.h"
+#include "../inc/Centrality/DegreeCentrality.h"
+#include "../inc/Command/SaveGraph.h"
 
 Widget *Widget::instance = NULL;
 
@@ -41,17 +44,18 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 
   //Export as
   Widget::Ins()->exportAsButton = gtk_button_new_with_label("Export As");
-  g_signal_connect (Widget::Ins()->exportAsButton, "clicked", G_CALLBACK(openFile), Widget::Ins());
+  g_signal_connect (Widget::Ins()->exportAsButton, "clicked", G_CALLBACK(saveFile), Widget::Ins());
 
   //Algorithm Radio Buttons
   Widget::Ins()->box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_set_homogeneous(GTK_BOX (Widget::Ins()->box), TRUE);
   Widget::Ins()->fruchterman = gtk_radio_button_new_with_label_from_widget(NULL,
-                                                                  "Fruchterman Reingold");
-  Widget::Ins()->simpleForce = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Widget::Ins()->fruchterman),
-                                                                    "Simple Force Directed");
+                                                                           "Fruchterman Reingold");
+  Widget::Ins()->simpleForce =
+      gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Widget::Ins()->fruchterman),
+                                                  "Simple Force Directed");
   Widget::Ins()->multiLevel = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (Widget::Ins()->simpleForce),
-                                                                    "Multi Level");
+                                                                          "Multi Level");
   // Pack them into a box, then show all the widgets
   gtk_box_pack_start(GTK_BOX (Widget::Ins()->box), Widget::Ins()->fruchterman, TRUE, TRUE, 2);
   gtk_box_pack_start(GTK_BOX (Widget::Ins()->box), Widget::Ins()->simpleForce, TRUE, TRUE, 2);
@@ -72,8 +76,21 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   Widget::Ins()->separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
   // Colour Node
-  Widget::Ins()->colourNodeLabel = gtk_label_new("Colour Node");
-  Widget::Ins()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new();
+  Widget::Ins()->colourNodeLabel = gtk_label_new("Colouration: ");
+  // Centrality
+  Widget::Ins()->distanceCentralityButton = gtk_button_new_with_label("Distance Centrality");
+  g_signal_connect (Widget::Ins()->distanceCentralityButton, "clicked", G_CALLBACK(distanceC), Widget::Ins());
+
+  Widget::Ins()->degreeCentralityButton = gtk_button_new_with_label("Degree Centrality");
+  g_signal_connect (Widget::Ins()->degreeCentralityButton, "clicked", G_CALLBACK(degreeC), Widget::Ins());
+
+  GdkRGBA *def = new GdkRGBA;
+  def->red = 1;
+  def->green = 1;
+  def->blue = 1;
+  Widget::Ins()->colourNodeButton = (GtkColorChooser *) gtk_color_button_new_with_rgba(def);
+  gtk_color_button_set_title((GtkColorButton *) Widget::Ins()->colourNodeButton, "Nodes");
+  delete(def);
 
   // Text Node
   Widget::Ins()->textNodeLabel = gtk_label_new("Add text to node");
@@ -95,8 +112,9 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 //  gtk_container_add(GTK_CONTAINER (Widget::Instance()->button_box), Widget::Ins()->deleteEdgeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourNodeLabel);
-  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box),
-                    (GtkWidget *) Widget::Ins()->colourNodeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->degreeCentralityButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->distanceCentralityButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), (GtkWidget *) Widget::Ins()->colourNodeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
@@ -106,9 +124,18 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator3);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exitButton);
 
-
   gtk_widget_show_all(Widget::Ins()->window);
 
+}
+
+void Widget::distanceC(){
+    DistanceCentrality c;
+    c.calcApply(GLWindow::Instance()->graph);
+}
+
+void Widget::degreeC(){
+  DegreeCentrality c;
+  c.calcApply(GLWindow::Instance()->graph);
 }
 
 void Widget::openFile() {
@@ -144,6 +171,42 @@ void Widget::openFile() {
     GLWindow::Instance()->loadGraph->execute();
 }
 
+void Widget::saveFile() {
+  GtkWidget *dialog;
+  GtkFileChooser *chooser;
+  GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
+  SaveAsFileType res;
+
+  dialog = gtk_file_chooser_dialog_new("Save File",
+                                       NULL,
+                                       action,
+                                       ("_Cancel"),
+                                       GTK_RESPONSE_CANCEL,
+                                       ("_Save as Adjacency Matrix"),
+                                       ADJACENCY,
+                                       ("_Save as Edge List"),
+                                       EDGELIST,
+                                       ("_Save as PNG"),
+                                       PNG,
+                                       ("_Save as SVG"),
+                                       SVG,
+                                       NULL);
+  chooser = GTK_FILE_CHOOSER (dialog);
+
+  gtk_file_chooser_set_do_overwrite_confirmation(chooser, TRUE);
+  gtk_file_chooser_set_current_name(chooser, "Untitled");
+
+  res = (SaveAsFileType) gtk_dialog_run(GTK_DIALOG (dialog));
+
+  char *filefile;
+  filefile = gtk_file_chooser_get_filename(chooser);
+
+  SaveGraph s(GLWindow::Instance(), res, filefile);
+  s.execute();
+
+  gtk_widget_destroy(dialog);
+}
+
 void Widget::updateColour() {
   GdkRGBA *colour = new GdkRGBA;
   gtk_color_chooser_get_rgba(Widget::Ins()->colourNodeButton, colour);
@@ -172,16 +235,16 @@ void Widget::textChanged() {
 }
 
 void Widget::refresh() {
-  RefreshGraphCommand c(GLWindow::Instance());
+  RefreshGraph c(GLWindow::Instance());
   c.execute();
 }
 
 int Widget::getAlgorithm() {
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->fruchterman))==TRUE)
+  if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Widget::Ins()->fruchterman)) == TRUE)
     return FR;
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->simpleForce))==TRUE)
+  if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Widget::Ins()->simpleForce)) == TRUE)
     return SMPL;
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(Widget::Ins()->multiLevel))==TRUE)
+  if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Widget::Ins()->multiLevel)) == TRUE)
     return MLT;
 }
 

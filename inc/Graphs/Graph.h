@@ -21,7 +21,7 @@ class Graph {
   vector<Vertex *> vertices;
   unsigned long numVertices;
   unsigned long numEdges;
-  int **adjacencyMatrix;
+  vector<vector<int>> adjacencyMatrix;
   vector<int *> edgeList;
 
   virtual void draw() = 0;

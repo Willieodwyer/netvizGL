@@ -59,9 +59,6 @@ void SimpleForceDirected::initialPlacement() {
     graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * graph->numVertices - graph->numVertices / 2;
     graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * graph->numVertices - graph->numVertices / 2;
     graph->vertices[j]->posZ = 0;
-    graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)));
   }
 
   for (int i = 0; i < graph->numVertices; ++i) {

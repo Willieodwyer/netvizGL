@@ -22,12 +22,15 @@ class Widget {
   GtkWidget *refreshButton,*entry;
 
   GtkWidget *separator1,*separator2,*separator3;
-  GtkWidget *deleteNodeButton;
 
+  GtkWidget *deleteNodeButton;
   GtkWidget *deleteEdgeButton;
-  GtkColorChooser *colourNodeButton;
 
   GtkWidget *colourNodeLabel;
+  GtkWidget *distanceCentralityButton;
+  GtkWidget *degreeCentralityButton;
+  GtkColorChooser *colourNodeButton;
+
   GtkWidget *colourEdgeButton;
 
   GtkWidget *filterButton;
@@ -45,16 +48,20 @@ class Widget {
   static Widget *Ins();
   static void toggleView();
   static void openFile();
+  static void saveFile();
   static void quitNetviz();
   static void updateColour();
   static void textChanged();
   static void refresh();
   enum AlgorithmSelection { FR, SMPL, MLT };
+  enum SaveAsFileType { ADJACENCY, EDGELIST, PNG, SVG };
   static int getAlgorithm();
   double redColour;
   double blueColour;
   double greenColour;
   char *textNodeText;
+  static void degreeC();
+  static void distanceC();
 };
 
 #endif //NETVIZGL_BUTTONS_H

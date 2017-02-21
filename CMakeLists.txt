@@ -89,16 +89,16 @@ add_executable(${PROJ_NAME}
         src/Graphs/MatrixMarketGraph.cpp inc/Graphs/MatrixMarketGraph.h
         src/Widget.cpp inc/Widget.h
         inc/Command/Command.h
-        src/Command/LoadGraphCommand.cpp inc/Command/LoadGraphCommand.h
-        src/Command/ColourNodeCommand.cpp inc/Command/ColourNodeCommand.h
-        src/Command/TextNodeCommand.cpp inc/Command/TextNodeCommand.h
+        inc/Command/LoadGraph.h
+        inc/Command/ColourNode.h
+        inc/Command/TextNode.h
         src/Graphs/mmio.c inc/Graphs/mmio.h
-        inc/SvgPrinter.h 
-        src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h 
-        src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h 
-        inc/Centrality/Centrality.h 
-        src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h)
-        src/Command/RefreshGraphCommand.cpp inc/Command/RefreshGraphCommand.h)
+        inc/SvgPrinter.h
+        src/Algorithms/FruchtermanReingold.cpp inc/Algorithms/FruchtermanReingold.h
+        src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h
+        inc/Centrality/Centrality.h
+        src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h
+        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteNode.h)
 
 
 # Libraries to be linked

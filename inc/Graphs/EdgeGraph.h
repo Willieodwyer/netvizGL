@@ -9,6 +9,7 @@
 class EdgeGraph : public Graph {
  public:
   EdgeGraph(char *filePath);
+  EdgeGraph(char *filePath, vector<int *> newEdgeList);
   virtual void draw();
   virtual void update();
  private:

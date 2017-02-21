@@ -163,24 +163,17 @@ void MultiLevel::calcApplyForces() {
 
 
 void MultiLevel::initialPlacement() {
-  char *digit = new char[64];
   struct timeval time;
   gettimeofday(&time, NULL);
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
   for (int j = 0; j < graph->numVertices; ++j) {
-    sprintf(digit, "%d", j);
     graph->vertices[j]->posX = 1;
     graph->vertices[j]->posY = 1;
     graph->vertices[j]->posZ = -100;
-    graph->vertices[j]->setText(digit);
-    graph->vertices[j]->setColour(((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)),
-                                  ((double) rand() / (RAND_MAX)));
   }
   graph->vertices[0]->posX = 0;
   graph->vertices[0]->posY = 0;
   graph->vertices[0]->posZ = 0;
-  delete (digit);
 }
 
 void MultiLevel::placement() {
