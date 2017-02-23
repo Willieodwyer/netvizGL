@@ -59,10 +59,11 @@ class Vertex {
   bool selected;
   bool isPointerOver(double x, double y, int width, int height);
   double getDepth();
+
   void *getScreenPosition(GLdouble *pos);
+  void setPositionFromScreen(double x, double y);
 
   void drawText();
-
   void setText(const char *t);
   char *text;
 };
