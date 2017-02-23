@@ -9,6 +9,7 @@
 #include "../inc/SvgPrinter.h"
 #include "../inc/Command/DeleteNode.h"
 #include "../inc/Command/SelectVertex.h"
+#include "../inc/Command/DragNode.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -53,6 +54,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
   colourNode = new ColourNode(this);
   textNode = new TextNode(this);
   refreshGraph = new RefreshGraph(this);
+  dragNode = new DragNode(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
@@ -190,14 +192,15 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
 
 void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
   static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
-
+  wind->mouseDiffX = wind->mouseX - xpos;
+  wind->mouseDiffY = wind->mouseY - ypos;
   if (wind->mouseMIDDLE) {
     wind->yaw += (xpos - wind->mouseX) / 8;
     wind->pitch += (ypos - wind->mouseY) / 8;
     wind->mouseX = xpos;
     wind->mouseY = ypos;
   }
-  if (wind->mouseLEFT) {
+  if (wind->mouseLEFT && !wind->keyCTRL) {
     wind->translateX += ((xpos - wind->mouseX) / wind->windowWidth) * wind->translateZ;
     wind->translateY += ((wind->mouseY - ypos) / wind->windowWidth) * wind->translateZ;
     wind->mouseX = xpos;
@@ -205,6 +208,9 @@ void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) 
   }
   wind->mouseX = xpos;
   wind->mouseY = ypos;
+  if (wind->mouseLEFT && wind->keyCTRL) {
+    wind->dragNode->execute();
+  }
 }
 
 void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode) {
@@ -236,6 +242,14 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, GL_TRUE);
+  }
+
+  if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_PRESS) {
+    wind->keyCTRL = true;
+  }
+
+  if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_RELEASE) {
+    wind->keyCTRL = false;
   }
 
   if (key == GLFW_KEY_LEFT) {

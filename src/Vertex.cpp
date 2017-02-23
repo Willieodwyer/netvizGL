@@ -2,6 +2,7 @@
 // Created by werl on 23/09/16.
 //
 
+#include <iostream>
 #include "../inc/GLWindow.h"
 
 Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
@@ -234,26 +235,6 @@ bool Vertex::isPointerOver(double x, double y, int width, int height) {
   return pointerDistance < maxMouseDistance;
 }
 
-void *Vertex::getScreenPosition(GLdouble *pos) {
-  GLdouble proj[16];
-  GLdouble model[16];
-  GLint view[4];
-
-  glGetDoublev(GL_PROJECTION_MATRIX, proj);
-  glGetDoublev(GL_MODELVIEW_MATRIX, model);
-  glGetIntegerv(GL_VIEWPORT, view);
-
-  gluProject(posX * Line::scale * .1,
-             posY * Line::scale * .1,
-             posZ * Line::scale * .1,
-             model,
-             proj,
-             view,
-             pos,
-             pos + 1,
-             pos + 2);
-}
-
 double Vertex::getDepth() {
   GLdouble proj[16];
   GLdouble model[16];
@@ -279,4 +260,51 @@ double Vertex::getDepth() {
 
 void Vertex::setText(const char *t) {
   strcpy(text, t);
+}
+
+void *Vertex::getScreenPosition(GLdouble *pos) {
+  GLdouble proj[16];
+  GLdouble model[16];
+  GLint view[4];
+
+  glGetDoublev(GL_PROJECTION_MATRIX, proj);
+  glGetDoublev(GL_MODELVIEW_MATRIX, model);
+  glGetIntegerv(GL_VIEWPORT, view);
+
+  gluProject(posX * Line::scale * .1,
+             posY * Line::scale * .1,
+             posZ * Line::scale * .1,
+             model,
+             proj,
+             view,
+             pos,
+             pos + 1,
+             pos + 2);
+}
+
+void Vertex::setPositionFromScreen(double x, double y) {
+  GLdouble proj[16];
+  GLdouble model[16];
+  GLint view[4];
+
+  glGetDoublev(GL_PROJECTION_MATRIX, proj);
+  glGetDoublev(GL_MODELVIEW_MATRIX, model);
+  glGetIntegerv(GL_VIEWPORT, view);
+
+  GLdouble obj[3];
+
+  gluUnProject(x,
+               y,
+               -1,
+               model,
+               proj,
+               view,
+               obj,
+               obj + 1,
+               obj + 2);
+
+  //cerr << obj[0] << "," << obj[1] << endl;
+
+  posX = obj[0] * 100;
+  posY = obj[1] * 100;
 }

@@ -89,9 +89,13 @@ class GLWindow {
   void svgScreenshot(char *fileName);
   void refresh();
   Command *refreshGraph;
+  Command *dragNode;
   Command *updateGraph;
   Vertex *selectedNode;
   int selectedNodeNumber = -1;
+  bool keyCTRL = false;
+  double mouseDiffX;
+  double mouseDiffY;
 };
 
 #endif //NETVIZGL_WINDOW_H
