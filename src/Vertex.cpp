@@ -5,6 +5,7 @@
 #include "../inc/GLWindow.h"
 
 Vertex::Vertex(GLdouble offsetx, GLdouble offsety, GLdouble offsetz) {
+  selected = false;
   font = new FTGLPixmapFont("../Fonts/arial.ttf");
   if (font->Error())
     fprintf(stderr, "Err");
@@ -116,11 +117,13 @@ void Vertex::drawPoints() {
 
   glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
 
-//  glEnable(GL_POLYGON_OFFSET_FILL);
-//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//
-//  glColorPointer(3, GL_DOUBLE, 0, NULL);
-//  glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
+  if (selected) {
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    glColorPointer(3, GL_DOUBLE, 0, NULL);
+    glDrawElements(GL_QUADS, this->indIndex, GL_UNSIGNED_INT, this->indices);
+  }
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 

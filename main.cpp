@@ -7,7 +7,7 @@
 //}
 
 int main(int argc, char **argv) {
-  GLWindow *window = GLWindow::Instance();
+  GLWindow *window = GLWindow::Ins();
 
   //std::thread widgetThread(widgetFunction, buttonWidget);
 

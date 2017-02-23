@@ -8,6 +8,7 @@
 #include "../inc/SimpleSvg.h"
 #include "../inc/SvgPrinter.h"
 #include "../inc/Command/DeleteNode.h"
+#include "../inc/Command/SelectVertex.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -18,7 +19,7 @@
 //
 GLWindow *GLWindow::windowInstance = NULL;
 
-GLWindow *GLWindow::Instance() {
+GLWindow *GLWindow::Ins() {
   if (!windowInstance)
     windowInstance = new GLWindow(1280, 720);
   return windowInstance;
@@ -48,7 +49,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
   //Graph command
   loadGraph = new LoadGraph(this);
-  updateGraph = new DeleteNode(this,-1);
+  updateGraph = new DeleteNode(this, -1);
   colourNode = new ColourNode(this);
   textNode = new TextNode(this);
   refreshGraph = new RefreshGraph(this);
@@ -59,9 +60,9 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
 //Threads
 void GLWindow::algorithmFunction() {
-  while (!GLWindow::Instance()->endThread && GLWindow::Instance()->graph
-      && !glfwWindowShouldClose(GLWindow::Instance()->window)) {
-    GLWindow::Instance()->algorithm->apply();
+  while (!GLWindow::Ins()->endThread && GLWindow::Ins()->graph
+      && !glfwWindowShouldClose(GLWindow::Ins()->window)) {
+    GLWindow::Ins()->algorithm->apply();
   }
 }
 
@@ -153,7 +154,10 @@ void GLWindow::init() {
 
 void GLWindow::scrollEvent(GLFWwindow *window, double xoffset, double yoffset) {
   static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
-  wind->translateZ += yoffset / 20;
+  wind->translateZ += (yoffset / 20) * wind->translateZ;
+  if (wind->translateZ < 0.12) {
+    wind->translateZ = 0.12;
+  }
 }
 
 void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int mods) {
@@ -161,7 +165,9 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
 
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
     wind->mouseRIGHT = true;
-    wind->colourNode->execute();
+    //wind->colourNode->execute();
+    SelectVertex sv(wind);
+    sv.execute();
   }
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
     wind->mouseRIGHT = false;
@@ -174,16 +180,26 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
   }
 
   if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) {
-    wind->textNode->execute();
+    wind->mouseMIDDLE = true;
+  }
+
+  if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) {
+    wind->mouseMIDDLE = false;
   }
 }
 
 void GLWindow::mousePositionEvent(GLFWwindow *window, double xpos, double ypos) {
   static GLWindow *wind = (GLWindow *) (glfwGetWindowUserPointer(window));
 
-  if (wind->mouseLEFT) {
+  if (wind->mouseMIDDLE) {
     wind->yaw += (xpos - wind->mouseX) / 8;
     wind->pitch += (ypos - wind->mouseY) / 8;
+    wind->mouseX = xpos;
+    wind->mouseY = ypos;
+  }
+  if (wind->mouseLEFT) {
+    wind->translateX += ((xpos - wind->mouseX) / wind->windowWidth) * wind->translateZ;
+    wind->translateY += ((wind->mouseY - ypos) / wind->windowWidth) * wind->translateZ;
     wind->mouseX = xpos;
     wind->mouseY = ypos;
   }
@@ -209,10 +225,13 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     wind->svgScreenshot((char *) "DefaultSVG");
   }
 
-  if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-    DeleteNode *temp = (DeleteNode *) wind->updateGraph;
-    temp->deleteNode = 3;
-    wind->updateGraph->execute();
+  if (key == GLFW_KEY_DELETE && action == GLFW_PRESS) {
+    if (wind->graph->numVertices > 1) {
+      DeleteNode *temp = (DeleteNode *) wind->updateGraph;
+      temp->deleteNode = wind->selectedNodeNumber;
+      wind->updateGraph->execute();
+      wind->selectedNodeNumber = -1;
+    }
   }
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
