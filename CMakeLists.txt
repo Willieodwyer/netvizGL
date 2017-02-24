@@ -79,7 +79,7 @@ add_executable(${PROJ_NAME}
         src/GLWindow.cpp inc/GLWindow.h
         src/Vertex.cpp inc/Vertex.h
         inc/Shader.h src/Shader.cpp
-        src/Line.cpp inc/Line.h
+        src/Edge.cpp inc/Edge.h
         src/Graphs/Graph.cpp inc/Graphs/Graph.h
         src/Algorithms/SimpleForceDirected.cpp inc/Algorithms/SimpleForceDirected.h
         src/Algorithms/MultiLevel.cpp inc/Algorithms/MultiLevel.h
@@ -98,7 +98,7 @@ add_executable(${PROJ_NAME}
         src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h
         inc/Centrality/Centrality.h
         src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h
-        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteNode.h inc/Command/SelectVertex.h inc/Command/DragNode.h)
+        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteNode.h inc/Command/SelectVertex.h inc/Command/DragNode.h inc/Command/NameByIndex.h inc/Command/SelectEdge.h)
 
 
 # Libraries to be linked

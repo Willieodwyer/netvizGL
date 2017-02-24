@@ -91,7 +91,7 @@ void SvgPrinter::printText(Vertex *v) {
 }
 }
 
-//    *doc << (svg::Line(Point(600, 300), Point(600, 200), Stroke(2, Color::Black)));
+//    *doc << (svg::Edge(Point(600, 300), Point(600, 200), Stroke(2, Color::Black)));
 //    *doc << Circle(Point(600, 300), 10, Fill(Color(100, 200, 120)), Stroke(0, Color(200, 250, 150)));
 //    *doc << Text(Point(600, 300), "Some Data", Color::Black, svg::Font(9, "Arial"));
 //  doc->save();

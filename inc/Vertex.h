@@ -6,7 +6,7 @@
 #define NETVIZGL_SPHERE_H
 
 #include <cmath>
-#include "Line.h"
+#include "Edge.h"
 #include <vector>
 #include <mutex>
 #include <FTGL/ftgl.h>
@@ -26,7 +26,7 @@ class Vertex {
 
   std::mutex mtx;
 
-  vector<Line *> lines;
+  vector<Edge *> lines;
 
   FTPixmapFont *font;
 
@@ -43,7 +43,7 @@ class Vertex {
 
   int degree = 0;
   int level;
-  int nodeNumber = 0;
+  int vertexNumber = 0;
 
   GLdouble posX, posY, posZ;
   GLdouble force;
@@ -53,7 +53,7 @@ class Vertex {
   void setColour(GLdouble r, GLdouble g, GLdouble b);
   GLdouble *getColour(GLdouble *colours);
 
-  void drawPoints();
+  void draw();
   void update();
 
   bool selected;

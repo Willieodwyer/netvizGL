@@ -101,6 +101,14 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   g_signal_connect (Widget::Ins()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Ins());
   Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
 
+  // Text Edge
+  Widget::Ins()->textEdgeLabel = gtk_label_new("Add text to Edge");
+  Widget::Ins()->textEdgeEntry = gtk_entry_new();
+  gtk_entry_set_text((GtkEntry *) Widget::Ins()->textEdgeEntry, "Enter Edge text here");
+  gtk_entry_set_max_length((GtkEntry *) Widget::Ins()->textEdgeEntry, 64);
+  g_signal_connect (Widget::Ins()->textEdgeEntry, "changed", G_CALLBACK(edgeTextChanged), Widget::Ins());
+  Widget::Ins()->textEdgeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textEdgeEntry);
+
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->openFileButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exportAsButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator1);
@@ -119,6 +127,9 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
+
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textEdgeLabel);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textEdgeEntry);
 
 //  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourEdgeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->filterButton);
@@ -247,6 +258,12 @@ void Widget::textChanged() {
   Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
   if (GLWindow::Ins()->selectedNode)
     GLWindow::Ins()->selectedNode->setText(Widget::Ins()->textNodeText);
+}
+
+void Widget::edgeTextChanged() {
+//  Widget::Ins()->textEdgeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textEdgeEntry);
+//  if (GLWindow::Ins()->selectedNode)
+//    GLWindow::Ins()->selectedNode->setText(Widget::Ins()->textNodeText);
 }
 
 void Widget::colourChanged() {

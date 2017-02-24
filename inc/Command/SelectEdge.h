@@ -1,19 +1,21 @@
 //
-// Created by william on 21/02/17.
+// Created by william on 24/02/17.
 //
 
-#ifndef NETVIZGL_SELECTVERTEX_H
-#define NETVIZGL_SELECTVERTEX_H
+#ifndef NETVIZGL_SELECTEDGE_H
+#define NETVIZGL_SELECTEDGE_H
 
 #include <algorithm>
+#include <iostream>
 #include "Command.h"
 #include "../GLWindow.h"
-
-class SelectVertex : public Command{
+class SelectEdge : public Command {
  private:
   GLWindow *window;
+  Vertex *secondVertex = NULL;
+  bool edgeBetween = false;
  public:
-  SelectVertex(GLWindow *pWindow) {
+  SelectEdge(GLWindow *pWindow) {
     this->window = pWindow;
   }
   void execute() override {
@@ -22,7 +24,6 @@ class SelectVertex : public Command{
 
     if (window->graph) {
       for (int i = 0; i < window->graph->numVertices; ++i) {
-        Widget::updateColour();
         if (window->graph->vertices[i]->isPointerOver(window->mouseX,
                                                       window->mouseY,
                                                       window->windowWidth,
@@ -30,7 +31,7 @@ class SelectVertex : public Command{
           pointerOver.push_back(window->graph->vertices[i]);
 
         }
-        if(window->graph->vertices[i]->selected){
+        if (window->graph->vertices[i]->selected && i != window->selectedVertexNumber) {
           window->graph->vertices[i]->selected = false;
         }
         window->graph->vertices[i]->vertexNumber = i;
@@ -47,24 +48,26 @@ class SelectVertex : public Command{
 
     double closest = *std::min_element(depthValues.begin(), depthValues.end());
 
-    double *cols = new double[3];
     for (int i = 0; i < pointerOver.size(); i++) {
       if (closest == depthValues[i]) {
         pointerOver[i]->selected = true;
-        window->selectedVertexNumber = pointerOver[i]->vertexNumber;
-        pointerOver[i]->getColour(cols);
-        pointerOver[i]->getColour(cols);
-
-        GLWindow::Ins()->selectedNode = pointerOver[i];
-
-        Widget::Ins()->redColour = cols[0];
-        Widget::Ins()->greenColour = cols[1];
-        Widget::Ins()->blueColour = cols[2];
-        Widget::Ins()->textNodeText = pointerOver[i]->text;
-        Widget::updateNodeDetails();
+        secondVertex = pointerOver[i];
       }
     }
+
+    for (int i = 0; i < window->graph->numEdges; ++i) {
+      edgeBetween = (window->graph->edgeList[i][0] == window->selectedVertexNumber
+          && window->graph->edgeList[i][1] == secondVertex->vertexNumber)
+          || (window->graph->edgeList[i][1] == window->selectedVertexNumber
+              && window->graph->edgeList[i][0] == secondVertex->vertexNumber);
+      if (edgeBetween)
+        break;
+    }
+
+    if (edgeBetween)
+      cerr << "EDGE BETWEEN" << endl;
+
   };
 };
 
-#endif //NETVIZGL_SELECTVERTEX_H
+#endif //NETVIZGL_SELECTEDGE_H

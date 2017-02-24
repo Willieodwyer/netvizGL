@@ -64,6 +64,10 @@ class Widget {
   static void degreeC();
   static void distanceC();
   static void colourChanged();
+  GtkWidget *textEdgeLabel;
+  GtkWidget *textEdgeEntry;
+  char *textEdgeText;
+  static void edgeTextChanged();
 };
 
 #endif //NETVIZGL_BUTTONS_H

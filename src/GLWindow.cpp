@@ -10,6 +10,8 @@
 #include "../inc/Command/DeleteNode.h"
 #include "../inc/Command/SelectVertex.h"
 #include "../inc/Command/DragNode.h"
+#include "../inc/Command/NameByIndex.h"
+#include "../inc/Command/SelectEdge.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -55,6 +57,7 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
   textNode = new TextNode(this);
   refreshGraph = new RefreshGraph(this);
   dragNode = new DragNode(this);
+  selectEdge = new SelectEdge(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   //glEnable(GL_CULL_FACE);
@@ -167,9 +170,13 @@ void GLWindow::mousePressedEvent(GLFWwindow *window, int button, int action, int
 
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
     wind->mouseRIGHT = true;
-    //wind->colourNode->execute();
-    SelectVertex sv(wind);
-    sv.execute();
+    if(wind->keySHIFT){
+        wind->selectEdge->execute();
+    }
+    else {
+      SelectVertex sv(wind);
+      sv.execute();
+    }
   }
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
     wind->mouseRIGHT = false;
@@ -224,6 +231,11 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     }
   }
 
+  if (key == GLFW_KEY_N && action == GLFW_PRESS) {
+    NameByIndex nameByIndex(wind);
+    nameByIndex.execute();
+  }
+
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
     wind->X11Screenshot((char *) "DefaultPng");
 
@@ -234,9 +246,9 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
   if (key == GLFW_KEY_DELETE && action == GLFW_PRESS) {
     if (wind->graph->numVertices > 1) {
       DeleteNode *temp = (DeleteNode *) wind->updateGraph;
-      temp->deleteNode = wind->selectedNodeNumber;
+      temp->deleteNode = wind->selectedVertexNumber;
       wind->updateGraph->execute();
-      wind->selectedNodeNumber = -1;
+      wind->selectedVertexNumber = -1;
     }
   }
 
@@ -250,6 +262,14 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
 
   if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_RELEASE) {
     wind->keyCTRL = false;
+  }
+
+  if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS) {
+    wind->keySHIFT = true;
+  }
+
+  if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_RELEASE) {
+    wind->keySHIFT = false;
   }
 
   if (key == GLFW_KEY_LEFT) {
