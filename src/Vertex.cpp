@@ -94,16 +94,16 @@ void Vertex::update() {
 
     }
 
-  for (int i = 0; i < lines.size(); ++i) {
-    lines[i]->posX1 = posX * Edge::scale;
-    lines[i]->posY1 = posY * Edge::scale;
-    lines[i]->posZ1 = posZ * Edge::scale;
+  for (int i = 0; i < edges.size(); ++i) {
+    edges[i]->posX1 = posX * Edge::scale;
+    edges[i]->posY1 = posY * Edge::scale;
+    edges[i]->posZ1 = posZ * Edge::scale;
 
-    lines[i]->posX2 = attachedPoints[i]->posX * Edge::scale;
-    lines[i]->posY2 = attachedPoints[i]->posY * Edge::scale;
-    lines[i]->posZ2 = attachedPoints[i]->posZ * Edge::scale;
+    edges[i]->posX2 = attachedPoints[i]->posX * Edge::scale;
+    edges[i]->posY2 = attachedPoints[i]->posY * Edge::scale;
+    edges[i]->posZ2 = attachedPoints[i]->posZ * Edge::scale;
 
-    lines[i]->update();
+    edges[i]->update();
   }
 
   mtx.unlock();
@@ -137,9 +137,9 @@ void Vertex::draw() {
 
   glPolygonOffset(0, 0);
 
-  if (lines.size() > 0) {
-    for (int i = 0; i < lines.size(); ++i) {
-      lines[i]->draw();
+  if (edges.size() > 0) {
+    for (int i = 0; i < edges.size(); ++i) {
+      edges[i]->draw();
     }
   }
 
@@ -147,19 +147,18 @@ void Vertex::draw() {
 }
 
 void Vertex::drawText() {
-  if (strlen(text) < 1)
-    return;
+  if (!strlen(text) < 1) {
+    glPixelTransferf(GL_RED_BIAS, -1.0f);
+    glPixelTransferf(GL_GREEN_BIAS, -1.0f);
+    glPixelTransferf(GL_BLUE_BIAS, -1.0f);
 
-  glPixelTransferf(GL_RED_BIAS, -1.0f);
-  glPixelTransferf(GL_GREEN_BIAS, -1.0f);
-  glPixelTransferf(GL_BLUE_BIAS, -1.0f);
+    getScreenPosition(pos);
+    font->Render(text, -1, FTPoint(pos[0], pos[1], pos[2]));
+  }
 
-  getScreenPosition(pos);
-  font->Render(text, -1, FTPoint(pos[0], pos[1], pos[2]));
-
-  if (lines.size() > 0) {
-    for (int i = 0; i < lines.size(); ++i) {
-      lines[i]->drawText();
+  if (edges.size() > 0) {
+    for (int i = 0; i < edges.size(); ++i) {
+      edges[i]->drawText();
     }
   }
 }
@@ -198,7 +197,7 @@ void Vertex::attachPoint(Vertex *p) {
                      p->posX * 0.1, p->posY * 0.1, p->posZ * 0.1);
   l->base = this;
   l->connect = p;
-  lines.push_back(l);
+  edges.push_back(l);
 }
 
 bool Vertex::isPointerOver(double x, double y, int width, int height) {

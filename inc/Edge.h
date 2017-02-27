@@ -21,7 +21,7 @@ class Edge {
 
   GLdouble *vertices;
 
-  GLfloat *colors;
+  GLfloat *colours;
 
   void draw();
   void setColour(GLfloat r, GLfloat g, GLfloat b, GLfloat r2, GLfloat g2, GLfloat b2);
@@ -34,6 +34,7 @@ class Edge {
 
   FTPixmapFont *font;
   char *text;
+  void setText(const char *t);
 };
 
 #endif //NETVIZGL_LINE_H

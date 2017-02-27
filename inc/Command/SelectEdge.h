@@ -60,12 +60,29 @@ class SelectEdge : public Command {
           && window->graph->edgeList[i][1] == secondVertex->vertexNumber)
           || (window->graph->edgeList[i][1] == window->selectedVertexNumber
               && window->graph->edgeList[i][0] == secondVertex->vertexNumber);
-      if (edgeBetween)
+      if (edgeBetween) {
+        window->selectedEdgeIndex = i;
         break;
+      }
     }
 
-    if (edgeBetween)
-      cerr << "EDGE BETWEEN" << endl;
+//    if (edgeBetween)
+//      cerr << "EDGE BETWEEN: " << window->graph->edgeList[window->selectedEdgeIndex][0] << ","
+//           << window->graph->edgeList[window->selectedEdgeIndex][1] << endl;
+
+    int u = window->graph->edgeList[window->selectedEdgeIndex][0];
+    int v = window->graph->edgeList[window->selectedEdgeIndex][1];
+
+    for (int i = 0; i < window->graph->vertices[u]->attachedPoints.size(); ++i) {
+      if(window->graph->vertices[u]->attachedPoints[i]->vertexNumber == v){
+        Widget::Ins()->textEdgeText = window->graph->vertices[u]->edges[i]->text;
+        Widget::Ins()->edgeRedColour = window->graph->vertices[u]->edges[i]->colours[0];
+        Widget::Ins()->edgeBlueColour = window->graph->vertices[u]->edges[i]->colours[2];
+        Widget::Ins()->edgeGreenColour = window->graph->vertices[u]->edges[i]->colours[3];
+      }
+    }
+
+    Widget::updateEdgeDetails();
 
   };
 };

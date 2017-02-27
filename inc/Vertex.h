@@ -26,8 +26,6 @@ class Vertex {
 
   std::mutex mtx;
 
-  vector<Edge *> lines;
-
   FTPixmapFont *font;
 
   GLdouble *pos;
@@ -39,6 +37,7 @@ class Vertex {
   virtual ~Vertex();
 
   vector<Vertex *> attachedPoints;
+  vector<Edge *> edges;
   void attachPoint(Vertex *p);
 
   int degree = 0;

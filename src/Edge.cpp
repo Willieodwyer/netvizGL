@@ -16,9 +16,9 @@ Edge::Edge(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdo
   posY2 = Y2;
   posZ2 = Z2;
 
-  colors = new GLfloat[6];
+  colours = new GLfloat[6];
   for (int i = 0; i < 6; ++i) {
-    colors[i] = 0;
+    colours[i] = 0;
   }
   vertices = new GLdouble[6];
   vertices[0] = X1 * scale;
@@ -29,7 +29,7 @@ Edge::Edge(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdo
   vertices[5] = Z2 * scale;
 
   text = new char[64];
-  strcpy(text, "default String");
+  strcpy(text, "");
   font = new FTGLPixmapFont("../Fonts/arial.ttf");
   if (font->Error())
     fprintf(stderr, "Err");
@@ -53,7 +53,7 @@ void Edge::draw() {
 
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
-  glColorPointer(3, GL_FLOAT, 0, colors);
+  glColorPointer(3, GL_FLOAT, 0, colours);
 
   glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
 
@@ -92,10 +92,14 @@ void Edge::drawText() {
 }
 
 void Edge::setColour(GLfloat r, GLfloat g, GLfloat b, GLfloat r2, GLfloat g2, GLfloat b2) {
-  colors[0] = r;
-  colors[1] = g;
-  colors[2] = b;
-  colors[3] = r2;
-  colors[4] = b2;
-  colors[5] = g2;
+  colours[0] = r;
+  colours[1] = g;
+  colours[2] = b;
+  colours[3] = r2;
+  colours[4] = g2;
+  colours[5] = b2;
+}
+
+void Edge::setText(const char *t) {
+  strcpy(text, t);
 }

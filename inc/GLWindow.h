@@ -98,6 +98,7 @@ class GLWindow {
   double mouseDiffX;
   double mouseDiffY;
   bool keySHIFT = false;
+  int selectedEdgeIndex = -1;
 };
 
 #endif //NETVIZGL_WINDOW_H

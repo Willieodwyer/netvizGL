@@ -31,7 +31,7 @@ class Widget {
   GtkWidget *degreeCentralityButton;
   GtkColorChooser *colourNodeButton;
 
-  GtkWidget *colourEdgeButton;
+  GtkColorChooser *colourEdgeButton;
 
   GtkWidget *filterButton;
   GtkWidget *textNodeLabel;
@@ -68,6 +68,11 @@ class Widget {
   GtkWidget *textEdgeEntry;
   char *textEdgeText;
   static void edgeTextChanged();
+  static void updateEdgeDetails();
+  static void edgeColourChanged();
+  gdouble edgeRedColour;
+  gdouble edgeBlueColour;
+  gdouble edgeGreenColour;
 };
 
 #endif //NETVIZGL_BUTTONS_H

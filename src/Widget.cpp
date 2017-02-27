@@ -94,15 +94,25 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   delete (def);
 
   // Text Node
-  Widget::Ins()->textNodeLabel = gtk_label_new("Add text to node");
+  Widget::Ins()->textNodeLabel = gtk_label_new("Add text/colour to node");
   Widget::Ins()->textNodeEntry = gtk_entry_new();
   gtk_entry_set_text((GtkEntry *) Widget::Ins()->textNodeEntry, "Enter node text here");
   gtk_entry_set_max_length((GtkEntry *) Widget::Ins()->textNodeEntry, 64);
   g_signal_connect (Widget::Ins()->textNodeEntry, "changed", G_CALLBACK(textChanged), Widget::Ins());
   Widget::Ins()->textNodeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textNodeEntry);
 
+  // Colour Edge
+  GdkRGBA *df = new GdkRGBA;
+  def->red = 1;
+  def->green = 1;
+  def->blue = 1;
+  Widget::Ins()->colourEdgeButton = (GtkColorChooser *) gtk_color_button_new_with_rgba(def);
+  gtk_color_button_set_title((GtkColorButton *) Widget::Ins()->colourNodeButton, "Nodes");
+  g_signal_connect (Widget::Ins()->colourEdgeButton, "color-set", G_CALLBACK(edgeColourChanged), Widget::Ins());
+  delete (df);
+
   // Text Edge
-  Widget::Ins()->textEdgeLabel = gtk_label_new("Add text to Edge");
+  Widget::Ins()->textEdgeLabel = gtk_label_new("Add text/colour to Edge");
   Widget::Ins()->textEdgeEntry = gtk_entry_new();
   gtk_entry_set_text((GtkEntry *) Widget::Ins()->textEdgeEntry, "Enter Edge text here");
   gtk_entry_set_max_length((GtkEntry *) Widget::Ins()->textEdgeEntry, 64);
@@ -123,15 +133,15 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->degreeCentralityButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->distanceCentralityButton);
-  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), (GtkWidget *) Widget::Ins()->colourNodeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), (GtkWidget *) Widget::Ins()->colourNodeButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textEdgeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textEdgeEntry);
 
-//  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourEdgeButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), (GtkWidget *) Widget::Ins()->colourEdgeButton);
 //  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->filterButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->separator3);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->exitButton);
@@ -240,6 +250,18 @@ void Widget::updateNodeDetails() {
   gtk_entry_set_text((GtkEntry *) Widget::Ins()->textNodeEntry, Widget::Ins()->textNodeText);
 }
 
+void Widget::updateEdgeDetails() {
+  GdkRGBA *colour = new GdkRGBA;
+  colour->alpha = 1;
+  colour->red = Widget::Ins()->edgeRedColour;
+  colour->green = Widget::Ins()->edgeGreenColour;
+  colour->blue = Widget::Ins()->edgeBlueColour;
+
+  gtk_color_chooser_set_rgba((GtkColorChooser *) Widget::Ins()->colourEdgeButton, colour);
+
+  gtk_entry_set_text((GtkEntry *) Widget::Ins()->textEdgeEntry, Widget::Ins()->textEdgeText);
+}
+
 void Widget::toggleView() {
   if (Widget::Ins()->visible) {
     Widget::Ins()->visible = false;
@@ -261,9 +283,23 @@ void Widget::textChanged() {
 }
 
 void Widget::edgeTextChanged() {
-//  Widget::Ins()->textEdgeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textEdgeEntry);
-//  if (GLWindow::Ins()->selectedNode)
-//    GLWindow::Ins()->selectedNode->setText(Widget::Ins()->textNodeText);
+  Widget::Ins()->textEdgeText = (char *) gtk_entry_get_text((GtkEntry *) Widget::Ins()->textEdgeEntry);
+  if (GLWindow::Ins()->selectedEdgeIndex >= 0) {
+    int u = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][0];
+    int v = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][1];
+
+    for (int i = 0; i < GLWindow::Ins()->graph->vertices[u]->attachedPoints.size(); ++i) {
+      if (GLWindow::Ins()->graph->vertices[u]->attachedPoints[i]->vertexNumber == v) {
+        GLWindow::Ins()->graph->vertices[u]->edges[i]->setText(Widget::Ins()->textEdgeText);
+      }
+    }
+
+    for (int i = 0; i < GLWindow::Ins()->graph->vertices[v]->attachedPoints.size(); ++i) {
+      if (GLWindow::Ins()->graph->vertices[v]->attachedPoints[i]->vertexNumber == u) {
+        GLWindow::Ins()->graph->vertices[v]->edges[i]->setText(Widget::Ins()->textEdgeText);
+      }
+    }
+  }
 }
 
 void Widget::colourChanged() {
@@ -276,6 +312,57 @@ void Widget::colourChanged() {
 
   if (GLWindow::Ins()->selectedNode)
     GLWindow::Ins()->selectedNode->setColour(colour->red, colour->green, colour->blue);
+}
+
+void Widget::edgeColourChanged() {
+  GdkRGBA *colour = new GdkRGBA;
+  gtk_color_chooser_get_rgba(Widget::Ins()->colourEdgeButton, colour);
+
+  Widget::Ins()->edgeRedColour = colour->red;
+  Widget::Ins()->edgeBlueColour = colour->blue;
+  Widget::Ins()->edgeGreenColour = colour->green;
+
+  if (GLWindow::Ins()->selectedEdgeIndex >= 0) {
+//    int x = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][0];
+//    int y = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][1];
+//
+//    Vertex *v = GLWindow::Ins()->graph->vertices[x];
+//    Vertex *u = GLWindow::Ins()->graph->vertices[y];
+//
+//    for (int i = 0; i < v->attachedPoints.size(); ++i) {
+//      if (v->attachedPoints[i] == u) {
+//        v->edges[i]->setColour((GLfloat) colour->red, (GLfloat) colour->green, (GLfloat) colour->blue,
+//                               (GLfloat) colour->red, (GLfloat) colour->green, (GLfloat) colour->blue);
+//      }
+//    }
+
+    int u = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][0];
+    int v = GLWindow::Ins()->graph->edgeList[GLWindow::Ins()->selectedEdgeIndex][1];
+
+    for (int i = 0; i < GLWindow::Ins()->graph->vertices[u]->attachedPoints.size(); ++i) {
+      if (GLWindow::Ins()->graph->vertices[u]->attachedPoints[i]->vertexNumber == v) {
+        GLWindow::Ins()->graph->vertices[u]->edges[i]->setColour((GLfloat) colour->red,
+                                                                 (GLfloat) colour->green,
+                                                                 (GLfloat) colour->blue,
+                                                                 (GLfloat) colour->red,
+                                                                 (GLfloat) colour->green,
+                                                                 (GLfloat) colour->blue);
+        return;
+      }
+    }
+
+    for (int i = 0; i < GLWindow::Ins()->graph->vertices[v]->attachedPoints.size(); ++i) {
+      if (GLWindow::Ins()->graph->vertices[v]->attachedPoints[i]->vertexNumber == u) {
+        GLWindow::Ins()->graph->vertices[v]->edges[i]->setColour((GLfloat) colour->red,
+                                                                 (GLfloat) colour->green,
+                                                                 (GLfloat) colour->blue,
+                                                                 (GLfloat) colour->red,
+                                                                 (GLfloat) colour->green,
+                                                                 (GLfloat) colour->blue);
+        return;
+      }
+    }
+  }
 }
 
 void Widget::refresh() {
