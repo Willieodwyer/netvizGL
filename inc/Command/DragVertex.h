@@ -9,11 +9,11 @@
 #include <iostream>
 #include "Command.h"
 #include "../GLWindow.h"
-class DragNode : public Command {
+class DragVertex : public Command {
  private:
   GLWindow *window;
  public:
-  DragNode(GLWindow *window) : window(window) {}
+  DragVertex(GLWindow *window) : window(window) {}
 
   void execute() override {
     if (window->selectedNode) {

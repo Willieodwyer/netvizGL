@@ -77,8 +77,17 @@ class SelectEdge : public Command {
       if(window->graph->vertices[u]->attachedPoints[i]->vertexNumber == v){
         Widget::Ins()->textEdgeText = window->graph->vertices[u]->edges[i]->text;
         Widget::Ins()->edgeRedColour = window->graph->vertices[u]->edges[i]->colours[0];
+        Widget::Ins()->edgeGreenColour = window->graph->vertices[u]->edges[i]->colours[1];
         Widget::Ins()->edgeBlueColour = window->graph->vertices[u]->edges[i]->colours[2];
-        Widget::Ins()->edgeGreenColour = window->graph->vertices[u]->edges[i]->colours[3];
+      }
+    }
+
+    for (int i = 0; i < window->graph->vertices[v]->attachedPoints.size(); ++i) {
+      if(window->graph->vertices[v]->attachedPoints[i]->vertexNumber == u){
+        Widget::Ins()->textEdgeText = window->graph->vertices[v]->edges[i]->text;
+        Widget::Ins()->edgeRedColour = window->graph->vertices[v]->edges[i]->colours[0];
+        Widget::Ins()->edgeGreenColour = window->graph->vertices[v]->edges[i]->colours[1];
+        Widget::Ins()->edgeBlueColour = window->graph->vertices[v]->edges[i]->colours[2];
       }
     }
 

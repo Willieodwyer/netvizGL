@@ -13,11 +13,11 @@
 #include "../Algorithms/MultiLevel.h"
 #include <fstream>
 
-class DeleteNode : public Command {
+class DeleteVertex : public Command {
  private:
   GLWindow *window;
  public:
-  DeleteNode(GLWindow *window, int deletedNode)
+  DeleteVertex(GLWindow *window, int deletedNode)
       : window(window), deleteNode(deletedNode) {};
   int deleteNode;
 

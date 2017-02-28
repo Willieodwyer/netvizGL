@@ -7,9 +7,9 @@
 #include "../inc/Command/RefreshGraph.h"
 #include "../inc/SimpleSvg.h"
 #include "../inc/SvgPrinter.h"
-#include "../inc/Command/DeleteNode.h"
+#include "../inc/Command/DeleteVertex.h"
 #include "../inc/Command/SelectVertex.h"
-#include "../inc/Command/DragNode.h"
+#include "../inc/Command/DragVertex.h"
 #include "../inc/Command/NameByIndex.h"
 #include "../inc/Command/SelectEdge.h"
 #include <glm/geometric.hpp>
@@ -52,11 +52,11 @@ GLWindow::GLWindow(const int WIDTH, const int HEIGHT) {
 
   //Graph command
   loadGraph = new LoadGraph(this);
-  updateGraph = new DeleteNode(this, -1);
+  updateGraph = new DeleteVertex(this, -1);
   colourNode = new ColourNode(this);
   textNode = new TextNode(this);
   refreshGraph = new RefreshGraph(this);
-  dragNode = new DragNode(this);
+  dragNode = new DragVertex(this);
   selectEdge = new SelectEdge(this);
 
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -245,7 +245,7 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
 
   if (key == GLFW_KEY_DELETE && action == GLFW_PRESS) {
     if (wind->graph->numVertices > 1) {
-      DeleteNode *temp = (DeleteNode *) wind->updateGraph;
+      DeleteVertex *temp = (DeleteVertex *) wind->updateGraph;
       temp->deleteNode = wind->selectedVertexNumber;
       wind->updateGraph->execute();
       wind->selectedVertexNumber = -1;
