@@ -60,42 +60,42 @@ public class MultiLevel {
 		File aFile = new File(filename);
 		Scanner in = new Scanner (aFile);
 		Alists.clear();
-		ArrayList <String> lines = new ArrayList <String>();
+		ArrayList <String> edges = new ArrayList <String>();
 		
-		lines.clear();
+		edges.clear();
 		
 		while(in.hasNextLine())
 		{
 			String line = in.nextLine();
-			lines.add(line);
+			edges.add(line);
 		}
-		variables.v=lines.size();
+		variables.v=edges.size();
 		variables.node_degree= new int [variables.v];
 		degree_met = new int [variables.v];
 		mat= new boolean[variables.v][variables.v];
 		
 		boolean adj= true;
 		
-		if(lines.get(lines.size()-1).equals("-1"))
+		if(edges.get(edges.size()-1).equals("-1"))
 			adj=false;
 		
 		variables.links=0;
 		
 		if(adj)
 		{
-			for(int i=0;i<(lines.size());i++)
+			for(int i=0;i<(edges.size());i++)
 			{
-				String [] line = lines.get(i).split(" ");
-				if(line.length!=lines.size())
+				String [] line = edges.get(i).split(" ");
+				if(line.length!=edges.size())
 				{
 					JOptionPane.showMessageDialog(null, "Matrix is wrong  ... !");
 					break;
 				}
 				
-				String [] line_deg = (lines.get(i)+" ").split("1");
+				String [] line_deg = (edges.get(i)+" ").split("1");
 				variables.node_degree[i]=line_deg.length-1;
 				degree_met = variables.node_degree.clone();
-				for(int j=i+1;j<(lines.size());j++)
+				for(int j=i+1;j<(edges.size());j++)
 				{
 					if(line[j].equals("1"))
 					{
@@ -220,9 +220,9 @@ public class MultiLevel {
 		File aFile = new File(filename);
 		Scanner in = new Scanner (aFile);
 	
-		ArrayList <String> lines = new ArrayList <String>();
+		ArrayList <String> edges = new ArrayList <String>();
 		
-		lines.clear();
+		edges.clear();
 		int max=0;
 		while(in.hasNextLine())
 		{
@@ -235,19 +235,19 @@ public class MultiLevel {
 				max=Integer.parseInt(temp[1]);
 			
 			if(!temp[0].equals(temp[1]))
-				lines.add(line);
+				edges.add(line);
 		}
 		variables.v=max;
-		lists = new int [2][lines.size()];
+		lists = new int [2][edges.size()];
 		variables.node_degree= new int [variables.v];
 		mat1 = new int [variables.v][variables.v];
 		
 			
-		variables.links=lines.size();
+		variables.links=edges.size();
 		System.out.println("Size:  "+variables.v+"  links:  "+variables.links);
-		for(int i=0;i<lines.size();i++)
+		for(int i=0;i<edges.size();i++)
 		{
-			String [] temp = lines.get(i).split(" ");
+			String [] temp = edges.get(i).split(" ");
 		
 			lists[0][i]= Integer.parseInt(temp[0])-1;
 			lists[1][i]= Integer.parseInt(temp[1])-1;

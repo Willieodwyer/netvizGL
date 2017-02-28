@@ -13,11 +13,11 @@
 #include "../Algorithms/MultiLevel.h"
 #include <fstream>
 
-class DeleteNode : public Command {
+class DeleteVertex : public Command {
  private:
   GLWindow *window;
  public:
-  DeleteNode(GLWindow *window, int deletedNode)
+  DeleteVertex(GLWindow *window, int deletedNode)
       : window(window), deleteNode(deletedNode) {};
   int deleteNode;
 
@@ -98,6 +98,8 @@ class DeleteNode : public Command {
         window->graph->vertices[i]->posY = temp->vertices[i]->posY;
         window->graph->vertices[i]->posZ = temp->vertices[i]->posZ;
 
+        window->graph->vertices[i]->setText(temp->vertices[i]->text);
+
         temp->vertices[i]->getColour(colours);
         window->graph->vertices[i]->setColour(colours[0], colours[1], colours[2]);
       }
@@ -106,6 +108,8 @@ class DeleteNode : public Command {
         window->graph->vertices[k]->posX = temp->vertices[k + 1]->posX;
         window->graph->vertices[k]->posY = temp->vertices[k + 1]->posY;
         window->graph->vertices[k]->posZ = temp->vertices[k + 1]->posZ;
+
+        window->graph->vertices[k]->setText(temp->vertices[k + 1]->text);
 
         temp->vertices[k + 1]->getColour(colours);
         window->graph->vertices[k]->setColour(colours[0], colours[1], colours[2]);

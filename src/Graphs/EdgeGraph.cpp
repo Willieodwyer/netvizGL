@@ -56,7 +56,7 @@ EdgeGraph::EdgeGraph(char *filePath, vector<int *> newEdgeList)
 
 void EdgeGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-    vertices[i]->drawPoints();
+    vertices[i]->draw();
   }
   for (int i = 0; i < numVertices; ++i) {
     vertices[i]->drawText();

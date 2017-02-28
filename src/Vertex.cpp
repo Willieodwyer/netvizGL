@@ -94,23 +94,23 @@ void Vertex::update() {
 
     }
 
-  for (int i = 0; i < lines.size(); ++i) {
-    lines[i]->posX1 = posX * Line::scale;
-    lines[i]->posY1 = posY * Line::scale;
-    lines[i]->posZ1 = posZ * Line::scale;
+  for (int i = 0; i < edges.size(); ++i) {
+    edges[i]->posX1 = posX * Edge::scale;
+    edges[i]->posY1 = posY * Edge::scale;
+    edges[i]->posZ1 = posZ * Edge::scale;
 
-    lines[i]->posX2 = attachedPoints[i]->posX * Line::scale;
-    lines[i]->posY2 = attachedPoints[i]->posY * Line::scale;
-    lines[i]->posZ2 = attachedPoints[i]->posZ * Line::scale;
+    edges[i]->posX2 = attachedPoints[i]->posX * Edge::scale;
+    edges[i]->posY2 = attachedPoints[i]->posY * Edge::scale;
+    edges[i]->posZ2 = attachedPoints[i]->posZ * Edge::scale;
 
-    lines[i]->update();
+    edges[i]->update();
   }
 
   mtx.unlock();
 
 }
 
-void Vertex::drawPoints() {
+void Vertex::draw() {
   mtx.lock();
 
   glEnableClientState(GL_COLOR_ARRAY);
@@ -137,9 +137,9 @@ void Vertex::drawPoints() {
 
   glPolygonOffset(0, 0);
 
-  if (lines.size() > 0) {
-    for (int i = 0; i < lines.size(); ++i) {
-      lines[i]->draw();
+  if (edges.size() > 0) {
+    for (int i = 0; i < edges.size(); ++i) {
+      edges[i]->draw();
     }
   }
 
@@ -147,15 +147,20 @@ void Vertex::drawPoints() {
 }
 
 void Vertex::drawText() {
-  if (strlen(text) < 1)
-    return;
+  if (!strlen(text) < 1) {
+    glPixelTransferf(GL_RED_BIAS, -1.0f);
+    glPixelTransferf(GL_GREEN_BIAS, -1.0f);
+    glPixelTransferf(GL_BLUE_BIAS, -1.0f);
 
-  glPixelTransferf(GL_RED_BIAS, -1.0f);
-  glPixelTransferf(GL_GREEN_BIAS, -1.0f);
-  glPixelTransferf(GL_BLUE_BIAS, -1.0f);
+    getScreenPosition(pos);
+    font->Render(text, -1, FTPoint(pos[0], pos[1], pos[2]));
+  }
 
-  getScreenPosition(pos);
-  font->Render(text, -1, FTPoint(pos[0], pos[1], pos[2]));
+  if (edges.size() > 0) {
+    for (int i = 0; i < edges.size(); ++i) {
+      edges[i]->drawText();
+    }
+  }
 }
 
 Vertex::~Vertex() {
@@ -188,9 +193,11 @@ GLdouble *Vertex::getColour(GLdouble *colours) {
 
 void Vertex::attachPoint(Vertex *p) {
   attachedPoints.push_back(p);
-  Line *l = new Line(posX * 0.1, posY * 0.1, posZ * 0.1,
+  Edge *l = new Edge(posX * 0.1, posY * 0.1, posZ * 0.1,
                      p->posX * 0.1, p->posY * 0.1, p->posZ * 0.1);
-  lines.push_back(l);
+  l->base = this;
+  l->connect = p;
+  edges.push_back(l);
 }
 
 bool Vertex::isPointerOver(double x, double y, int width, int height) {
@@ -204,9 +211,9 @@ bool Vertex::isPointerOver(double x, double y, int width, int height) {
   glGetDoublev(GL_MODELVIEW_MATRIX, model);
   glGetIntegerv(GL_VIEWPORT, view);
 
-  gluProject(posX * Line::scale * .1,
-             posY * Line::scale * .1,
-             posZ * Line::scale * .1,
+  gluProject(posX * Edge::scale * .1,
+             posY * Edge::scale * .1,
+             posZ * Edge::scale * .1,
              model,
              proj,
              view,
@@ -245,9 +252,9 @@ double Vertex::getDepth() {
   glGetDoublev(GL_MODELVIEW_MATRIX, model);
   glGetIntegerv(GL_VIEWPORT, view);
 
-  gluProject(posX * Line::scale * .1,
-             posY * Line::scale * .1,
-             posZ * Line::scale * .1,
+  gluProject(posX * Edge::scale * .1,
+             posY * Edge::scale * .1,
+             posZ * Edge::scale * .1,
              model,
              proj,
              view,
@@ -271,9 +278,9 @@ void *Vertex::getScreenPosition(GLdouble *pos) {
   glGetDoublev(GL_MODELVIEW_MATRIX, model);
   glGetIntegerv(GL_VIEWPORT, view);
 
-  gluProject(posX * Line::scale * .1,
-             posY * Line::scale * .1,
-             posZ * Line::scale * .1,
+  gluProject(posX * Edge::scale * .1,
+             posY * Edge::scale * .1,
+             posZ * Edge::scale * .1,
              model,
              proj,
              view,

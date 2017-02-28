@@ -33,7 +33,7 @@ class SelectVertex : public Command{
         if(window->graph->vertices[i]->selected){
           window->graph->vertices[i]->selected = false;
         }
-        window->graph->vertices[i]->nodeNumber = i;
+        window->graph->vertices[i]->vertexNumber = i;
       }
     }
 
@@ -51,7 +51,7 @@ class SelectVertex : public Command{
     for (int i = 0; i < pointerOver.size(); i++) {
       if (closest == depthValues[i]) {
         pointerOver[i]->selected = true;
-        window->selectedNodeNumber = pointerOver[i]->nodeNumber;
+        window->selectedVertexNumber = pointerOver[i]->vertexNumber;
         pointerOver[i]->getColour(cols);
         pointerOver[i]->getColour(cols);
 
