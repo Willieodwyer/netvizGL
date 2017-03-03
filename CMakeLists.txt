@@ -98,7 +98,7 @@ add_executable(${PROJ_NAME}
         src/Centrality/DegreeCentrality.cpp inc/Centrality/DegreeCentrality.h
         inc/Centrality/Centrality.h
         src/Centrality/DistanceCentrality.cpp inc/Centrality/DistanceCentrality.h
-        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteVertex.h inc/Command/SelectVertex.h inc/Command/DragVertex.h inc/Command/NameByIndex.h inc/Command/SelectEdge.h)
+        inc/Command/RefreshGraph.h inc/Command/SaveGraph.h inc/Command/DeleteVertex.h inc/Command/SelectVertex.h inc/Command/DragVertex.h inc/Command/NameByIndex.h inc/Command/SelectEdge.h src/Algorithms/MultiForce.cpp inc/Algorithms/MultiForce.h)
 
 
 # Libraries to be linked

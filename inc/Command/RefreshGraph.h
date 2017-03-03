@@ -7,7 +7,7 @@
 
 #include "Command.h"
 #include "../GLWindow.h"
-#include "../Algorithms/MultiLevel.h"
+#include "../Algorithms/MultiForce.h"
 #include "../Algorithms/SimpleForceDirected.h"
 #include "../Algorithms/FruchtermanReingold.h"
 
@@ -28,7 +28,7 @@ class RefreshGraph : public Command {
           break;
         case Widget::SMPL: window->algorithm = new SimpleForceDirected(window->graph);
           break;
-        case Widget::MLT: window->algorithm = new MultiLevel(window->graph);
+        case Widget::MLT: window->algorithm = new MultiForce(window->graph);
           break;
         default: break;
       }
