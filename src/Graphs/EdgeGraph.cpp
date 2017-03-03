@@ -10,6 +10,49 @@ EdgeGraph::EdgeGraph(char *filePath)
   read(filePath);
 }
 
+EdgeGraph::EdgeGraph(vector<int *> newEdgeList) : Graph((char *) "./tempGraph"){
+  edgeList = newEdgeList;
+
+  for (int i = 0; i < edgeList.size(); ++i) {
+    if (edgeList[i][0] > numVertices) {
+      numVertices = (unsigned long) edgeList[i][0];
+    }
+    if (edgeList[i][1] > numVertices) {
+      numVertices = (unsigned long) edgeList[i][1];
+    }
+  }
+
+  numVertices++;
+
+  adjacencyMatrix.clear();
+  for (int i = 0; i < numVertices; ++i) {
+    vector<int> row;
+    adjacencyMatrix.push_back(row);
+    for (int j = 0; j < numVertices; ++j) {
+      adjacencyMatrix[i].push_back(0);
+    }
+  }
+
+  vertices.clear();
+  for (int j = 0; j < numVertices; ++j) {
+    vertices.push_back(new Vertex(0, 0, 0));
+    vertices[j]->setColour(0, 0, 0);
+  }
+
+  for (int k = 0; k < edgeList.size(); ++k) {
+    vertices[edgeList[k][0]]->attachPoint(vertices[edgeList[k][1]]);
+    vertices[edgeList[k][0]]->degree++;
+    vertices[edgeList[k][1]]->degree++;
+    adjacencyMatrix[edgeList[k][0]][edgeList[k][1]] = 1;
+    adjacencyMatrix[edgeList[k][1]][edgeList[k][0]] = 1;
+  }
+
+  numEdges = edgeList.size();
+//  for (int i = 0; i < edgeList.size(); ++i) {
+//    fprintf(stderr, "%d,%d\n", edgeList[i][0], edgeList[i][1]);
+//  }
+}
+
 EdgeGraph::EdgeGraph(char *filePath, vector<int *> newEdgeList)
     : Graph(filePath) {
   edgeList = newEdgeList;
@@ -146,3 +189,4 @@ bool EdgeGraph::validate(char *filePath) {
 EdgeGraph::~EdgeGraph() {
   fprintf(stderr, "Deleting EdgeGraph\n");
 }
+

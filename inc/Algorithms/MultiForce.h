@@ -18,8 +18,15 @@ class MultiForce : public Algorithm{
   double t;
   void placement();
   double edgeIndex = 0;
+
+  double energy1 = 0;
   double energy = 0;
+
   bool doPlace;
+
+  vector<int*> newEdgeList;
+  vector<int> seenVertices;
+  Graph *temp;
 };
 
 #endif //NETVIZGL_MULTIFORCE_H
