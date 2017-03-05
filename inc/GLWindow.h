@@ -91,11 +91,14 @@ class GLWindow {
   Command *refreshGraph;
   Command *dragNode;
   Command *updateGraph;
+  Command *selectEdge;
   Vertex *selectedNode;
-  int selectedNodeNumber = -1;
+  int selectedVertexNumber = -1;
   bool keyCTRL = false;
   double mouseDiffX;
   double mouseDiffY;
+  bool keySHIFT = false;
+  int selectedEdgeIndex = -1;
 };
 
 #endif //NETVIZGL_WINDOW_H

@@ -62,7 +62,7 @@ void MatrixMarketGraph::read(char *filePath) {
   mm_write_banner(stdout, matcode);
   mm_write_mtx_crd_size(stdout, rows, cols, edgs);
 //  for (i = 0; i < edgs; i++)
-//    fprintf(stderr, "%d %d\n", I[i] + 1, J[i] + 1);
+//    fprintf(stderr, "%d %d\n", I[i], J[i]);
 
   numVertices = (unsigned long) rows;
 
@@ -82,9 +82,14 @@ void MatrixMarketGraph::read(char *filePath) {
 
   //Attach points to each other
   for (int k = 0; k < edgs; ++k) {
-    vertices[I[k]]->attachPoint(vertices[J[k]]);
-    adjacencyMatrix[I[k]][J[k]] = 1;
-    adjacencyMatrix[J[k]][I[k]] = 1;
+    if(I[k] == J[k]){
+      //fprintf(stderr, "%d %d\n", I[k], J[k]);
+    }
+    else {
+      vertices[I[k]]->attachPoint(vertices[J[k]]);
+      adjacencyMatrix[I[k]][J[k]] = 1;
+      adjacencyMatrix[J[k]][I[k]] = 1;
+    }
   }
 
   for (int i = 0; i < numVertices; ++i) {
@@ -118,7 +123,7 @@ void MatrixMarketGraph::read(char *filePath) {
 
 void MatrixMarketGraph::draw() {
   for (int i = 0; i < numVertices; ++i) {
-      vertices[i]->drawPoints();
+    vertices[i]->draw();
   }
   for (int i = 0; i < numVertices; ++i) {
       vertices[i]->drawText();
