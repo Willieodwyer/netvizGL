@@ -50,17 +50,18 @@ Edge::~Edge() {
 }
 
 void Edge::draw() {
+  if (posZ1 > -1000 && posZ2 > -1000) {
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, colours);
 
-  glEnableClientState(GL_COLOR_ARRAY);
-  glEnableClientState(GL_VERTEX_ARRAY);
-  glColorPointer(3, GL_FLOAT, 0, colours);
+    glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
 
-  glVertexPointer(3, GL_DOUBLE, 0, this->vertices);
+    glDrawArrays(GL_LINES, 0, 2);
 
-  glDrawArrays(GL_LINES, 0, 2);
-
-  glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-  glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+    glDisableClientState(GL_COLOR_ARRAY);
+  }
 }
 
 void Edge::drawText() {

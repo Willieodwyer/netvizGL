@@ -10,33 +10,15 @@
 #include "../../inc/Graphs/EdgeGraph.h"
 #include "../../inc/GLWindow.h"
 MultiForce::MultiForce(Graph *g) : Algorithm(g) {
-  W = 128;
-  L = 72;
+//  W = 128;
+//  L = 72;
+  W = 64;
+  L = 36;
   area = W * L;
   k = sqrt(area / (double) graph->numVertices);
   t = graph->numVertices;
   initialPlacement();
   doPlace = true;
-
-  seenVertices.push_back(0);
-  for (int i = 0; i < graph->edgeList.size(); ++i) {
-    if (graph->edgeList[i][0] == 0) {
-      newEdgeList.push_back(graph->edgeList[i]);
-      seenVertices.push_back(graph->edgeList[i][1]);
-    }
-  }
-
-  temp = graph;
-  graph = new EdgeGraph(newEdgeList);
-
-  ofstream myfile;
-  myfile.open("./LastEditedGraph");
-  for (int i = 0; i < newEdgeList.size(); ++i) {
-    myfile << newEdgeList[i][0] << " " << newEdgeList[i][1] << endl;
-  }
-  myfile.close();
-
-  GLWindow::Ins()->graphFilePath = (char *) "./LastEditedGraph";
 }
 
 void MultiForce::apply() {
@@ -47,11 +29,9 @@ void MultiForce::apply() {
 //      doPlace = false;
     }
 
-    energy = 1;
-    while (energy) {
-      cerr << "EN:" << energy << endl;
+    energy = 999999999;
+    while (energy > 5) {
       energy = 0;
-
       Vertex *v;
       Vertex *u;
 
@@ -76,9 +56,9 @@ void MultiForce::apply() {
         }
       }
 
-      for (int i = 0; i < newEdgeList.size(); ++i) {
-        v = graph->vertices[newEdgeList[i][0]];
-        u = graph->vertices[newEdgeList[i][1]];
+      for (int i = 0; i < edgeIndex; ++i) {
+        v = graph->vertices[graph->edgeList[i][0]];
+        u = graph->vertices[graph->edgeList[i][1]];
 
         double xDist = (v->posX - u->posX);
         double yDist = (v->posY - u->posY);
@@ -98,12 +78,14 @@ void MultiForce::apply() {
 
       for (int i = 0; i < seenVertices.size(); ++i) {
         v = graph->vertices[seenVertices[i]];
-        v->posX += v->forceX * 0.000015;
-        v->posY += v->forceY * 0.000015;
+        v->posX += v->forceX * 0.005;
+        v->posY += v->forceY * 0.005;
 
-        cerr << v->forceX * 0.000015 << "," << v->forceY * 0.000015 << endl;
-        energy += v->forceX * 0.000015;
-        energy += v->forceY * 0.000015;
+        if ((v->forceX + v->forceY) > energy)
+          energy = (v->forceX + v->forceY);
+
+        //cerr << "EN:" << energy << endl;
+
 ////    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
 ////    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
 //
@@ -118,10 +100,12 @@ void MultiForce::apply() {
 }
 
 void MultiForce::placement() {
-  double radius = 100 / graph->numVertices;
+
+  double radius = 2;
 
   int v = graph->edgeList[edgeIndex][0];
   int a = graph->edgeList[edgeIndex][1];
+
 
   //calculate J
   double connectedEdges = 1;
@@ -130,15 +114,20 @@ void MultiForce::placement() {
     connectedEdges++;
   }
 
+  //seenVertices.clear();
   vector<int> connectedNodes;
   for (int l = 0; l < graph->numEdges; ++l) {
-    if (graph->edgeList[l][0] == v)
+    if (graph->edgeList[l][0] == v) {
       connectedNodes.push_back(graph->edgeList[l][1]);
+      //seenVertices.push_back(graph->edgeList[l][1]);
+    }
   }
 
   for (int l = 0; l < graph->numEdges; ++l) {
-    if (graph->edgeList[l][1] == v)
+    if (graph->edgeList[l][1] == v) {
       connectedNodes.push_back(graph->edgeList[l][0]);
+      //seenVertices.push_back(graph->edgeList[l][0]);
+    }
   }
 
   for (int i = 0; i < connectedEdges; ++i) {
@@ -147,7 +136,7 @@ void MultiForce::placement() {
     graph->vertices[v]->posZ = 0;
     graph->vertices[a]->posZ = 0;
 
-    cerr << "placement v:" << v << " u:" << a << endl;
+    //cerr << "placement v:" << v << " u:" << a << endl;
 
     graph->vertices[a]->posX = graph->vertices[v]->posX +
         cos((2 * M_PI * edgeIndex) / connectedNodes.size()) * radius;
@@ -156,10 +145,21 @@ void MultiForce::placement() {
         sin((2 * M_PI * edgeIndex) / connectedNodes.size()) * radius;
 
     edgeIndex++;
-    usleep(1000000);
+    //usleep(1000000);
   }
-  GLWindow::Ins()->algorithm->graph = graph;
-  GLWindow::Ins()->graph = graph;
+
+  bool isSeen = false;
+  for (int i = 0; i < connectedNodes.size(); ++i) {
+    for (int j = 0; j < seenVertices.size(); ++j) {
+      if(connectedNodes[i] == seenVertices[j])
+        isSeen = true;
+    }
+    if(!isSeen)
+      seenVertices.push_back(connectedNodes[i]);
+    isSeen = false;
+  }
+//  GLWindow::Ins()->algorithm->graph = graph;
+//  GLWindow::Ins()->graph = graph;
   // << endl;
 }
 
@@ -172,9 +172,10 @@ void MultiForce::initialPlacement() {
   for (int j = 0; j < graph->numVertices; ++j) {
     //sprintf(digit, "%d", j);
     //graph->vertices[j]->setText(digit);
-    graph->vertices[j]->posX = ((double) rand()) / RAND_MAX * (W) - W / 2;
-    graph->vertices[j]->posY = ((double) rand()) / RAND_MAX * (L) - L / 2;
+    graph->vertices[j]->posX = 1;//((double) rand()) / RAND_MAX * (W) - W / 2;
+    graph->vertices[j]->posY = 1;//((double) rand()) / RAND_MAX * (L) - L / 2;
     graph->vertices[j]->posZ = -9999990;
+//    graph->vertices[j]->setColour(1, 1, 1);
   }
 
 //  for (int i = 0; i < graph->numVertices; ++i) {
