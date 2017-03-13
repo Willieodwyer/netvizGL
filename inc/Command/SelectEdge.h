@@ -50,7 +50,6 @@ class SelectEdge : public Command {
 
     for (int i = 0; i < pointerOver.size(); i++) {
       if (closest == depthValues[i]) {
-        pointerOver[i]->selected = true;
         secondVertex = pointerOver[i];
       }
     }
@@ -62,6 +61,7 @@ class SelectEdge : public Command {
               && window->graph->edgeList[i][0] == secondVertex->vertexNumber);
       if (edgeBetween) {
         window->selectedEdgeIndex = i;
+        secondVertex->selected = true;
         break;
       }
     }
@@ -70,30 +70,31 @@ class SelectEdge : public Command {
 //      cerr << "EDGE BETWEEN: " << window->graph->edgeList[window->selectedEdgeIndex][0] << ","
 //           << window->graph->edgeList[window->selectedEdgeIndex][1] << endl;
 
-    int u = window->graph->edgeList[window->selectedEdgeIndex][0];
-    int v = window->graph->edgeList[window->selectedEdgeIndex][1];
+    if (edgeBetween) {
+      int u = window->graph->edgeList[window->selectedEdgeIndex][0];
+      int v = window->graph->edgeList[window->selectedEdgeIndex][1];
 
-    for (int i = 0; i < window->graph->vertices[u]->attachedPoints.size(); ++i) {
-      if(window->graph->vertices[u]->attachedPoints[i]->vertexNumber == v){
-        Widget::Ins()->textEdgeText = window->graph->vertices[u]->edges[i]->text;
-        Widget::Ins()->edgeRedColour = window->graph->vertices[u]->edges[i]->colours[0];
-        Widget::Ins()->edgeGreenColour = window->graph->vertices[u]->edges[i]->colours[1];
-        Widget::Ins()->edgeBlueColour = window->graph->vertices[u]->edges[i]->colours[2];
+      for (int i = 0; i < window->graph->vertices[u]->attachedPoints.size(); ++i) {
+        if (window->graph->vertices[u]->attachedPoints[i]->vertexNumber == v) {
+          Widget::Ins()->textEdgeText = window->graph->vertices[u]->edges[i]->text;
+          Widget::Ins()->edgeRedColour = window->graph->vertices[u]->edges[i]->colours[0];
+          Widget::Ins()->edgeGreenColour = window->graph->vertices[u]->edges[i]->colours[1];
+          Widget::Ins()->edgeBlueColour = window->graph->vertices[u]->edges[i]->colours[2];
+        }
       }
-    }
 
-    for (int i = 0; i < window->graph->vertices[v]->attachedPoints.size(); ++i) {
-      if(window->graph->vertices[v]->attachedPoints[i]->vertexNumber == u){
-        Widget::Ins()->textEdgeText = window->graph->vertices[v]->edges[i]->text;
-        Widget::Ins()->edgeRedColour = window->graph->vertices[v]->edges[i]->colours[0];
-        Widget::Ins()->edgeGreenColour = window->graph->vertices[v]->edges[i]->colours[1];
-        Widget::Ins()->edgeBlueColour = window->graph->vertices[v]->edges[i]->colours[2];
+      for (int i = 0; i < window->graph->vertices[v]->attachedPoints.size(); ++i) {
+        if (window->graph->vertices[v]->attachedPoints[i]->vertexNumber == u) {
+          Widget::Ins()->textEdgeText = window->graph->vertices[v]->edges[i]->text;
+          Widget::Ins()->edgeRedColour = window->graph->vertices[v]->edges[i]->colours[0];
+          Widget::Ins()->edgeGreenColour = window->graph->vertices[v]->edges[i]->colours[1];
+          Widget::Ins()->edgeBlueColour = window->graph->vertices[v]->edges[i]->colours[2];
+        }
       }
+
+      Widget::updateEdgeDetails();
     }
-
-    Widget::updateEdgeDetails();
-
-  };
+  }
 };
 
 #endif //NETVIZGL_SELECTEDGE_H
