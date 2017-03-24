@@ -6,10 +6,13 @@
 #define NETVIZGL_BETWEENNESS_H
 
 #include "Centrality.h"
-class Betweenness : public Centrality{
+class Betweenness : public Centrality {
  public:
+  int *vals;
+  vector<vector<int>> tree;
   void calcApply(Graph *g) override;
-  int findDist(int v, int u, Graph *g);
+  void buildTree(Graph *g);
+  void BFS(Graph *g, int v, int u);
 };
 
 #endif //NETVIZGL_BETWEENNESS_H
