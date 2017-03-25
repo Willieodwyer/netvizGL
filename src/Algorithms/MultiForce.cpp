@@ -102,15 +102,15 @@ void MultiForce::apply() {
     Vertex *v;
     Vertex *u;
 
-    for (int i = 0; i < seenVertices.size(); ++i) {
-      v = graph->vertices[seenVertices[i]];
+    for (int i = 0; i < graph->numVertices; ++i) {
+      v = graph->vertices[i];
       v->forceX = 0;
       v->forceY = 0;
 
-      for (int j = 0; j < seenVertices.size(); ++j) {
+      for (int j = 0; j < graph->numVertices; ++j) {
         if (i == j) continue;
 
-        u = graph->vertices[seenVertices[j]];
+        u = graph->vertices[j];
         double xDist = (v->posX - u->posX);
         double yDist = (v->posY - u->posY);
         double dist = sqrt((xDist * xDist) + (yDist * yDist));
@@ -123,7 +123,7 @@ void MultiForce::apply() {
       }
     }
 
-    for (int i = 0; i < edgeIndex; ++i) {
+    for (int i = 0; i < graph->numEdges; ++i) {
       v = graph->vertices[graph->edgeList[i][0]];
       u = graph->vertices[graph->edgeList[i][1]];
 
@@ -143,16 +143,10 @@ void MultiForce::apply() {
 
     }
 
-    for (int i = 0; i < seenVertices.size(); ++i) {
-      v = graph->vertices[seenVertices[i]];
-      v->posX += v->forceX * 0.005;
-      v->posY += v->forceY * 0.005;
-
-      if ((v->forceX + v->forceY) > energy)
-        energy = (v->forceX + v->forceY);
-
-      //cerr << "EN:" << energy << endl;
-
+    for (int i = 0; i < graph->numVertices; ++i) {
+      v = graph->vertices[i];
+      v->posX += v->forceX * 0.0015;
+      v->posY += v->forceY * 0.0015;
 ////    v->velocityX = min(t, max(-t, (v->velocityX + v->forceX)));
 ////    v->velocityY = min(t, max(-t, (v->velocityY + v->forceY)));
 //

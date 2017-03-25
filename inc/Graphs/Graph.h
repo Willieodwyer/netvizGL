@@ -1,6 +1,7 @@
 //
 // Created by werl on 25/10/16.
 //
+
 #include <stdio.h>
 #include <string.h>
 #include <cstdio>
@@ -11,12 +12,15 @@
 #ifndef NETVIZGL_GRAPH_H
 #define NETVIZGL_GRAPH_H
 
+class Algorithm;
+
 using namespace std;
 
 class Graph {
  public:
   Graph(char *filePath);
   virtual ~Graph();
+  Algorithm *algorithm;
 
   vector<Vertex *> vertices;
   unsigned long numVertices;

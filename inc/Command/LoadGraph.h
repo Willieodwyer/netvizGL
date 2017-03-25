@@ -11,9 +11,9 @@
 #include "../Graphs/MatrixMarketGraph.h"
 #include "../Graphs/AdjacencyGraph.h"
 #include "../Algorithms/FruchtermanReingold.h"
-#include "../Algorithms/SimpleForceDirected.h"
 #include "../Algorithms/MultiLevel.h"
 #include "../Algorithms/MultiForce.h"
+#include "../Algorithms/SFDAdapter.h"
 #include <fstream>
 
 class LoadGraph : public Command {
@@ -63,7 +63,7 @@ class LoadGraph : public Command {
     switch (window->buttonWidget->getAlgorithm()) {
       case Widget::FR :window->algorithm = new FruchtermanReingold(window->graph);
         break;
-      case Widget::SMPL: window->algorithm = new SimpleForceDirected(window->graph);
+      case Widget::SMPL: window->algorithm = new SFDAdapter(window->graph);
         break;
       case Widget::MLT: window->algorithm = new MultiForce(window->graph);
         break;
