@@ -8,8 +8,8 @@
 #include "Command.h"
 #include "../GLWindow.h"
 #include "../Algorithms/MultiForce.h"
-#include "../Algorithms/SimpleForceDirected.h"
 #include "../Algorithms/FruchtermanReingold.h"
+#include "../Algorithms/SFDAdapter.h"
 
 class RefreshGraph : public Command {
  private:
@@ -26,7 +26,7 @@ class RefreshGraph : public Command {
       switch (window->buttonWidget->getAlgorithm()) {
         case Widget::FR :window->algorithm = new FruchtermanReingold(window->graph);
           break;
-        case Widget::SMPL: window->algorithm = new SimpleForceDirected(window->graph);
+        case Widget::SMPL: window->algorithm = new SFDAdapter(window->graph);
           break;
         case Widget::MLT: window->algorithm = new MultiForce(window->graph);
           break;
