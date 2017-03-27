@@ -8,7 +8,7 @@
 #include "Centrality.h"
 class Betweenness : public Centrality {
  public:
-  int *vals;
+  double *vals;
   vector<vector<int>> tree;
   void calcApply(Graph *g) override;
   void buildTree(Graph *g);

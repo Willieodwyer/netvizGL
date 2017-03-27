@@ -8,6 +8,7 @@
 #include "../inc/Centrality/DistanceCentrality.h"
 #include "../inc/Centrality/DegreeCentrality.h"
 #include "../inc/Command/SaveGraph.h"
+#include "../inc/Centrality/Betweenness.h"
 
 Widget *Widget::instance = NULL;
 
@@ -84,6 +85,9 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   Widget::Ins()->degreeCentralityButton = gtk_button_new_with_label("Degree Centrality");
   g_signal_connect (Widget::Ins()->degreeCentralityButton, "clicked", G_CALLBACK(degreeC), Widget::Ins());
 
+  Widget::Ins()->betweennessCentralityButton = gtk_button_new_with_label("Betweenness Centrality");
+  g_signal_connect (Widget::Ins()->betweennessCentralityButton, "clicked", G_CALLBACK(betweennessC), Widget::Ins());
+
   GdkRGBA *def = new GdkRGBA;
   def->red = 1;
   def->green = 1;
@@ -133,6 +137,7 @@ void Widget::activate(GtkApplication *app, gpointer user_data) {
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->colourNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->degreeCentralityButton);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->distanceCentralityButton);
+  gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->betweennessCentralityButton);
 
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeLabel);
   gtk_container_add(GTK_CONTAINER (Widget::Ins()->button_box), Widget::Ins()->textNodeEntry);
@@ -377,6 +382,11 @@ int Widget::getAlgorithm() {
     return SMPL;
   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Widget::Ins()->multiLevel)) == TRUE)
     return MLT;
+}
+
+void Widget::betweennessC() {
+  Betweenness c;
+  c.calcApply(GLWindow::Ins()->graph);
 }
 
 

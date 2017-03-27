@@ -29,6 +29,7 @@ class Widget {
   GtkWidget *colourNodeLabel;
   GtkWidget *distanceCentralityButton;
   GtkWidget *degreeCentralityButton;
+  GtkWidget *betweennessCentralityButton;
   GtkColorChooser *colourNodeButton;
 
   GtkColorChooser *colourEdgeButton;
@@ -63,6 +64,7 @@ class Widget {
   char *textNodeText;
   static void degreeC();
   static void distanceC();
+  static void betweennessC();
   static void colourChanged();
   GtkWidget *textEdgeLabel;
   GtkWidget *textEdgeEntry;
