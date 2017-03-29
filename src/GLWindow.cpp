@@ -13,6 +13,7 @@
 #include "../inc/Command/NameByIndex.h"
 #include "../inc/Command/SelectEdge.h"
 #include "../inc/Centrality/Betweenness.h"
+#include "../inc/Command/DeleteEdge.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
 #include <X11/Xlib.h>
@@ -253,8 +254,19 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
     if (wind->graph->numVertices > 1) {
       DeleteVertex *temp = (DeleteVertex *) wind->updateGraph;
       temp->deleteNode = wind->selectedVertexNumber;
-      wind->updateGraph->execute();
+      temp->execute();
+//      wind->updateGraph->execute();
       wind->selectedVertexNumber = -1;
+    }
+  }
+
+  if (key == GLFW_KEY_INSERT && action == GLFW_PRESS) {
+    if (wind->graph->numVertices > 1) {
+      DeleteEdge *temp = new DeleteEdge(wind);
+      temp->deleteEdge = wind->selectedEdgeIndex;
+      cerr << wind->selectedEdgeIndex << endl;
+      temp->execute();
+      wind->selectedEdgeIndex = -1;
     }
   }
 

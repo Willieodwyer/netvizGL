@@ -6,7 +6,7 @@
 #include <zconf.h>
 #include "../../inc/Algorithms/SimpleForceDirected.h"
 
-void SimpleForceDirected::apply() {
+void SimpleForceDirected::calculate() {
   Vertex *v;
   Vertex *u;
 
@@ -47,11 +47,12 @@ void SimpleForceDirected::apply() {
   }
 }
 
-SimpleForceDirected::SimpleForceDirected(Graph *g)
-    : Algorithm(g) {
-  initialPlacement();
+SimpleForceDirected::SimpleForceDirected(Graph *g){
+  graph = g;
+  place();
 }
-void SimpleForceDirected::initialPlacement() {
+
+void SimpleForceDirected::place() {
   struct timeval time;
   gettimeofday(&time, NULL);
   srand(Graph::hash3(time.tv_sec, time.tv_usec, getpid()));
