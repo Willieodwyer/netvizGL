@@ -12,6 +12,7 @@
 #include "../inc/Command/DragVertex.h"
 #include "../inc/Command/NameByIndex.h"
 #include "../inc/Command/SelectEdge.h"
+#include "../inc/Centrality/Betweenness.h"
 #include "../inc/Command/DeleteEdge.h"
 #include <glm/geometric.hpp>
 #include <pngwriter.h>
@@ -242,6 +243,11 @@ void GLWindow::keyPressedEvent(GLFWwindow *window, int key, int scancode, int ac
 
   if (key == GLFW_KEY_F6 && action == GLFW_PRESS) {
     wind->svgScreenshot((char *) "DefaultSVG");
+  }
+
+  if (key == GLFW_KEY_B && action == GLFW_PRESS) {
+    Betweenness b;
+    b.calcApply(wind->graph);
   }
 
   if (key == GLFW_KEY_DELETE && action == GLFW_PRESS) {
